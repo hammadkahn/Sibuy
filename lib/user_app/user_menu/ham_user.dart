@@ -1,3 +1,6 @@
+import 'package:SiBuy/user_app/user_menu/insights.dart';
+import 'package:SiBuy/user_app/user_menu/points.dart';
+import 'package:SiBuy/user_app/user_menu/referral.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/user_model.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
@@ -194,12 +197,71 @@ class _ham_userState extends State<ham_user> {
                                       indent: 26,
                                       endIndent: 26,
                                     )),
-                                const Text("My Insights",
-                                    style: TextStyle(
-                                        fontFamily: 'Mulish',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xff32324D))),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Referal(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text("My Referrals",
+                                      style: TextStyle(
+                                          fontFamily: 'Mulish',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xff32324D))),
+                                ),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 18, bottom: 18),
+                                    child: Divider(
+                                      color: Color(0xFFE6E6E6),
+                                      thickness: 0.5,
+                                      // height: 214,
+                                      indent: 26,
+                                      endIndent: 26,
+                                    )),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Points(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text("My Points",
+                                      style: TextStyle(
+                                          fontFamily: 'Mulish',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xff32324D))),
+                                ),
+                                const Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 18, bottom: 18),
+                                    child: Divider(
+                                      color: Color(0xFFE6E6E6),
+                                      thickness: 0.5,
+                                      // height: 214,
+                                      indent: 26,
+                                      endIndent: 26,
+                                    )),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Insights(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text("My Insights",
+                                      style: TextStyle(
+                                          fontFamily: 'Mulish',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xff32324D))),
+                                ),
                                 const Padding(
                                     padding:
                                         EdgeInsets.only(top: 18, bottom: 18),

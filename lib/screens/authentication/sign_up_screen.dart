@@ -4,6 +4,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:SiBuy/models/category_model.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
+import 'package:intl_phone_field/countries.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
 import '../../services/categories/category_services.dart';
 import '../../user_app/verify _code/user_verification.dart';
 
@@ -31,6 +33,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   double? longitude;
   double? latitued;
+  Country? selectedCountry;
+  @override
+
   //Signup
   var isLoading = false;
   bool catLoaded = false;
@@ -46,6 +51,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void initState() {
+    selectedCountry = const Country(
+      name: "Azerbaijan",
+      flag: "🇦🇿",
+      code: "AZ",
+      dialCode: "994",
+      minLength: 9,
+      maxLength: 9,
+    );
+    debugPrint(countryCtr.text);
     loadAllCategories().whenComplete(() {
       setState(() {
         catLoaded = true;
@@ -178,7 +192,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    hintText: 'Email',
+                    hintText: 'Email (Optional)',
                   ),
                   validator: (value) {
                     if (value == null ||
@@ -193,7 +207,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Column(
                   children: [
                     TextButton.icon(
-                      icon: const Icon(Icons.location_pin),
+                      icon: const Icon(
+                        Icons.location_pin,
+                        color: Colors.orange,
+                      ),
                       onPressed: () {
                         _determinePosition()
                             .whenComplete(() => debugPrint('fetched'))
@@ -206,7 +223,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             );
                       },
-                      label: const Text('Fetch your current location'),
+                      label: const Text(
+                        'Fetch your current location',
+                        style: TextStyle(color: Colors.orange),
+                      ),
                     ),
                     Text(
                       'For get your pricise location, Please Fetch your location',
@@ -217,9 +237,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 16, bottom: 16),
                   child: TextFormField(
-                    readOnly: true,
+                    textInputAction: TextInputAction.next,
                     controller: countryCtr,
                     decoration: InputDecoration(
+                      prefixIcon: IconButton(
+                        icon: const Icon(Icons.arrow_drop_down),
+                        onPressed: () => showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) => SizedBox(
+                            height: MediaQuery.of(context).size.height / 1.3,
+                            child: CountryPickerDialog(
+                                searchText: 'Search Country',
+                                countryList: countries,
+                                onCountryChanged: (value) {
+                                  setState(() {
+                                    selectedCountry = value;
+                                    countryCtr.text = value.name;
+                                  });
+                                },
+                                selectedCountry: selectedCountry!,
+                                filteredCountries: countries),
+                          ),
+                        ),
+                      ),
                       labelText: 'Country',
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),

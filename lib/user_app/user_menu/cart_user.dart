@@ -138,31 +138,6 @@ class _Cart_userState extends State<Cart_user> {
                       }),
                     )),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 54,
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.add,
-                        color: Color(0xffff6600),
-                        size: 20,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text('Add More Offers',
-                            style: TextStyle(
-                                fontFamily: 'Mulish',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xffff6600))),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Consumer<Cart>(builder: (__, value, _) {
                 return CustomButton(
                   text: 'Get this Offer',

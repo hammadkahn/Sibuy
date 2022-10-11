@@ -76,7 +76,7 @@ class NotificationScreen extends StatelessWidget {
 
   Widget _createItem(BuildContext ctx, Data element) {
     return InkWell(
-        hoverColor: Colors.lightBlue,
+        hoverColor: Colors.orange,
         onTap: () => showsimple(ctx, element),
         child: Container(
           margin: const EdgeInsets.only(bottom: 12),
@@ -113,7 +113,7 @@ class NotificationScreen extends StatelessWidget {
         child: Container(
           width: 120,
           decoration: const BoxDecoration(
-            color: Colors.blue,
+            color: Colors.orange,
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
           ),
           child: Padding(
