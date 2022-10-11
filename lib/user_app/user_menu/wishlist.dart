@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../constant/size_constants.dart';

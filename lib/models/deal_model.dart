@@ -1,5 +1,5 @@
-import 'package:gigi_app/models/branch_model.dart';
-import 'package:gigi_app/models/category_model.dart';
+import 'package:SiBuy/models/branch_model.dart';
+import 'package:SiBuy/models/category_model.dart';
 
 import 'image_model.dart';
 

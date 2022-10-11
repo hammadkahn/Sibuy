@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/apis/api_urls.dart';
-import 'package:gigi_app/models/puchase_model.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
-import 'package:gigi_app/services/deals/user_deals_services.dart';
-import 'package:gigi_app/services/reviews_services.dart';
-import 'package:gigi_app/shared/custom_button.dart';
+import 'package:SiBuy/apis/api_urls.dart';
+import 'package:SiBuy/models/puchase_model.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
+import 'package:SiBuy/services/deals/user_deals_services.dart';
+import 'package:SiBuy/services/reviews_services.dart';
+import 'package:SiBuy/shared/custom_button.dart';
 import 'package:provider/provider.dart';
 
 class review extends StatefulWidget {

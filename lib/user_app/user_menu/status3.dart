@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/shared/custom_button.dart';
-import 'package:gigi_app/user_app/user_menu/my_qrs.dart';
+import 'package:SiBuy/shared/custom_button.dart';
+import 'package:SiBuy/user_app/user_menu/my_qrs.dart';
 
 class stats3 extends StatelessWidget {
   const stats3({Key? key, required this.token, required this.productName})

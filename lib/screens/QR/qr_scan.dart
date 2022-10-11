@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/scanned/scan_details.dart';
+import 'package:SiBuy/scanned/scan_details.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:io';
 

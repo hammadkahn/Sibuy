@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gigi_app/apis/api_urls.dart';
+import 'package:SiBuy/apis/api_urls.dart';
 import 'package:http/http.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import 'dart:async';

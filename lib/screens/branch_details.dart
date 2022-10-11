@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/branch_model.dart';
+import 'package:SiBuy/models/branch_model.dart';
 
 class BranchDetails extends StatelessWidget {
   const BranchDetails({Key? key, required this.branchData}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/deal_model.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
+import 'package:SiBuy/models/deal_model.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 

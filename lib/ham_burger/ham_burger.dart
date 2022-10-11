@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/screens/authentication/auth.dart';
+import 'package:SiBuy/screens/authentication/auth.dart';
 
-import 'package:gigi_app/support/support.dart';
+import 'package:SiBuy/support/support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/auth/authentication.dart';

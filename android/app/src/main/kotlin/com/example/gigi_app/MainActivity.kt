@@ -1,4 +1,4 @@
-package com.example.gigi_app
+package com.example.SiBuy
 
 import io.flutter.embedding.android.FlutterActivity
 

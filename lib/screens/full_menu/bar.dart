@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/chat/user_list_screen.dart';
-import 'package:gigi_app/screens/QR/qr.dart';
-import 'package:gigi_app/screens/full_menu/menu.dart';
-import 'package:gigi_app/screens/full_menu/profile.dart';
+import 'package:SiBuy/chat/user_list_screen.dart';
+import 'package:SiBuy/screens/QR/qr.dart';
+import 'package:SiBuy/screens/full_menu/menu.dart';
+import 'package:SiBuy/screens/full_menu/profile.dart';
 
 import '../../support/contact.dart';
 

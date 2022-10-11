@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/deal_model.dart';
-import 'package:gigi_app/screens/full_menu/location_bar.dart';
-import 'package:gigi_app/screens/full_menu/sheet_deals.dart';
-import 'package:gigi_app/services/dashboard_stats/dash_board.dart';
-import 'package:gigi_app/services/deals/merchant_deal_services.dart';
+import 'package:SiBuy/models/deal_model.dart';
+import 'package:SiBuy/screens/full_menu/location_bar.dart';
+import 'package:SiBuy/screens/full_menu/sheet_deals.dart';
+import 'package:SiBuy/services/dashboard_stats/dash_board.dart';
+import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 
 import '../../constant/size_constants.dart';
 import 'deals.dart';

@@ -1,4 +1,4 @@
-import 'package:gigi_app/models/image_model.dart';
+import 'package:SiBuy/models/image_model.dart';
 
 class CartListModel {
   bool? status;

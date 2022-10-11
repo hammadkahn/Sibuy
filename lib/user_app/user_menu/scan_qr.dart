@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/branch_model.dart';
-import 'package:gigi_app/models/cart_model.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
+import 'package:SiBuy/models/branch_model.dart';
+import 'package:SiBuy/models/cart_model.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';

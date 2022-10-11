@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/merchant_model.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
-import 'package:gigi_app/services/user_merchant_services.dart';
+import 'package:SiBuy/models/merchant_model.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
+import 'package:SiBuy/services/user_merchant_services.dart';
 import 'package:provider/provider.dart';
 
 import '../../apis/api_urls.dart';

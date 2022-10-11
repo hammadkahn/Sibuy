@@ -1,7 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
-import 'package:gigi_app/shared/custom_button.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
+import 'package:SiBuy/shared/custom_button.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:provider/provider.dart';
@@ -320,6 +320,8 @@ class _filter_listState extends State<filter_list> {
               height: 30,
             ),
             RangeSlider(
+              activeColor: Color(0xffff6600),
+              inactiveColor: Color(0xFFff6600),
               values: valuess,
               onChanged: (newRange) {
                 setState(() => valuess = newRange);

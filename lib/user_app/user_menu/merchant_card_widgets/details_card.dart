@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/top_mecrchant_model.dart';
-import 'package:gigi_app/user_app/user_menu/profile.dart';
+import 'package:SiBuy/models/top_mecrchant_model.dart';
+import 'package:SiBuy/user_app/user_menu/profile.dart';
 
 class DetailsCardWidget extends StatefulWidget {
   const DetailsCardWidget(

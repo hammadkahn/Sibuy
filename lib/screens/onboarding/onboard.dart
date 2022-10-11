@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/screens/authentication/auth.dart';
-import 'package:gigi_app/screens/authentication/sign_up_screen.dart';
-import 'package:gigi_app/screens/onboarding/onboard_carousel.dart';
-import 'package:gigi_app/shared/custom_button.dart';
+import 'package:SiBuy/screens/authentication/auth.dart';
+import 'package:SiBuy/screens/authentication/sign_up_screen.dart';
+import 'package:SiBuy/screens/onboarding/onboard_carousel.dart';
+import 'package:SiBuy/shared/custom_button.dart';
 
 import '../../constant/size_constants.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/providers/chat_provider.dart';
+import 'package:SiBuy/providers/chat_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

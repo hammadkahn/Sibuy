@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/user_app/categories/categories.dart';
-import 'package:gigi_app/user_app/user_menu/cart_user.dart';
-import 'package:gigi_app/user_app/user_menu/my_qrs.dart';
-import 'package:gigi_app/user_app/user_menu/fav_user.dart';
-import 'package:gigi_app/user_app/user_menu/full_user_meu.dart';
+import 'package:SiBuy/user_app/categories/categories.dart';
+import 'package:SiBuy/user_app/user_menu/cart_user.dart';
+import 'package:SiBuy/user_app/user_menu/my_qrs.dart';
+import 'package:SiBuy/user_app/user_menu/fav_user.dart';
+import 'package:SiBuy/user_app/user_menu/full_user_meu.dart';
 
 class User_bar extends StatefulWidget {
   const User_bar({Key? key, required this.token}) : super(key: key);

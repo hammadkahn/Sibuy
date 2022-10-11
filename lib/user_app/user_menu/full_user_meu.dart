@@ -1,9 +1,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/deal_model.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
-import 'package:gigi_app/services/deals/user_deals_services.dart';
-import 'package:gigi_app/user_app/user_menu/details_with_all.dart';
+import 'package:SiBuy/models/deal_model.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
+import 'package:SiBuy/services/deals/user_deals_services.dart';
+import 'package:SiBuy/user_app/user_menu/details_with_all.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

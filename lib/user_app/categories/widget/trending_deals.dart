@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/apis/api_urls.dart';
-import 'package:gigi_app/models/category_model.dart';
+import 'package:SiBuy/apis/api_urls.dart';
+import 'package:SiBuy/models/category_model.dart';
 
 class TrendingDealsWidget extends StatelessWidget {
   const TrendingDealsWidget({Key? key, required this.categoryData})

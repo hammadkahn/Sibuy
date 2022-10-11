@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/screens/branch_details.dart';
+import 'package:SiBuy/screens/branch_details.dart';
 
 import '../models/branch_model.dart';
 import '../services/branch/branch_services.dart';

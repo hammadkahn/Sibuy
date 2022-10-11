@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:gigi_app/apis/api_urls.dart';
+import 'package:SiBuy/apis/api_urls.dart';
 import 'package:http/http.dart' as http;
 
 class ReviewsServices {

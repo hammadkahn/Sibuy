@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:gigi_app/apis/api_urls.dart';
-import 'package:gigi_app/models/merchant_profile_model.dart';
-import 'package:gigi_app/models/user_model.dart';
+import 'package:SiBuy/apis/api_urls.dart';
+import 'package:SiBuy/models/merchant_profile_model.dart';
+import 'package:SiBuy/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class UserInformation {

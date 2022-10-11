@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:gigi_app/models/top_mecrchant_model.dart';
+import 'package:SiBuy/models/top_mecrchant_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../apis/api_urls.dart';

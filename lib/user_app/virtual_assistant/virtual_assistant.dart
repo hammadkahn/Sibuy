@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/shared/custom_button.dart';
-import 'package:gigi_app/shared/toggle_button.dart';
+import 'package:SiBuy/shared/custom_button.dart';
+import 'package:SiBuy/shared/toggle_button.dart';
 
 class Virtual_user extends StatelessWidget {
   const Virtual_user({Key? key}) : super(key: key);

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/branch_model.dart';
-import 'package:gigi_app/models/merchant_profile_model.dart';
-import 'package:gigi_app/screens/active_deals.dart';
-import 'package:gigi_app/services/branch/branch_services.dart';
-import 'package:gigi_app/services/get_profile/get_user_info.dart';
-import 'package:gigi_app/user_app/splash_screen/splash.dart';
+import 'package:SiBuy/models/branch_model.dart';
+import 'package:SiBuy/models/merchant_profile_model.dart';
+import 'package:SiBuy/screens/active_deals.dart';
+import 'package:SiBuy/services/branch/branch_services.dart';
+import 'package:SiBuy/services/get_profile/get_user_info.dart';
+import 'package:SiBuy/user_app/splash_screen/splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../apis/api_urls.dart';

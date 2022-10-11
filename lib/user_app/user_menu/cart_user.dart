@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:gigi_app/shared/custom_button.dart';
-import 'package:gigi_app/user_app/user_menu/order_status1.dart';
-import 'package:gigi_app/user_app/user_menu/user_menu.dart';
+import 'package:SiBuy/shared/custom_button.dart';
+import 'package:SiBuy/user_app/user_menu/order_status1.dart';
+import 'package:SiBuy/user_app/user_menu/user_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -147,7 +147,7 @@ class _Cart_userState extends State<Cart_user> {
                     children: const [
                       Icon(
                         Icons.add,
-                        color: Color(0xff0D9BFF),
+                        color: Color(0xffff6600),
                         size: 20,
                       ),
                       Padding(
@@ -157,7 +157,7 @@ class _Cart_userState extends State<Cart_user> {
                                 fontFamily: 'Mulish',
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
-                                color: Color(0xff0D9BFF))),
+                                color: Color(0xffff6600))),
                       ),
                     ],
                   ),

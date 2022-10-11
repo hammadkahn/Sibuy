@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/chat/user_list_screen.dart';
-import 'package:gigi_app/support/contact.dart';
+import 'package:SiBuy/chat/user_list_screen.dart';
+import 'package:SiBuy/support/contact.dart';
 
 class Support extends StatelessWidget {
   const Support({Key? key, required this.token}) : super(key: key);

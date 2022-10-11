@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/cart_model.dart';
-import 'package:gigi_app/models/deal_model.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
+import 'package:SiBuy/models/cart_model.dart';
+import 'package:SiBuy/models/deal_model.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/reviews_model.dart';

@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:gigi_app/screens/full_menu/bar.dart';
-import 'package:gigi_app/shared/custom_button.dart';
+import 'package:SiBuy/screens/full_menu/bar.dart';
+import 'package:SiBuy/shared/custom_button.dart';
 
 class ThankYouPage extends StatefulWidget {
   const ThankYouPage({Key? key, required this.token}) : super(key: key);

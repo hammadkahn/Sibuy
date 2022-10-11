@@ -1,4 +1,4 @@
-import 'package:gigi_app/models/branch_model.dart';
+import 'package:SiBuy/models/branch_model.dart';
 
 import 'reviews_model.dart';
 

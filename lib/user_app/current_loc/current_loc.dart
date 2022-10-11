@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:gigi_app/user_app/current_loc/loc_dropdown.dart';
-import 'package:gigi_app/user_app/virtual_assistant/virtual_assistant.dart';
+import 'package:SiBuy/user_app/current_loc/loc_dropdown.dart';
+import 'package:SiBuy/user_app/virtual_assistant/virtual_assistant.dart';
 
 import '../../shared/custom_button.dart';
 

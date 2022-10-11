@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/screens/authentication/sign_up_screen.dart';
+import 'package:SiBuy/screens/authentication/sign_up_screen.dart';
 
-import 'package:gigi_app/shared/custom_button.dart';
+import 'package:SiBuy/shared/custom_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constant/size_constants.dart';
@@ -39,7 +39,11 @@ class _auth_pageState extends State<auth_page> {
               const Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 56),
-                child: Image.asset('assets/images/auth_pic.png'),
+                child: Image.asset(
+                  'assets/images/auth_pic.png',
+                  height: MediaQuery.of(context).size.height * 67 / 812,
+                  width: MediaQuery.of(context).size.width * 67 / 375,
+                ),
               ),
               const Text(
                 'Let’s Get Started 😁',

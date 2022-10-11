@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/notification.dart';
-import 'package:gigi_app/services/notification_services.dart';
+import 'package:SiBuy/models/notification.dart';
+import 'package:SiBuy/services/notification_services.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 

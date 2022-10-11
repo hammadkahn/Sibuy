@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/apis/api_urls.dart';
-import 'package:gigi_app/providers/order.dart';
+import 'package:SiBuy/apis/api_urls.dart';
+import 'package:SiBuy/providers/order.dart';
 
 import '../../constant/size_constants.dart';
 import '../../services/user_merchant_services.dart';

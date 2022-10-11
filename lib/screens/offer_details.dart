@@ -1,5 +1,5 @@
 // import 'package:flutter/material.dart';
-// import 'package:gigi_app/models/deal_model.dart';
+// import 'package:SiBuy/models/deal_model.dart';
 
 // class OfferDetails extends StatefulWidget {
 //   const OfferDetails({Key? key, this.dealData}) : super(key: key);

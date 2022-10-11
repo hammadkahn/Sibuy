@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/cart_model.dart';
-import 'package:gigi_app/models/puchase_model.dart';
-import 'package:gigi_app/models/reviews_model.dart';
-import 'package:gigi_app/models/wish_list_model.dart';
+import 'package:SiBuy/models/cart_model.dart';
+import 'package:SiBuy/models/puchase_model.dart';
+import 'package:SiBuy/models/reviews_model.dart';
+import 'package:SiBuy/models/wish_list_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../apis/api_urls.dart';

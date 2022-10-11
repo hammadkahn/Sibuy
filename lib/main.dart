@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/providers/chat_provider.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
-import 'package:gigi_app/providers/order.dart';
+import 'package:SiBuy/providers/chat_provider.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
+import 'package:SiBuy/providers/order.dart';
 import 'package:provider/provider.dart';
 
 import 'constant/theme.dart';

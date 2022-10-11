@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gigi_app/services/auth/authentication.dart';
-import 'package:gigi_app/shared/custom_button.dart';
-import 'package:gigi_app/user_app/email_verification/email_ver.dart';
+import 'package:SiBuy/services/auth/authentication.dart';
+import 'package:SiBuy/shared/custom_button.dart';
+import 'package:SiBuy/user_app/email_verification/email_ver.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class User_Verification extends StatefulWidget {

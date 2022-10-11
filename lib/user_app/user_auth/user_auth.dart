@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/shared/mail_button.dart';
-import 'package:gigi_app/user_app/email_verification/email_ver.dart';
+import 'package:SiBuy/shared/mail_button.dart';
+import 'package:SiBuy/user_app/email_verification/email_ver.dart';
 
 import '../../constant/size_constants.dart';
 import '../../shared/custom_button.dart';
@@ -65,35 +65,7 @@ class _user_authState extends State<user_auth> {
                           color: Color(0xFFDCDCE4),
                           thickness: 1,
                           endIndent: 14)),
-                  Text(
-                    "OR",
-                    style: TextStyle(color: Color(0xffA5A5BA), fontSize: 16),
-                  ),
-                  Expanded(
-                      child: Divider(
-                    color: Color(0xFFDCDCE4),
-                    thickness: 1,
-                    indent: 14,
-                  )),
                 ]),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: EmailButton(
-                    text: 'Continue with Apple ID',
-                    onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const Email_ver()));
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 18),
-                child: EmailButton(
-                    text: 'Continue with Gmail',
-                    onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const Email_ver()));
-                    }),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 54, top: 20),

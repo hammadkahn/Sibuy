@@ -1,4 +1,4 @@
-import 'package:gigi_app/models/deal_model.dart';
+import 'package:SiBuy/models/deal_model.dart';
 
 import 'image_model.dart';
 

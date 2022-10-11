@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/deal_model.dart';
-import 'package:gigi_app/user_app/user_menu/deals_user.dart';
+import 'package:SiBuy/models/deal_model.dart';
+import 'package:SiBuy/user_app/user_menu/deals_user.dart';
 
 class C_slider extends StatefulWidget {
   const C_slider({Key? key, required this.merchantList, required this.token})

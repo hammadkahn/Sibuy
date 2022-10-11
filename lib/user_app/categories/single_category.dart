@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/category_model.dart';
-import 'package:gigi_app/services/deals/user_deals_services.dart';
-import 'package:gigi_app/user_app/user_menu/deals_details.dart';
+import 'package:SiBuy/models/category_model.dart';
+import 'package:SiBuy/services/deals/user_deals_services.dart';
+import 'package:SiBuy/user_app/user_menu/deals_details.dart';
 
 import '../../models/deal_model.dart';
 

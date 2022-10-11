@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gigi_app/user_app/share_loc/share_loc.dart';
+import 'package:SiBuy/user_app/share_loc/share_loc.dart';
 
 class Set_user_location extends StatefulWidget {
   const Set_user_location({Key? key}) : super(key: key);

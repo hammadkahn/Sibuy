@@ -1,7 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:gigi_app/screens/full_menu/profile.dart';
-import 'package:gigi_app/services/branch/branch_services.dart';
+import 'package:SiBuy/screens/full_menu/profile.dart';
+import 'package:SiBuy/services/branch/branch_services.dart';
 
 class location_bar extends StatefulWidget {
   const location_bar({Key? key, required this.token}) : super(key: key);

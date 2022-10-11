@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/cart_model.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
-import 'package:gigi_app/user_app/user_menu/my_qrs_cont.dart';
+import 'package:SiBuy/models/cart_model.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
+import 'package:SiBuy/user_app/user_menu/my_qrs_cont.dart';
 import 'package:provider/provider.dart';
 
 class My_Qrs extends StatefulWidget {

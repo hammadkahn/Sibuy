@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-import 'package:gigi_app/User_APP/user_onboarding/user-onboarding.dart';
+import 'package:SiBuy/User_APP/user_onboarding/user-onboarding.dart';
 
 class user_splash extends StatefulWidget {
   const user_splash({Key? key}) : super(key: key);

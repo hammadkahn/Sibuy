@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/user_app/user_menu/user_menu.dart';
-import 'package:gigi_app/user_app/verify%20_code/user_verification.dart';
+import 'package:SiBuy/user_app/user_menu/user_menu.dart';
+import 'package:SiBuy/user_app/verify%20_code/user_verification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constant/size_constants.dart';

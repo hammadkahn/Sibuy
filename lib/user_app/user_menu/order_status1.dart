@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
-import 'package:gigi_app/providers/order.dart';
-import 'package:gigi_app/user_app/user_menu/status3.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
+import 'package:SiBuy/providers/order.dart';
+import 'package:SiBuy/user_app/user_menu/status3.dart';
 
 import 'package:provider/provider.dart';
 

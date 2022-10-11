@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/cart_model.dart';
-import 'package:gigi_app/user_app/user_menu/review.dart';
-import 'package:gigi_app/user_app/user_menu/scan_qr.dart';
+import 'package:SiBuy/models/cart_model.dart';
+import 'package:SiBuy/user_app/user_menu/review.dart';
+import 'package:SiBuy/user_app/user_menu/scan_qr.dart';
 import 'package:intl/intl.dart';
 
 import '../../services/user_merchant_services.dart';

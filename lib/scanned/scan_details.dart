@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/scanned/thank_you_screen.dart';
-import 'package:gigi_app/services/deals/merchant_deal_services.dart';
+import 'package:SiBuy/scanned/thank_you_screen.dart';
+import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../shared/custom_button.dart';

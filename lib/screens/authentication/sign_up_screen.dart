@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:gigi_app/models/category_model.dart';
-import 'package:gigi_app/services/auth/authentication.dart';
-import 'package:gigi_app/shared/custom_button.dart';
+import 'package:SiBuy/models/category_model.dart';
+import 'package:SiBuy/services/auth/authentication.dart';
+import 'package:SiBuy/shared/custom_button.dart';
 import '../../services/categories/category_services.dart';
 import '../../user_app/verify _code/user_verification.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:gigi_app/services/auth/authentication.dart';
-import 'package:gigi_app/shared/custom_button.dart';
+import 'package:SiBuy/services/auth/authentication.dart';
+import 'package:SiBuy/shared/custom_button.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
@@ -174,7 +174,7 @@ class _User_create_accState extends State<User_create_acc> {
                       borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    hintText: 'Email',
+                    hintText: 'Email (Optional)',
                   ),
                   validator: (value) {
                     if (value == null ||
@@ -186,7 +186,7 @@ class _User_create_accState extends State<User_create_acc> {
                   },
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 26),
+                  padding: const EdgeInsets.only(bottom: 26, top: 16),
                   child: TextFormField(
                     textInputAction: TextInputAction.next,
                     controller: passCtr,
@@ -291,6 +291,9 @@ class _User_create_accState extends State<User_create_acc> {
                     }
                     return null;
                   },
+                ),
+                SizedBox(
+                  height: 16,
                 ),
                 // SelectState(
                 //   onCountryChanged: (value) {

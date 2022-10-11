@@ -1,4 +1,4 @@
-import 'package:gigi_app/models/cart_model.dart';
+import 'package:SiBuy/models/cart_model.dart';
 
 class SinglePurchaseModel {
   bool? status;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/user_model.dart';
-import 'package:gigi_app/services/auth/authentication.dart';
-import 'package:gigi_app/services/get_profile/get_user_info.dart';
-import 'package:gigi_app/user_app/splash_screen/splash.dart';
-import 'package:gigi_app/user_app/user_menu/my_qrs.dart';
-import 'package:gigi_app/user_app/user_menu/support_user.dart';
+import 'package:SiBuy/models/user_model.dart';
+import 'package:SiBuy/services/auth/authentication.dart';
+import 'package:SiBuy/services/get_profile/get_user_info.dart';
+import 'package:SiBuy/user_app/splash_screen/splash.dart';
+import 'package:SiBuy/user_app/user_menu/my_qrs.dart';
+import 'package:SiBuy/user_app/user_menu/support_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../apis/api_urls.dart';

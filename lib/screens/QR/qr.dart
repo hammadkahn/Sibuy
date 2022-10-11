@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/screens/QR/qr_scan.dart';
-import 'package:gigi_app/shared/custom_button.dart';
+import 'package:SiBuy/screens/QR/qr_scan.dart';
+import 'package:SiBuy/shared/custom_button.dart';
 
 class QR extends StatelessWidget {
   const QR({Key? key, required this.token}) : super(key: key);

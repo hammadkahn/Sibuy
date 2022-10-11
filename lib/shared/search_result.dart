@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/models/category_model.dart';
+import 'package:SiBuy/models/category_model.dart';
 import 'package:provider/provider.dart';
 
 import '../apis/api_urls.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
-import 'package:gigi_app/user_app/user_menu/user_menu.dart';
-import 'package:gigi_app/user_app/user_menu/wishlist.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
+import 'package:SiBuy/user_app/user_menu/user_menu.dart';
+import 'package:SiBuy/user_app/user_menu/wishlist.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/wish_list_model.dart';

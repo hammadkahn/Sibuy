@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:gigi_app/apis/api_urls.dart';
-import 'package:gigi_app/models/current_user_chat_model.dart';
+import 'package:SiBuy/apis/api_urls.dart';
+import 'package:SiBuy/models/current_user_chat_model.dart';
 import 'package:http/http.dart' as http;
 
 class Conversation {

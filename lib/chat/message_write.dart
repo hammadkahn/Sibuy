@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:gigi_app/providers/chat_provider.dart';
+import 'package:SiBuy/providers/chat_provider.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/screens/onboarding/onboard.dart';
-import 'package:gigi_app/user_app/user_auth/user_auth.dart';
+import 'package:SiBuy/screens/onboarding/onboard.dart';
+import 'package:SiBuy/user_app/user_auth/user_auth.dart';
 
 import '../../shared/custom_button.dart';
 

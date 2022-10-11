@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:gigi_app/apis/api_urls.dart';
-import 'package:gigi_app/models/deal_model.dart';
-import 'package:gigi_app/models/merchant_single_deal.dart';
+import 'package:SiBuy/apis/api_urls.dart';
+import 'package:SiBuy/models/deal_model.dart';
+import 'package:SiBuy/models/merchant_single_deal.dart';
 import 'package:http/http.dart' as http;
 
 class DealServices {

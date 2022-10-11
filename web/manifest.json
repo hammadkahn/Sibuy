@@ -1,6 +1,6 @@
 {
-    "name": "gigi_app",
-    "short_name": "gigi_app",
+    "name": "SiBuy",
+    "short_name": "SiBuy",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

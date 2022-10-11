@@ -1,4 +1,4 @@
-# gigi_app
+# SiBuy
 
 A new Flutter project.
 

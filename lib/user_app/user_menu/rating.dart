@@ -1,6 +1,6 @@
 import 'package:chips_choice_null_safety/chips_choice_null_safety.dart';
 import 'package:flutter/material.dart';
-import 'package:gigi_app/providers/deal_provider.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
 
 class rating extends StatefulWidget {

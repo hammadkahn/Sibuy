@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gigi_app/shared/custom_button.dart';
-import 'package:gigi_app/user_app/current_loc/current_loc.dart';
+import 'package:SiBuy/shared/custom_button.dart';
+import 'package:SiBuy/user_app/current_loc/current_loc.dart';
 
 // ignore: camel_case_types
 class Share_user_loc extends StatefulWidget {
