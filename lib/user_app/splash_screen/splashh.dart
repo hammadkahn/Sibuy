@@ -18,17 +18,16 @@ class _user_splashState extends State<user_splash>
   @override
   void initState() {
     super.initState();
-    //navigate to next page after 5 seconds
-    // Timer(const Duration(seconds: 5), () {
-    //   Navigator.pushReplacement(context,
-    //       MaterialPageRoute(builder: (context) => const User_onboard()));
-    // });
+    // navigate to next page after 5 seconds
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const User_onboard()));
+    });
     animationController = new AnimationController(
       vsync: this,
-      duration: new Duration(seconds: 5),
+      duration: new Duration(seconds: 3),
     );
-
-    animationController.repeat();
+    animationController.forward();
   }
 
   @override
@@ -45,7 +44,7 @@ class _user_splashState extends State<user_splash>
         ),
         builder: (BuildContext context, Widget? _widget) {
           return new Transform.rotate(
-            angle: animationController.value * 10,
+            angle: animationController.value * 6.3,
             child: _widget,
           );
         },
