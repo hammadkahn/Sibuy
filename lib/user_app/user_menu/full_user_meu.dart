@@ -1,3 +1,4 @@
+import 'package:SiBuy/user_app/user_menu/categ.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/deal_model.dart';
@@ -29,6 +30,11 @@ class _Full_menu_userState extends State<Full_menu_user> {
   ValueNotifier<List<dynamic>>? items = ValueNotifier([]);
 
   String? city = '';
+  List a = [
+    Image.asset('assets/images/bev.png'),
+    Image.asset('assets/images/bev.png'),
+    Image.asset('assets/images/bev.png'),
+  ];
 
   Future<void> getCountry() async {
     debugPrint('widget : ${widget.token}');
@@ -102,19 +108,48 @@ class _Full_menu_userState extends State<Full_menu_user> {
                     );
                   },
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: const Text('Trending Deals for You',
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF505050))),
+                //two rows with 8 icons of categories
+                const SizedBox(
+                  height: 20,
                 ),
-                SizedBox(
-                  height: 210,
-                  child: userTrendingDeals(),
+                const Text(
+                  'Categories',
+                  style: TextStyle(
+                      fontFamily: 'DMSans',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF32324D)),
                 ),
+                Row(
+                  children: [
+                    Image.asset('assets/images/bev.png'),
+                    Image.asset('assets/images/bev.png'),
+                    Image.asset('assets/images/bev.png'),
+                    // ListView.builder(
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemCount: 1,
+                    //   itemBuilder: (BuildContext context, int index) {
+                    //     return a[index];
+                    //   },
+                    // ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                // Container(
+                //   margin: const EdgeInsets.symmetric(vertical: 10),
+                //   child: const Text('Trending Deals for You',
+                //       style: TextStyle(
+                //           fontFamily: 'Mulish',
+                //           fontSize: 16,
+                //           fontWeight: FontWeight.w700,
+                //           color: Color(0xFF505050))),
+                // ),
+                // SizedBox(
+                //   height: 210,
+                //   child: userTrendingDeals(),
+                // ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Row(
