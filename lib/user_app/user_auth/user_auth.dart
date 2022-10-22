@@ -15,6 +15,7 @@ class user_auth extends StatefulWidget {
 }
 
 class _user_authState extends State<user_auth> {
+  int _value = 0;
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
@@ -81,6 +82,52 @@ class _user_authState extends State<user_auth> {
                         color: Color(0xFF8981AE)),
                   ),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () => setState(() => _value = 0),
+                    child: Container(
+                      height: 56,
+                      width: 56,
+                      color: _value == 0 ? Colors.grey : Colors.transparent,
+                      child: Image.asset(
+                        'assets/images/com.png',
+                        height: 24,
+                        width: 24,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 4),
+                  GestureDetector(
+                    onTap: () => setState(() => _value = 1),
+                    child: Container(
+                      height: 56,
+                      width: 56,
+                      color: _value == 1 ? Colors.grey : Colors.transparent,
+                      child: Image.asset(
+                        'assets/images/uk.png',
+                        height: 24,
+                        width: 24,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 4),
+                  GestureDetector(
+                    onTap: () => setState(() => _value = 2),
+                    child: Container(
+                      height: 56,
+                      width: 56,
+                      color: _value == 2 ? Colors.grey : Colors.transparent,
+                      child: Image.asset(
+                        'assets/images/china.png',
+                        height: 24,
+                        width: 24,
+                      ),
+                    ),
+                  ),
+                ],
               )
             ],
           ),

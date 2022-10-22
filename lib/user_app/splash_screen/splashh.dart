@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:SiBuy/user_app/user_auth/user_auth.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,14 @@ class user_splash extends StatefulWidget {
 class _user_splashState extends State<user_splash>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
+    
   @override
   void initState() {
     super.initState();
     // navigate to next page after 5 seconds
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const User_onboard()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const user_auth()));
     });
     animationController = new AnimationController(
       vsync: this,
