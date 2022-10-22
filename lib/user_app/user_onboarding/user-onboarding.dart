@@ -44,7 +44,7 @@ class User_onboard extends StatelessWidget {
               text: 'Get Started',
             ),
           ),
-          GestureDetector(
+          InkWell(
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (_) => const onBoard()));
