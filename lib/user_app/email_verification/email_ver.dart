@@ -60,7 +60,7 @@ class _Email_verState extends State<Email_ver> {
                     borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  hintText: 'Email',
+                  hintText: 'Email or Phone Number',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -194,7 +194,7 @@ class _Email_verState extends State<Email_ver> {
                 borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                 borderRadius: BorderRadius.circular(16),
               ),
-              hintText: 'Email',
+              hintText: 'Email or Phone Number',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {

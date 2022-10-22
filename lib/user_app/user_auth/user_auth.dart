@@ -91,7 +91,8 @@ class _user_authState extends State<user_auth> {
                     child: Container(
                       height: 56,
                       width: 56,
-                      color: _value == 0 ? Colors.grey : Colors.transparent,
+                      color:
+                          _value == 0 ? Color(0xFFff6600) : Colors.transparent,
                       child: Image.asset(
                         'assets/images/com.png',
                         height: 24,
@@ -105,7 +106,8 @@ class _user_authState extends State<user_auth> {
                     child: Container(
                       height: 56,
                       width: 56,
-                      color: _value == 1 ? Colors.grey : Colors.transparent,
+                      color:
+                          _value == 1 ? Color(0xFFff6600) : Colors.transparent,
                       child: Image.asset(
                         'assets/images/uk.png',
                         height: 24,
@@ -119,7 +121,8 @@ class _user_authState extends State<user_auth> {
                     child: Container(
                       height: 56,
                       width: 56,
-                      color: _value == 2 ? Colors.grey : Colors.transparent,
+                      color:
+                          _value == 2 ? Color(0xFFff6600) : Colors.transparent,
                       child: Image.asset(
                         'assets/images/china.png',
                         height: 24,
