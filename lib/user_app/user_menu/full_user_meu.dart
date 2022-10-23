@@ -120,20 +120,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                       fontWeight: FontWeight.w500,
                       color: Color(0xFF32324D)),
                 ),
-                Row(
-                  children: [
-                    Image.asset('assets/images/bev.png'),
-                    Image.asset('assets/images/bev.png'),
-                    Image.asset('assets/images/bev.png'),
-                    // ListView.builder(
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemCount: 1,
-                    //   itemBuilder: (BuildContext context, int index) {
-                    //     return a[index];
-                    //   },
-                    // ),
-                  ],
-                ),
+                categ(),
                 const SizedBox(
                   height: 20,
                 ),
