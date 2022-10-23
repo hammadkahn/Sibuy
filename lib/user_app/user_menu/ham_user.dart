@@ -76,35 +76,80 @@ class _ham_userState extends State<ham_user> {
                         if (snapshot.hasData) {
                           var data = snapshot.data!.data!;
                           children = [
-                            data.profilePicture == null ||
-                                    data.profilePicture!.isEmpty
-                                ? Image.asset(
-                                    'assets/images/slt.png',
-                                    height: 100,
-                                    width: 100,
-                                  )
-                                : Image.network(
-                                    '${ApiUrls.imgBaseUrl}${data.profilePicturePath}/${data.profilePicture}',
-                                    height: 100,
-                                    width: 100,
-                                  ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 13, bottom: 10),
-                              child: Text(data.name!,
-                                  style: const TextStyle(
-                                      fontFamily: 'DMSans',
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xff32324D))),
+                            GestureDetector(
+                              onTap: () {
+                                alertBox(data, context);
+                              },
+                              child: Container(
+                                height: MediaQuery.of(context).size.height *
+                                    145 /
+                                    812,
+                                width: MediaQuery.of(context).size.width *
+                                    327 /
+                                    375,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color(0xFFff6600),
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          20 /
+                                          375,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 13, bottom: 10),
+                                          child: Text(data.name!,
+                                              style: const TextStyle(
+                                                  fontFamily: 'DMSans',
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color(0xffFFFFFF))),
+                                        ),
+                                        Text('$address\n${data.phone!}',
+                                            textAlign: TextAlign.start,
+                                            style: const TextStyle(
+                                                fontFamily: 'DMSans',
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: Color(0xffFFFFFF))),
+                                        Text('${data.email}',
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                fontFamily: 'DMSans',
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: Color(0xffFFFFFF))),
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    data.profilePicture == null ||
+                                            data.profilePicture!.isEmpty
+                                        ? Image.asset(
+                                            'assets/images/slt.png',
+                                            height: 50,
+                                            width: 50,
+                                          )
+                                        : Image.network(
+                                            '${ApiUrls.imgBaseUrl}${data.profilePicturePath}/${data.profilePicture}',
+                                            height: 100,
+                                            width: 100,
+                                          ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          20 /
+                                          375,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            Text('$address\n${data.phone!}  |   ${data.email}',
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontFamily: 'DMSans',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xffC5C5C5))),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -205,7 +250,57 @@ class _ham_userState extends State<ham_user> {
                                       ),
                                     );
                                   },
+                                  child: const Text("My Payments Method",
+                                      style: TextStyle(
+                                          fontFamily: 'Mulish',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xff32324D))),
+                                ),
+                                const Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 18, bottom: 18),
+                                    child: Divider(
+                                      color: Color(0xFFE6E6E6),
+                                      thickness: 0.5,
+                                      // height: 214,
+                                      indent: 26,
+                                      endIndent: 26,
+                                    )),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Referal(),
+                                      ),
+                                    );
+                                  },
                                   child: const Text("My Referrals",
+                                      style: TextStyle(
+                                          fontFamily: 'Mulish',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xff32324D))),
+                                ),
+                                const Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 18, bottom: 18),
+                                    child: Divider(
+                                      color: Color(0xFFE6E6E6),
+                                      thickness: 0.5,
+                                      // height: 214,
+                                      indent: 26,
+                                      endIndent: 26,
+                                    )),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Referal(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text("Change Password",
                                       style: TextStyle(
                                           fontFamily: 'Mulish',
                                           fontSize: 12,
