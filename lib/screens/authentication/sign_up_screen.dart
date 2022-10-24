@@ -49,6 +49,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+  // Initial Selected Value
+  String dropdownvalue = 'Item 1';
+
+  // List of items in our dropdown menu
+  var items = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+  ];
+
   @override
   void initState() {
     selectedCountry = const Country(
@@ -377,27 +389,53 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 '${catData![index].id}: ${catData![index].name}');
                           }),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 26),
-                  child: TextFormField(
-                    controller: catCtr,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      hintText: 'Enter only one Category id from above list',
-                      // suffix: Icon(Icons.visibility)
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter category';
-                      }
-                      return null;
+                Container(
+                  child: DropdownButton(
+                    isExpanded: true,
+                    // Initial Value
+                    value: dropdownvalue,
+
+                    // Down Arrow Icon
+                    icon: const Icon(Icons.keyboard_arrow_down),
+
+                    // Array list of items
+                    items: items.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    // After selecting the desired option,it will
+                    // change button value to selected value
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownvalue = newValue!;
+                      });
                     },
                   ),
                 ),
+
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 26),
+                //   child: TextFormField(
+                //     controller: catCtr,
+                //     keyboardType: TextInputType.number,
+                //     decoration: InputDecoration(
+                //       enabledBorder: OutlineInputBorder(
+                //         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                //         borderRadius: BorderRadius.circular(16),
+                //       ),
+                //       hintText: 'Enter only one Category id from above list',
+                //       // suffix: Icon(Icons.visibility)
+                //     ),
+                //     validator: (value) {
+                //       if (value == null || value.isEmpty) {
+                //         return 'Please enter category';
+                //       }
+                //       return null;
+                //     },
+                //   ),
+                // ),
                 // Padding(
                 //   padding: const EdgeInsets.only(bottom: 26),
                 //   child: TextFormField(

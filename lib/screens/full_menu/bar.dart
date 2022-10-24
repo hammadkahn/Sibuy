@@ -116,12 +116,16 @@ class _BarState extends State<Bar> {
                       currentScreen = const Contact(isFromBottomNav: true);
                     });
                   },
-                  child: Image.asset(
-                    'assets/images/contact.png',
-                    width: 24,
-                    height: 24,
+                  child: Icon(
+                    Icons.add_box_outlined,
                     color: currentIndex == 1 ? Colors.black : Colors.white,
                   ),
+                  // child: Image.asset(
+                  //   'assets/images/contact.png',
+                  //   width: 24,
+                  //   height: 24,
+                  //   color: currentIndex == 1 ? Colors.black : Colors.white,
+                  // ),
                 ),
                 MaterialButton(
                   minWidth: 24,

@@ -218,6 +218,15 @@ class _Message_writeState extends State<Message_write> {
                   size: 25,
                 ),
               ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.call,
+                  //color: Colors.grey[300],
+                  color: const Color(0xFFB0B0B0).withOpacity(0.8),
+                  size: 25,
+                ),
+              ),
             ],
           ),
         ),

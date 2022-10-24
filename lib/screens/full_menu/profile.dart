@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../apis/api_urls.dart';
 import '../../services/auth/authentication.dart';
 
+import '../../support/contact.dart';
 import '../../support/support.dart';
 import '../my_branches.dart';
 
@@ -154,6 +155,25 @@ class _ProfileState extends State<Profile> {
                 ListTile(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Contact(
+                        isFromBottomNav: true,
+                      ),
+                    ));
+                    // branches().whenComplete(() =>
+                    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //         content: Text(
+                    //             'number of branches: ${allBranches!.data!.length}'))));
+                  },
+                  leading: const Text("All Offer",
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff32324D))),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => MyBranches(token: widget.token)));
                     // branches().whenComplete(() =>
                     //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -167,20 +187,58 @@ class _ProfileState extends State<Profile> {
                           fontWeight: FontWeight.w600,
                           color: Color(0xff32324D))),
                 ),
+                // ListTile(
+                //   onTap: () {
+                //     Navigator.of(context).push(MaterialPageRoute(
+                //         builder: (_) => Support(token: widget.token)));
+                //   },
+                //   title: const Text(
+                //     "Support",
+                //     style: TextStyle(
+                //       fontFamily: 'Mulish',
+                //       fontSize: 12,
+                //       fontWeight: FontWeight.w600,
+                //       color: Color(0xff32324D),
+                //     ),
+                //   ),
+                // ),
                 ListTile(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => Support(token: widget.token)));
+                      builder: (context) => Contact(
+                        isFromBottomNav: true,
+                      ),
+                    ));
+                    // branches().whenComplete(() =>
+                    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //         content: Text(
+                    //             'number of branches: ${allBranches!.data!.length}'))));
                   },
-                  title: const Text(
-                    "Support",
-                    style: TextStyle(
-                      fontFamily: 'Mulish',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xff32324D),
-                    ),
-                  ),
+                  leading: const Text("Add New Offer",
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff32324D))),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Contact(
+                        isFromBottomNav: true,
+                      ),
+                    ));
+                    // branches().whenComplete(() =>
+                    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //         content: Text(
+                    //             'number of branches: ${allBranches!.data!.length}'))));
+                  },
+                  leading: const Text("Request Payment",
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff32324D))),
                 ),
                 const Spacer(),
                 GestureDetector(

@@ -33,106 +33,111 @@ class _auth_pageState extends State<auth_page> {
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.only(right: 24, left: 24),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 56),
-                child: Image.asset(
-                  'assets/images/auth_pic.png',
-                  height: MediaQuery.of(context).size.height * 67 / 812,
-                  width: MediaQuery.of(context).size.width * 67 / 375,
-                ),
-              ),
-              const Text(
-                'Let’s Get Started 😁',
-                style: TextStyle(
-                    fontFamily: 'Dmsans',
-                    fontSize: 26,
-                    fontWeight: FontWeight.w500),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 14, bottom: 49),
-                child: Text(
-                    'Sign up or login into to have a full  digital \nexperience in our restaurant',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontFamily: 'Mulish',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF8E8EA9))),
-              ),
-              TextFormField(
-                controller: emailCtr,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  hintText: 'Email',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 22, bottom: 26),
-                child: TextFormField(
-                  controller: passwordCtr,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                      borderRadius: BorderRadius.circular(16),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 56),
+                    child: Image.asset(
+                      'assets/images/auth_pic.png',
+                      height: MediaQuery.of(context).size.height * 67 / 812,
+                      width: MediaQuery.of(context).size.width * 67 / 375,
                     ),
-                    hintText: 'Password',
-                    // suffix: Icon(Icons.visibility)
                   ),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
-                ),
+                  const Text(
+                    'Let’s Get Started 😁',
+                    style: TextStyle(
+                        fontFamily: 'Dmsans',
+                        fontSize: 26,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 14, bottom: 49),
+                    child: Text(
+                        'Sign up or login into to have a full  digital \nexperience in our restaurant',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF8E8EA9))),
+                  ),
+                  TextFormField(
+                    controller: emailCtr,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      hintText: 'Email',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22, bottom: 26),
+                    child: TextFormField(
+                      controller: passwordCtr,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        hintText: 'Password',
+                        // suffix: Icon(Icons.visibility)
+                      ),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 70),
+                    child: CustomButton(
+                        isLoading: isLoading,
+                        text: 'Sign In',
+                        onPressed: loginUsers),
+                  ),
+                  InkWell(
+                    onTap: showsimple,
+                    child: const Text(
+                      'Forgot Your Password?',
+                      style: TextStyle(color: Color(0xffff6600)),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => const SignUpScreen()));
+                    },
+                    child: const Text(
+                      'Registered as a Merchant',
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF8981AE)),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 70),
-                child: CustomButton(
-                    isLoading: isLoading,
-                    text: 'Sign In',
-                    onPressed: loginUsers),
-              ),
-              InkWell(
-                onTap: showsimple,
-                child: const Text(
-                  'Forgot Your Password?',
-                  style: TextStyle(color: Color(0xffff6600)),
-                ),
-              ),
-              const SizedBox(height: 12),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const SignUpScreen()));
-                },
-                child: const Text(
-                  'Registered as a Merchant',
-                  style: TextStyle(
-                      fontFamily: 'Mulish',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF8981AE)),
-                ),
-              ),
-              const SizedBox(
-                height: 40,
-              )
-            ],
+            ),
           ),
         ),
       ),
