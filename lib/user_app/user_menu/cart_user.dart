@@ -140,7 +140,7 @@ class _Cart_userState extends State<Cart_user> {
               ),
               Consumer<Cart>(builder: (__, value, _) {
                 return CustomButton(
-                  text: 'Get this Offer',
+                  text: 'Proceed To Payment',
                   onPressed: value.cartMap.isEmpty
                       ? () {
                           ScaffoldMessenger.of(context).showSnackBar(

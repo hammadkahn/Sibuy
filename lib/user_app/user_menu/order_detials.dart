@@ -5,9 +5,15 @@ import 'package:provider/provider.dart';
 import '../../apis/api_urls.dart';
 import '../../providers/order.dart';
 
-class order_details extends StatelessWidget {
+class order_details extends StatefulWidget {
   const order_details({Key? key}) : super(key: key);
 
+  @override
+  State<order_details> createState() => _order_detailsState();
+}
+
+class _order_detailsState extends State<order_details> {
+  int _radioValue = 0;
   @override
   Widget build(BuildContext context) {
     print('order details...');
@@ -20,6 +26,7 @@ class order_details extends StatelessWidget {
           double discount = double.parse(
                   '0.${cart.cartMap.values.toList()[index].discountOnPrice}') *
               int.parse(cart.cartMap.values.toList()[index].price!);
+
           return Card(
             margin: const EdgeInsets.only(bottom: 12),
             child: Padding(
@@ -193,9 +200,69 @@ class order_details extends StatelessWidget {
                                 color: Color(0xFFff6600))),
                       ],
                     ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 16, bottom: 16),
+                      child: Divider(
+                        color: Color(0xFFEAEAEF),
+                        thickness: 1,
+                      ),
+                    ),
                     const SizedBox(
                       height: 16,
-                    )
+                    ),
+                    //text for payment method
+                    const Text("Payment Method",
+                        style: TextStyle(
+                            fontFamily: "Mulish",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF4A4A6A))),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    //blue text for credit card and radio button in last
+                    Row(
+                      children: [
+                        //icon for credit card
+
+                        const Text("Credit Card",
+                            style: TextStyle(
+                                fontFamily: "Mulish",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF4A4A6A))),
+                        const Spacer(),
+                        Radio(
+                          value: 0,
+                          groupValue: _radioValue,
+                          onChanged: (value) {
+                            setState(() {
+                              _radioValue = 0;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text("Paypal",
+                            style: TextStyle(
+                                fontFamily: "Mulish",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF4A4A6A))),
+                        const Spacer(),
+                        Radio(
+                          value: 1,
+                          groupValue: _radioValue,
+                          onChanged: (value) {
+                            setState(() {
+                              _radioValue = 1;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

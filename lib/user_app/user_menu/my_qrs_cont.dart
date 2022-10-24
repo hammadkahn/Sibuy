@@ -75,7 +75,7 @@ class _qr_contState extends State<qr_cont> {
                     text: 'Qr Code: ',
                     style: TextStyle(
                         fontFamily: 'Mulish',
-                        fontSize: 6,
+                        fontSize: 10,
                         fontWeight: FontWeight.w700,
                         color: Color(0xFF000000)),
                     /*defining default style is optional */
@@ -84,7 +84,7 @@ class _qr_contState extends State<qr_cont> {
                           text: ' 12345678',
                           style: TextStyle(
                               fontFamily: 'Mulish',
-                              fontSize: 6,
+                              fontSize: 10,
                               fontWeight: FontWeight.w700,
                               color: Color(0xFFff6600))),
                     ],
@@ -143,7 +143,7 @@ class _qr_contState extends State<qr_cont> {
                   const Text('Date Purchased: ',
                       style: TextStyle(
                           fontFamily: 'Mulish',
-                          fontSize: 7,
+                          fontSize: 9,
                           fontWeight: FontWeight.w500,
                           color: Color(0xFF8E8EA9))),
                   Text(
@@ -151,26 +151,14 @@ class _qr_contState extends State<qr_cont> {
                           DateTime.parse(widget.cartData.purchaseDate!)),
                       style: const TextStyle(
                           fontFamily: 'Mulish',
-                          fontSize: 7,
+                          fontSize: 9,
                           fontWeight: FontWeight.w700,
                           color: Color(0xFFff6600))),
                   const SizedBox(width: 10),
-                  const Text('Date Expiry: ',
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 7,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF8E8EA9))),
-                  Text(widget.cartData.expiry!,
-                      style: const TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 7,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFFff6600))),
                   const Spacer(),
                   Container(
-                    width: 80,
-                    height: 15,
+                    width: 90,
+                    height: 20,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
                       color: const Color(0xFFff6600),
@@ -188,14 +176,32 @@ class _qr_contState extends State<qr_cont> {
                         child: const Text('★ Write a Review',
                             style: TextStyle(
                                 fontFamily: 'Mulish',
-                                fontSize: 7.5,
+                                fontSize: 9,
                                 fontWeight: FontWeight.w900,
                                 color: Color(0xFFFFFFFF))),
                       ),
                     ),
                   ),
+
+                  //
                 ]),
-                const SizedBox(height: 20)
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const Text('Redemption Expiry: ',
+                        style: TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 9,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF8E8EA9))),
+                    Text(widget.cartData.expiry!,
+                        style: const TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 9,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFFff6600))),
+                  ],
+                ),
               ],
             ),
           ),

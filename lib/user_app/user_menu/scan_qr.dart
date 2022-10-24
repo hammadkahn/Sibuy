@@ -99,6 +99,13 @@ class _scan_qrState extends State<scan_qr> {
                           size: 320,
                           gapless: false,
                         ),
+              SizedBox(height: 20),
+              Text('QR Code: Hr5J6oF4LA912 ',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Mulish',
+                      color: Color(0xFF8E8EA9))),
               const SizedBox(height: 29),
               const Text('Your Offer ',
                   style: TextStyle(

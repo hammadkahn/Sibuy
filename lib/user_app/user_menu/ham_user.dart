@@ -64,7 +64,7 @@ class _ham_userState extends State<ham_user> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  flex: 5,
+                  flex: 7,
                   child: Padding(
                     padding: const EdgeInsets.only(right: 29, left: 29),
                     child: SingleChildScrollView(
@@ -155,7 +155,7 @@ class _ham_userState extends State<ham_user> {
                               children: [
                                 const Padding(
                                     padding:
-                                        EdgeInsets.only(top: 22, bottom: 25),
+                                        EdgeInsets.only(top: 22, bottom: 10),
                                     child: Divider(
                                       color: Color(0xFFE6E6E6),
                                       thickness: 0.5,
@@ -243,13 +243,6 @@ class _ham_userState extends State<ham_user> {
                                       endIndent: 26,
                                     )),
                                 InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => Referal(),
-                                      ),
-                                    );
-                                  },
                                   child: const Text("My Payments Method",
                                       style: TextStyle(
                                           fontFamily: 'Mulish',
@@ -293,13 +286,6 @@ class _ham_userState extends State<ham_user> {
                                       endIndent: 26,
                                     )),
                                 InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => Referal(),
-                                      ),
-                                    );
-                                  },
                                   child: const Text("Change Password",
                                       style: TextStyle(
                                           fontFamily: 'Mulish',

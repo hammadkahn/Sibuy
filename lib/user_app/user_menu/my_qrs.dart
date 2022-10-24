@@ -62,6 +62,73 @@ class _My_QrsState extends State<My_Qrs> {
                 ],
               ),
             ),
+            //row with 3 small contianers
+            Row(
+              children: [
+                //container with small button
+                Container(
+                  height: MediaQuery.of(context).size.height * 40 / 812,
+                  width: MediaQuery.of(context).size.width * 60 / 375,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFff6600),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'All',
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 40 / 812,
+                  width: MediaQuery.of(context).size.width * 60 / 375,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFff6600),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Used',
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 40 / 812,
+                  width: MediaQuery.of(context).size.width * 60 / 375,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFff6600),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Unused',
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
+
             Expanded(
               flex: 6,
               child: FutureBuilder<CartListModel>(
