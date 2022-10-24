@@ -3,6 +3,8 @@ import 'package:SiBuy/shared/mail_button.dart';
 import 'package:SiBuy/user_app/email_verification/email_ver.dart';
 
 import '../../constant/size_constants.dart';
+import '../../screens/authentication/auth.dart';
+import '../../screens/authentication/sign_up_screen.dart';
 import '../../shared/custom_button.dart';
 import '../create_acc/user_create_acc.dart';
 
@@ -53,7 +55,18 @@ class _user_authState extends State<user_auth> {
                         color: Color(0xFF8E8EA9))),
               ),
               CustomButton(
-                  text: 'Sign In',
+                  text: "Sign In As Merchant",
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const auth_page(),
+                      ),
+                    );
+                  }),
+              const SizedBox(height: 10),
+              CustomButton(
+                  text: 'Sign In As User',
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => const Email_ver()));
@@ -81,6 +94,20 @@ class _user_authState extends State<user_auth> {
                         fontWeight: FontWeight.w600,
                         color: Color(0xFF8981AE)),
                   ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const SignUpScreen()));
+                },
+                child: const Text(
+                  'Registered as a Merchant',
+                  style: TextStyle(
+                      fontFamily: 'Mulish',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF8981AE)),
                 ),
               ),
               Row(

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'constant/theme.dart';
 import 'user_app/splash_screen/splash.dart';
+import 'user_app/splash_screen/splashh.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: theme(),
-        home: const SplashScreen(),
+        home: const user_splash(),
       ),
     );
   }

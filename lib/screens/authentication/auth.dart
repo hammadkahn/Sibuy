@@ -72,11 +72,11 @@ class _auth_pageState extends State<auth_page> {
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      hintText: 'Email',
+                      hintText: 'Email or Phone Number',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return 'Please enter your email or phone';
                       }
                       return null;
                     },
@@ -224,7 +224,7 @@ class _auth_pageState extends State<auth_page> {
                 borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                 borderRadius: BorderRadius.circular(16),
               ),
-              hintText: 'Email',
+              hintText: 'Email or Phone Number',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {

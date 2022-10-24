@@ -365,30 +365,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 150,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                  child: catLoaded == false
-                      ? const Center(child: CircularProgressIndicator())
-                      : GridView.builder(
-                          itemCount: catData!.length,
-                          physics: const BouncingScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 8,
-                            childAspectRatio:
-                                MediaQuery.of(context).size.width /
-                                    (MediaQuery.of(context).size.height / 10),
-                            mainAxisSpacing: 8,
-                          ),
-                          itemBuilder: (context, index) {
-                            return Text(
-                                '${catData![index].id}: ${catData![index].name}');
-                          }),
-                ),
+                // Container(
+                //   width: double.infinity,
+                //   height: 150,
+                //   margin:
+                //       const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                //   child: catLoaded == false
+                //       ? const Center(child: CircularProgressIndicator())
+                //       : GridView.builder(
+                //           itemCount: catData!.length,
+                //           physics: const BouncingScrollPhysics(),
+                //           gridDelegate:
+                //               SliverGridDelegateWithFixedCrossAxisCount(
+                //             crossAxisCount: 2,
+                //             crossAxisSpacing: 8,
+                //             childAspectRatio:
+                //                 MediaQuery.of(context).size.width /
+                //                     (MediaQuery.of(context).size.height / 10),
+                //             mainAxisSpacing: 8,
+                //           ),
+                //           itemBuilder: (context, index) {
+                //             return Text(
+                //                 '${catData![index].id}: ${catData![index].name}');
+                //           }),
+                // ),
                 Container(
                   child: DropdownButton(
                     isExpanded: true,
