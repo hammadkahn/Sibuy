@@ -67,7 +67,7 @@ class _User_create_accState extends State<User_create_acc> {
                 const Padding(
                   padding: EdgeInsets.only(top: 14, bottom: 40),
                   child: Text(
-                      'Look like you are new to us! Create an account for a complete experience.',
+                      'Look like you are new to us! To SiBuy365 Registration Form - Your Everyday Deal App.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: 'Mulish',
@@ -205,6 +205,38 @@ class _User_create_accState extends State<User_create_acc> {
                       }
                       return null;
                     },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 26),
+                  child: TextFormField(
+                    textInputAction: TextInputAction.next,
+                    controller: passCtr,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      hintText: ' Confirm Password',
+                      // suffix: Icon(Icons.visibility)
+                    ),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please a strong password';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                TextFormField(
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    hintText: 'Referral Code (Optional)',
                   ),
                 ),
                 const SizedBox(height: 8),
