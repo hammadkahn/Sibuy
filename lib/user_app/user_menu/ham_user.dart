@@ -11,6 +11,9 @@ import 'package:SiBuy/user_app/user_menu/support_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../apis/api_urls.dart';
+import '../../chat/user_list_screen.dart';
+import 'change_pass.dart';
+import 'payment_method.dart';
 
 class ham_user extends StatefulWidget {
   const ham_user({Key? key, required this.token}) : super(key: key);
@@ -243,6 +246,12 @@ class _ham_userState extends State<ham_user> {
                                       endIndent: 26,
                                     )),
                                 InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) => Payments()),
+                                    );
+                                  },
                                   child: const Text("My Payments Method",
                                       style: TextStyle(
                                           fontFamily: 'Mulish',
@@ -286,6 +295,13 @@ class _ham_userState extends State<ham_user> {
                                       endIndent: 26,
                                     )),
                                 InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Change_pass(),
+                                      ),
+                                    );
+                                  },
                                   child: const Text("Change Password",
                                       style: TextStyle(
                                           fontFamily: 'Mulish',
@@ -357,11 +373,8 @@ class _ham_userState extends State<ham_user> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (_) => support_user(
-                                          phoneNumber: data.phone!,
-                                          token: widget.token,
-                                        ),
-                                      ),
+                                          builder: (_) => UserListScreen(
+                                              token: widget.token)),
                                     );
                                   },
                                   child: const Text("Support",
@@ -470,7 +483,7 @@ class _ham_userState extends State<ham_user> {
               textAlign: TextAlign.center,
             ),
             content: Container(
-              width: MediaQuery.of(context).size.width - 30,
+              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,

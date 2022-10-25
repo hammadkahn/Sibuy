@@ -7,6 +7,7 @@ import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../apis/api_urls.dart';
 
@@ -219,7 +220,9 @@ class _Message_writeState extends State<Message_write> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  launch("tel://9871221212121");
+                },
                 icon: Icon(
                   Icons.call,
                   //color: Colors.grey[300],

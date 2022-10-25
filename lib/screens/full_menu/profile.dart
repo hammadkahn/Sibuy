@@ -65,6 +65,9 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                 SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
                   child: FutureBuilder<ProfileModel>(
                     future:
                         UserInformation().getMerchantInformation(widget.token),
@@ -75,33 +78,76 @@ class _ProfileState extends State<Profile> {
 
                         // print(int.parse(data.averageRating.toString()));
                         children = <Widget>[
-                          Container(
-                            child: data.profilePicture == null ||
-                                    data.profilePicture!.isEmpty
-                                ? Image.asset('assets/images/kfc.png')
-                                : CircleAvatar(
-                                    radius: 70,
-                                    backgroundImage: NetworkImage(
-                                        '${ApiUrls.imgBaseUrl}${data.profilePicturePath}/${data.profilePicture}'),
-                                  ),
-                          ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 13, bottom: 10),
-                            child: Text(data.name!,
-                                style: const TextStyle(
-                                    fontFamily: 'DMSans',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xff32324D))),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color(0xffff6000),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 13, bottom: 10),
+                                          child: Text(data.name!,
+                                              style: const TextStyle(
+                                                  fontFamily: 'DMSans',
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color(0xff32324D))),
+                                        ),
+                                        Text(
+                                            '${data.branches![0].address}\n${data.phone}',
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                fontFamily: 'DMSans',
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white)),
+                                        Text('${data.email}',
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                fontFamily: 'DMSans',
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white)),
+                                        SizedBox(
+                                          height: 10,
+                                        )
+                                      ],
+                                    ),
+                                    Container(
+                                      child: data.profilePicture == null ||
+                                              data.profilePicture!.isEmpty
+                                          ? Image.asset(
+                                              'assets/images/kfc.png',
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  100 /
+                                                  812,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  100 /
+                                                  375,
+                                            )
+                                          : CircleAvatar(
+                                              radius: 70,
+                                              backgroundImage: NetworkImage(
+                                                  '${ApiUrls.imgBaseUrl}${data.profilePicturePath}/${data.profilePicture}'),
+                                            ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                          Text(
-                              '${data.branches![0].address}\n${data.phone}  | ${data.email}',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  fontFamily: 'DMSans',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xffC5C5C5))),
                         ];
                       } else if (snapshot.hasError) {
                         children = <Widget>[
