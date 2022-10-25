@@ -5,6 +5,7 @@ import 'package:SiBuy/screens/full_menu/menu.dart';
 import 'package:SiBuy/screens/full_menu/profile.dart';
 
 import '../../support/contact.dart';
+import 'add_deal.dart';
 
 class Bar extends StatefulWidget {
   const Bar({Key? key, required this.token}) : super(key: key);
@@ -49,9 +50,7 @@ class _BarState extends State<Bar> {
       Menu(
         token: widget.token,
       ),
-      const Contact(
-        isFromBottomNav: true,
-      ),
+      const Add_deal(),
       QR(token: widget.token),
       UserListScreen(token: widget.token),
       Profile(
@@ -113,7 +112,7 @@ class _BarState extends State<Bar> {
                   onPressed: () {
                     setState(() {
                       currentIndex = 1;
-                      currentScreen = const Contact(isFromBottomNav: true);
+                      currentScreen = const Add_deal();
                     });
                   },
                   child: Icon(

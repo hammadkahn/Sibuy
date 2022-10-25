@@ -1,3 +1,5 @@
+import 'package:SiBuy/screens/full_menu/add_deal.dart';
+import 'package:SiBuy/user_app/user_menu/change_pass.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/branch_model.dart';
 import 'package:SiBuy/models/merchant_profile_model.dart';
@@ -13,6 +15,7 @@ import '../../services/auth/authentication.dart';
 import '../../support/contact.dart';
 import '../../support/support.dart';
 import '../my_branches.dart';
+import 'request_pay.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key, required this.token, this.isLeadingIcon = false})
@@ -129,12 +132,12 @@ class _ProfileState extends State<Profile> {
                                               height: MediaQuery.of(context)
                                                       .size
                                                       .height *
-                                                  100 /
+                                                  70 /
                                                   812,
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  100 /
+                                                  70 /
                                                   375,
                                             )
                                           : CircleAvatar(
@@ -176,7 +179,6 @@ class _ProfileState extends State<Profile> {
                       }
                       return SizedBox(
                         width: double.maxFinite,
-                        height: MediaQuery.of(context).size.height * 0.4,
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -185,6 +187,7 @@ class _ProfileState extends State<Profile> {
                     },
                   ),
                 ),
+                Spacer(),
                 ListTile(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -250,11 +253,8 @@ class _ProfileState extends State<Profile> {
                 // ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Contact(
-                        isFromBottomNav: true,
-                      ),
-                    ));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Add_deal()));
                     // branches().whenComplete(() =>
                     //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     //         content: Text(
@@ -269,11 +269,24 @@ class _ProfileState extends State<Profile> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Contact(
-                        isFromBottomNav: true,
-                      ),
-                    ));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Change_pass()));
+                    // branches().whenComplete(() =>
+                    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //         content: Text(
+                    //             'number of branches: ${allBranches!.data!.length}'))));
+                  },
+                  leading: const Text("Change Password",
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff32324D))),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Request_pay()));
                     // branches().whenComplete(() =>
                     //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     //         content: Text(
@@ -286,7 +299,10 @@ class _ProfileState extends State<Profile> {
                           fontWeight: FontWeight.w600,
                           color: Color(0xff32324D))),
                 ),
-                const Spacer(),
+                // const Spacer(),
+                SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
                   onTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(

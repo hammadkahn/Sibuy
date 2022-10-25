@@ -39,9 +39,24 @@ class _QR_scan extends State<QR_scan> {
             flex: 5,
             child: QRView(
               key: qrKey,
+              overlay: QrScannerOverlayShape(
+                borderColor: Colors.red,
+                borderRadius: 10,
+                borderLength: 30,
+                borderWidth: 10,
+                cutOutSize: 400,
+              ),
               onQRViewCreated: _onQRViewCreated,
             ),
           ),
+          IconButton(
+              icon: Icon(Icons.flash_on, color: Colors.white),
+              onPressed: () async {
+                await controller!.toggleFlash();
+                setState(() {
+                  controller!.getFlashStatus().then((value) => print(value));
+                });
+              }),
         ],
       ),
     );
