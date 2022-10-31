@@ -1,3 +1,4 @@
+import 'package:SiBuy/user_app/user_auth/user_auth.dart';
 import 'package:SiBuy/user_app/user_menu/insights.dart';
 import 'package:SiBuy/user_app/user_menu/points.dart';
 import 'package:SiBuy/user_app/user_menu/referral.dart';
@@ -434,8 +435,7 @@ class _ham_userState extends State<ham_user> {
                               isLogOut();
                               Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SplashScreen()),
+                                      builder: (context) => const user_auth()),
                                   (route) => false);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(

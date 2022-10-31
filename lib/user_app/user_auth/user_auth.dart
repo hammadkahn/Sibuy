@@ -55,6 +55,13 @@ class _user_authState extends State<user_auth> {
                         color: Color(0xFF8E8EA9))),
               ),
               CustomButton(
+                  text: 'Sign In As User',
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const Email_ver()));
+                  }),
+              const SizedBox(height: 10),
+              CustomButton(
                   text: "Sign In As Merchant",
                   onPressed: () {
                     Navigator.push(
@@ -63,13 +70,6 @@ class _user_authState extends State<user_auth> {
                         builder: (context) => const auth_page(),
                       ),
                     );
-                  }),
-              const SizedBox(height: 10),
-              CustomButton(
-                  text: 'Sign In As User',
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => const Email_ver()));
                   }),
               Padding(
                 padding: const EdgeInsets.only(top: 18),
@@ -96,6 +96,21 @@ class _user_authState extends State<user_auth> {
                   ),
                 ),
               ),
+              GestureDetector(
+                // onTap: () {
+                //   Navigator.of(context).push(
+                //       MaterialPageRoute(builder: (_) => const SignUpScreen()));
+                // },
+                child: const Text(
+                  'Explore As Guest',
+                  style: TextStyle(
+                      fontFamily: 'Mulish',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF8981AE)),
+                ),
+              ),
+              const SizedBox(height: 10),
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(

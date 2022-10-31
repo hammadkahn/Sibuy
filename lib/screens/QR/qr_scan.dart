@@ -50,7 +50,7 @@ class _QR_scan extends State<QR_scan> {
             ),
           ),
           IconButton(
-              icon: Icon(Icons.flash_on, color: Colors.white),
+              icon: Icon(Icons.flash_on, color: Colors.black),
               onPressed: () async {
                 await controller!.toggleFlash();
                 setState(() {

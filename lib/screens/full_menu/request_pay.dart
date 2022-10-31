@@ -9,7 +9,7 @@ class Request_pay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Color(0xFFff6600),
         title: const Text('Request Payment'),
       ),
       body: Center(
@@ -65,7 +65,7 @@ class Request_pay extends StatelessWidget {
               width: 300,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.orange,
+                  primary: Color(0xFFff6600),
                 ),
                 onPressed: () {},
                 child: const Text('Submit'),

@@ -14,7 +14,9 @@ import '../../services/auth/authentication.dart';
 
 import '../../support/contact.dart';
 import '../../support/support.dart';
+import '../../user_app/user_auth/user_auth.dart';
 import '../my_branches.dart';
+import 'all_offers.dart';
 import 'request_pay.dart';
 
 class Profile extends StatefulWidget {
@@ -104,14 +106,29 @@ class _ProfileState extends State<Profile> {
                                                   fontWeight: FontWeight.w500,
                                                   color: Color(0xff32324D))),
                                         ),
-                                        Text(
-                                            '${data.branches![0].address}\n${data.phone}',
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text('${data.branches![0].address}',
                                             textAlign: TextAlign.center,
                                             style: const TextStyle(
                                                 fontFamily: 'DMSans',
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.white)),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text('${data.phone}',
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                fontFamily: 'DMSans',
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white)),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
                                         Text('${data.email}',
                                             textAlign: TextAlign.center,
                                             style: const TextStyle(
@@ -203,11 +220,8 @@ class _ProfileState extends State<Profile> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Contact(
-                        isFromBottomNav: true,
-                      ),
-                    ));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => All_offer()));
                     // branches().whenComplete(() =>
                     //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     //         content: Text(
@@ -313,7 +327,7 @@ class _ProfileState extends State<Profile> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => const SplashScreen()),
+                                builder: (_) => const user_auth()),
                             (route) => false);
                       } else {
                         ScaffoldMessenger.of(context)

@@ -36,22 +36,11 @@ class _Email_verState extends State<Email_ver> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'What’s your email? 📨',
+                'Login to view deals! 📨',
                 style: TextStyle(
                     fontFamily: 'Dmsans',
                     fontSize: 36,
                     fontWeight: FontWeight.w500),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 14, bottom: 49),
-                child: Text(
-                    'Sign up or login into to have a full  digital \nexperience in our restaurant',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontFamily: 'Mulish',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF8E8EA9))),
               ),
               TextFormField(
                 controller: emailCtr,

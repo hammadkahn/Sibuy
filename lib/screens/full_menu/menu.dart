@@ -6,6 +6,7 @@ import 'package:SiBuy/services/dashboard_stats/dash_board.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 
 import '../../constant/size_constants.dart';
+import '../../user_app/user_menu/demi_deals.dart';
 import 'deals.dart';
 import 'percent_ind2.dart';
 import 'percent_ind3.dart';
@@ -93,7 +94,7 @@ class Menu extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 1.5,
+                  height: MediaQuery.of(context).size.height / 1,
                   child: FutureBuilder<MerchantListOfDeals>(
                     future: DealServices().getAllDeals(token: token),
                     builder: (context, snapshot) {
@@ -108,32 +109,52 @@ class Menu extends StatelessWidget {
                               child: Text(snapshot.error.toString()),
                             );
                           } else if (snapshot.data!.data!.isEmpty) {
-                            return const Center(
-                                child: Text('No deals available'));
-                          } else {
-                            return ListView.builder(
-                              itemCount: snapshot.data!.data!.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                var data = snapshot.data!.data![index];
-                                return InkWell(
-                                  onTap: () {
-                                    print(data.id);
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        context: context,
-                                        builder: (context) => sheet_deals(
-                                              dealId: data.id.toString(),
-                                              token: token,
-                                            ));
-                                  },
-                                  child: Deals(
-                                    token: token,
-                                    merchantListOfDeals: data,
-                                  ),
-                                );
-                              },
+                            return Column(
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Demo_Deals(),
+                                Demo_Deals(),
+                                Demo_Deals(),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
                             );
+                            // const Center(
+                            //     child: Text('No deals available'));
+                          } else {
+                            return Column(
+                              children: [
+                                Demo_Deals(),
+                                Demo_Deals(),
+                                Demo_Deals(),
+                              ],
+                            );
+                            // ListView.builder(
+                            //   itemCount: snapshot.data!.data!.length,
+                            //   shrinkWrap: true,
+                            //   itemBuilder: (context, index) {
+                            //     var data = snapshot.data!.data![index];
+                            //     return InkWell(
+                            //       onTap: () {
+                            //         print(data.id);
+                            //         showModalBottomSheet(
+                            //             isScrollControlled: true,
+                            //             context: context,
+                            //             builder: (context) => sheet_deals(
+                            //                   dealId: data.id.toString(),
+                            //                   token: token,
+                            //                 ));
+                            //       },
+                            //       child: Deals(
+                            //         token: token,
+                            //         merchantListOfDeals: data,
+                            //       ),
+                            //     );
+                            //   },
+                            // );
                           }
                       }
                     },

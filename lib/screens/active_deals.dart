@@ -3,6 +3,7 @@ import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/screens/full_menu/sheet_deals.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 
+import '../user_app/user_menu/demi_deals.dart';
 import 'full_menu/deals.dart';
 
 class ActiveMerchantDeals extends StatelessWidget {
@@ -32,7 +33,14 @@ class ActiveMerchantDeals extends StatelessWidget {
                     child: Text(snapshot.error.toString()),
                   );
                 } else if (snapshot.data!.data!.isEmpty) {
-                  return const Center(child: Text('No deals available'));
+                  return Column(
+                    children: [
+                      Demo_Deals(),
+                      Demo_Deals(),
+                      Demo_Deals(),
+                    ],
+                  );
+                  // Center(child: Text('No deals available'));
                 } else {
                   print(snapshot.data!.data!.length);
                   return ListView.builder(

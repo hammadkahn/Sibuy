@@ -80,7 +80,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                   height: 20,
                 ),
                 const Text(
-                  'SiBuy Find out the best deals for you!',
+                  'SiBuy365, Discounts for Everyone in Cambodia',
                   style: TextStyle(
                       fontFamily: 'DMSans',
                       fontSize: 18,
@@ -142,7 +142,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                   child: Row(
                     children: [
                       const Text(
-                        "Top Seller in ",
+                        "Most Purchased Vouchers in ",
                         style: TextStyle(
                             fontFamily: 'Mulish',
                             fontSize: 16,

@@ -7,6 +7,10 @@ class Payments extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xFFff6600),
+          title: const Text('Payment Method'),
+        ),
         //LIST WITH TWO PAYMENT METHODS
         body: Center(
           child: Column(

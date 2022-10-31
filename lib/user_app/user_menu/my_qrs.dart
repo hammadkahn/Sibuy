@@ -24,6 +24,10 @@ class _My_QrsState extends State<My_Qrs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFFF6600),
+        title: const Text('My QRs'),
+      ),
       body: Padding(
         padding: const EdgeInsets.only(right: 24, left: 24),
         child: Column(

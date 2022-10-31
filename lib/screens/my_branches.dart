@@ -14,9 +14,9 @@ class MyBranches extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Branches',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFff6600),
         iconTheme: Theme.of(context).iconTheme,
       ),
       body: Container(
