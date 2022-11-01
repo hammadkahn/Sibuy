@@ -6,7 +6,6 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import '../../constant/size_constants.dart';
 
-
 class Demo_Deals extends StatelessWidget {
   const Demo_Deals({Key? key}) : super(key: key);
 
@@ -16,7 +15,7 @@ class Demo_Deals extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Container(
-        width: SizeConfig.screenWidth,
+        width: MediaQuery.of(context).size.width,
         height: 145,
         decoration: BoxDecoration(
             color: Color(0xFFff6600),
@@ -151,9 +150,12 @@ class Demo_Deals extends StatelessWidget {
                       )),
                 ],
               ),
-              Spacer(),
               Container(
-                child: Image.asset('assets/images/food.png'),
+                child: Image.asset(
+                  'assets/images/food.png',
+                  height: MediaQuery.of(context).size.height * 150 / 812,
+                  width: MediaQuery.of(context).size.width * 150 / 375,
+                ),
               ),
             ],
           ),

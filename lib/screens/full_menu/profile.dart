@@ -211,12 +211,23 @@ class _ProfileState extends State<Profile> {
                         builder: (context) =>
                             ActiveMerchantDeals(token: widget.token)));
                   },
-                  title: const Text("Active Offers",
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff32324D))),
+                  title: Row(
+                    children: [
+                      const Icon(
+                        Icons.discount,
+                        color: Color(0xff32324D),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 10 / 375,
+                      ),
+                      const Text("Active Offers",
+                          style: TextStyle(
+                              fontFamily: 'Mulish',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xff32324D))),
+                    ],
+                  ),
                 ),
                 ListTile(
                   onTap: () {
@@ -227,12 +238,23 @@ class _ProfileState extends State<Profile> {
                     //         content: Text(
                     //             'number of branches: ${allBranches!.data!.length}'))));
                   },
-                  leading: const Text("All Offer",
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff32324D))),
+                  leading: Row(
+                    children: [
+                      const Icon(
+                        Icons.local_offer_sharp,
+                        color: Color(0xff32324D),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 10 / 375,
+                      ),
+                      const Text("All Offer",
+                          style: TextStyle(
+                              fontFamily: 'Mulish',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xff32324D))),
+                    ],
+                  ),
                 ),
                 ListTile(
                   onTap: () {
@@ -243,12 +265,23 @@ class _ProfileState extends State<Profile> {
                     //         content: Text(
                     //             'number of branches: ${allBranches!.data!.length}'))));
                   },
-                  leading: const Text("My Branches",
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff32324D))),
+                  leading: Row(
+                    children: [
+                      const Icon(
+                        Icons.travel_explore_outlined,
+                        color: Color(0xff32324D),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 10 / 375,
+                      ),
+                      const Text("My Branches",
+                          style: TextStyle(
+                              fontFamily: 'Mulish',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xff32324D))),
+                    ],
+                  ),
                 ),
                 // ListTile(
                 //   onTap: () {

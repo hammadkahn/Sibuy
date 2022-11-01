@@ -14,7 +14,7 @@ class Stacked_container2 extends StatelessWidget {
       child: Container(
         // color: Colors.red,
         width: MediaQuery.of(context).size.width - 48,
-        height: 70,
+        height: MediaQuery.of(context).size.height * 70 / 812,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: Colors.white,
@@ -26,7 +26,7 @@ class Stacked_container2 extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20),
               child: Container(
                 width: 60,
-                height: 60,
+                height: MediaQuery.of(context).size.height * 60 / 812,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   color: const Color(0xffD4A8F9),

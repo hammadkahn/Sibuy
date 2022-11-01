@@ -7,7 +7,7 @@ class Points extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Color(0xFFFF6600),
         title: const Text('Points'),
       ),
       body: Center(

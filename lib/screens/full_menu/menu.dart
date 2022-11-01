@@ -32,7 +32,7 @@ class Menu extends StatelessWidget {
                 const SizedBox(height: 10),
                 SizedBox(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 2.5,
+                  height: MediaQuery.of(context).size.height * 550 / 812,
                   child: FutureBuilder<Map<String, dynamic>>(
                     future: DashBoardStats().getDashBoardStats(token),
                     builder: (context, snapshot) {
@@ -59,6 +59,20 @@ class Menu extends StatelessWidget {
                           const SizedBox(height: 8),
                           Stacked_container2(
                             title: 'Total Deal Sale',
+                            totalActiveDeals: snapshot.data!['data']
+                                    ['totalDealSale']
+                                .toString(),
+                          ),
+                          const SizedBox(height: 8),
+                          Stacked_container2(
+                            title: 'total unredeemed withholding',
+                            totalActiveDeals: snapshot.data!['data']
+                                    ['totalDealSale']
+                                .toString(),
+                          ),
+                          const SizedBox(height: 8),
+                          Stacked_container2(
+                            title: 'total transaction fee',
                             totalActiveDeals: snapshot.data!['data']
                                     ['totalDealSale']
                                 .toString(),
