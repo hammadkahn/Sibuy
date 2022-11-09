@@ -1,11 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../../constant/size_constants.dart';
-
 
 class Demo_Deals extends StatelessWidget {
   const Demo_Deals({Key? key}) : super(key: key);
@@ -18,7 +13,7 @@ class Demo_Deals extends StatelessWidget {
       child: Container(
         width: SizeConfig.screenWidth,
         height: 145,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Color(0xFFff6600),
             borderRadius: BorderRadius.all(Radius.circular(16))),
         child: Padding(
@@ -28,8 +23,8 @@ class Demo_Deals extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10),
                     child: Text(
                       'Offer of the Week',
                       style: TextStyle(
@@ -39,8 +34,8 @@ class Demo_Deals extends StatelessWidget {
                           color: Color(0xFFA5A5BA)),
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 4),
+                  const Padding(
+                      padding: EdgeInsets.only(top: 4),
                       child: Text(
                         'Avocado Chicken \nSalad',
                         style: TextStyle(
@@ -58,7 +53,7 @@ class Demo_Deals extends StatelessWidget {
                             width: 8,
                             height: 8,
                           ),
-                          Text(
+                          const Text(
                             'Cafe Bistrovia - Baku, Azerbaijan',
                             style: TextStyle(
                                 fontFamily: 'Mulish',
@@ -74,7 +69,7 @@ class Demo_Deals extends StatelessWidget {
                         children: [
                           Image.asset('assets/images/rating.png',
                               width: 6, height: 6),
-                          Text(
+                          const Text(
                             '4.8',
                             style: TextStyle(
                                 fontFamily: 'Poppins',
@@ -82,7 +77,7 @@ class Demo_Deals extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                                 color: Color(0xFFFFFFFF)),
                           ),
-                          Text(
+                          const Text(
                             '(30 reviews)',
                             style: TextStyle(
                                 fontFamily: 'Poppins',
@@ -96,7 +91,7 @@ class Demo_Deals extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 2.83),
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             '\$',
                             style: TextStyle(
                                 fontFamily: 'Mulish',
@@ -104,7 +99,7 @@ class Demo_Deals extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                                 color: Color(0xFF0D9BFF)),
                           ),
-                          Text(
+                          const Text(
                             '10.40',
                             style: TextStyle(
                                 decoration: TextDecoration.lineThrough,
@@ -113,7 +108,7 @@ class Demo_Deals extends StatelessWidget {
                                 fontWeight: FontWeight.w400,
                                 color: Color(0xFF0D9BFF)),
                           ),
-                          Text(
+                          const Text(
                             '\$',
                             style: TextStyle(
                                 fontFamily: 'Mulish',
@@ -121,7 +116,7 @@ class Demo_Deals extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                                 color: Color(0xFFFFFFFF)),
                           ),
-                          Text(
+                          const Text(
                             '8.40',
                             style: TextStyle(
                                 fontFamily: 'Mulish',
@@ -132,11 +127,11 @@ class Demo_Deals extends StatelessWidget {
                           Container(
                             width: 28,
                             height: 11,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(3))),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 '20% OFF',
                                 style: TextStyle(
@@ -151,7 +146,7 @@ class Demo_Deals extends StatelessWidget {
                       )),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Container(
                 child: Image.asset('assets/images/food.png'),
               ),
