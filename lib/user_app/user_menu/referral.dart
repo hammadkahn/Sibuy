@@ -7,7 +7,7 @@ class Referal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Color(0xFFFF6600),
         title: const Text('Referal'),
       ),
       body: Column(
@@ -38,7 +38,7 @@ class Referal extends StatelessWidget {
                   margin: const EdgeInsets.all(10),
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.orange,
+                    color: Color(0xFFFF6600),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Text(
@@ -53,7 +53,7 @@ class Referal extends StatelessWidget {
                   margin: const EdgeInsets.all(10),
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.orange,
+                    color: Color(0xFFFF6600),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Text(

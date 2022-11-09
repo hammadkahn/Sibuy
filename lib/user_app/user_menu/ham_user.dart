@@ -1,5 +1,6 @@
 import 'package:SiBuy/user_app/user_auth/user_auth.dart';
 import 'package:SiBuy/user_app/user_menu/insights.dart';
+import 'package:SiBuy/user_app/user_menu/my_profile.dart';
 import 'package:SiBuy/user_app/user_menu/points.dart';
 import 'package:SiBuy/user_app/user_menu/referral.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +83,11 @@ class _ham_userState extends State<ham_user> {
                           children = [
                             GestureDetector(
                               onTap: () {
-                                alertBox(data, context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const My_Profile()));
                               },
                               child: Container(
                                 height: MediaQuery.of(context).size.height *
@@ -176,12 +181,26 @@ class _ham_userState extends State<ham_user> {
                                       ),
                                     );
                                   },
-                                  child: const Text("My Offers",
-                                      style: TextStyle(
-                                          fontFamily: 'Mulish',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff32324D))),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.discount,
+                                        color: Color(0xff32324D),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                10 /
+                                                375,
+                                      ),
+                                      const Text("My Offers",
+                                          style: TextStyle(
+                                              fontFamily: 'Mulish',
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff32324D))),
+                                    ],
+                                  ),
                                 ),
                                 const Padding(
                                   padding: EdgeInsets.only(top: 18, bottom: 18),
@@ -208,33 +227,26 @@ class _ham_userState extends State<ham_user> {
                                         : preferencesBox(
                                             data.perference!, context);
                                   },
-                                  child: const Text("My Prefrences",
-                                      style: TextStyle(
-                                          fontFamily: 'Mulish',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff32324D))),
-                                ),
-                                const Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 18, bottom: 18),
-                                    child: Divider(
-                                      color: Color(0xFFE6E6E6),
-                                      thickness: 0.5,
-                                      // height: 214,
-                                      indent: 26,
-                                      endIndent: 26,
-                                    )),
-                                InkWell(
-                                  onTap: () {
-                                    alertBox(data, context);
-                                  },
-                                  child: const Text("My Account",
-                                      style: TextStyle(
-                                          fontFamily: 'Mulish',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff32324D))),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.settings_accessibility,
+                                        color: Color(0xff32324D),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                10 /
+                                                375,
+                                      ),
+                                      const Text("My Prefrences",
+                                          style: TextStyle(
+                                              fontFamily: 'Mulish',
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff32324D))),
+                                    ],
+                                  ),
                                 ),
                                 const Padding(
                                     padding:
@@ -253,12 +265,27 @@ class _ham_userState extends State<ham_user> {
                                           builder: (context) => Payments()),
                                     );
                                   },
-                                  child: const Text("My Payments Method",
-                                      style: TextStyle(
-                                          fontFamily: 'Mulish',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff32324D))),
+                                  child: Row(
+                                    children: [
+                                      //icon for payment method
+                                      const Icon(
+                                        Icons.payment,
+                                        color: Color(0xff32324D),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                10 /
+                                                375,
+                                      ),
+                                      const Text("My Payments Method",
+                                          style: TextStyle(
+                                              fontFamily: 'Mulish',
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff32324D))),
+                                    ],
+                                  ),
                                 ),
                                 const Padding(
                                     padding:
@@ -278,12 +305,26 @@ class _ham_userState extends State<ham_user> {
                                       ),
                                     );
                                   },
-                                  child: const Text("My Referrals",
-                                      style: TextStyle(
-                                          fontFamily: 'Mulish',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff32324D))),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.share_outlined,
+                                        color: Color(0xff32324D),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                10 /
+                                                375,
+                                      ),
+                                      const Text("My Referrals",
+                                          style: TextStyle(
+                                              fontFamily: 'Mulish',
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff32324D))),
+                                    ],
+                                  ),
                                 ),
                                 const Padding(
                                     padding:
@@ -303,12 +344,26 @@ class _ham_userState extends State<ham_user> {
                                       ),
                                     );
                                   },
-                                  child: const Text("Change Password",
-                                      style: TextStyle(
-                                          fontFamily: 'Mulish',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff32324D))),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.password_outlined,
+                                        color: Color(0xff32324D),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                10 /
+                                                375,
+                                      ),
+                                      const Text("Change Password",
+                                          style: TextStyle(
+                                              fontFamily: 'Mulish',
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff32324D))),
+                                    ],
+                                  ),
                                 ),
                                 Padding(
                                     padding:
@@ -328,12 +383,26 @@ class _ham_userState extends State<ham_user> {
                                       ),
                                     );
                                   },
-                                  child: const Text("My Points",
-                                      style: TextStyle(
-                                          fontFamily: 'Mulish',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff32324D))),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.point_of_sale_rounded,
+                                        color: Color(0xff32324D),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                10 /
+                                                375,
+                                      ),
+                                      const Text("My Points",
+                                          style: TextStyle(
+                                              fontFamily: 'Mulish',
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff32324D))),
+                                    ],
+                                  ),
                                 ),
                                 const Padding(
                                     padding:
@@ -353,12 +422,26 @@ class _ham_userState extends State<ham_user> {
                                       ),
                                     );
                                   },
-                                  child: const Text("My Insights",
-                                      style: TextStyle(
-                                          fontFamily: 'Mulish',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff32324D))),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.insights,
+                                        color: Color(0xff32324D),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                10 /
+                                                375,
+                                      ),
+                                      const Text("My Insights",
+                                          style: TextStyle(
+                                              fontFamily: 'Mulish',
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff32324D))),
+                                    ],
+                                  ),
                                 ),
                                 const Padding(
                                     padding:
@@ -378,12 +461,26 @@ class _ham_userState extends State<ham_user> {
                                               token: widget.token)),
                                     );
                                   },
-                                  child: const Text("Support",
-                                      style: TextStyle(
-                                          fontFamily: 'Mulish',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xff32324D))),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.support_agent,
+                                        color: Color(0xff32324D),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                10 /
+                                                375,
+                                      ),
+                                      const Text("Support",
+                                          style: TextStyle(
+                                              fontFamily: 'Mulish',
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff32324D))),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -443,12 +540,24 @@ class _ham_userState extends State<ham_user> {
                             }
                           });
                         },
-                        child: const Text('Log out',
-                            style: TextStyle(
-                                fontFamily: 'Mulish',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xff9E9E9E))),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.logout,
+                              color: Color(0xff32324D),
+                            ),
+                            SizedBox(
+                              width:
+                                  MediaQuery.of(context).size.width * 10 / 375,
+                            ),
+                            const Text('Log out',
+                                style: TextStyle(
+                                    fontFamily: 'Mulish',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xff9E9E9E))),
+                          ],
+                        ),
                       ),
                     ))
               ],

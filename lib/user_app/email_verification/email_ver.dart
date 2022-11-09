@@ -42,6 +42,9 @@ class _Email_verState extends State<Email_ver> {
                     fontSize: 36,
                     fontWeight: FontWeight.w500),
               ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 30 / 812,
+              ),
               TextFormField(
                 controller: emailCtr,
                 decoration: InputDecoration(

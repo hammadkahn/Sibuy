@@ -26,45 +26,14 @@ class _My_QrsState extends State<My_Qrs> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFFF6600),
-        title: const Text('My QRs'),
+        title: const Text('My Purchased Deals'),
       ),
       body: Padding(
         padding: const EdgeInsets.only(right: 24, left: 24),
         child: Column(
           children: [
-            Expanded(
-              flex: 1,
-              child: Row(
-                children: [
-                  Container(
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          // changes position of shadow
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(16),
-                      color: Colors.white,
-                    ),
-                    child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Image.asset('assets/images/arrow-left.png')),
-                  ),
-                  const Spacer(),
-                  const Text('My QR’s',
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600))
-                ],
-              ),
+            SizedBox(
+              height: 20,
             ),
             //row with 3 small contianers
             Row(
