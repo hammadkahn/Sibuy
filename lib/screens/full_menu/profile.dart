@@ -307,12 +307,23 @@ class _ProfileState extends State<Profile> {
                     //         content: Text(
                     //             'number of branches: ${allBranches!.data!.length}'))));
                   },
-                  leading: const Text("Add New Offer",
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff32324D))),
+                  leading: Row(
+                    children: [
+                      const Icon(
+                        Icons.local_offer_rounded,
+                        color: Color(0xff32324D),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 10 / 375,
+                      ),
+                      const Text("Add New Offer",
+                          style: TextStyle(
+                              fontFamily: 'Mulish',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xff32324D))),
+                    ],
+                  ),
                 ),
                 ListTile(
                   onTap: () {
@@ -323,12 +334,23 @@ class _ProfileState extends State<Profile> {
                     //         content: Text(
                     //             'number of branches: ${allBranches!.data!.length}'))));
                   },
-                  leading: const Text("Change Password",
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff32324D))),
+                  leading: Row(
+                    children: [
+                      const Icon(
+                        Icons.lock,
+                        color: Color(0xff32324D),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 10 / 375,
+                      ),
+                      const Text("Change Password",
+                          style: TextStyle(
+                              fontFamily: 'Mulish',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xff32324D))),
+                    ],
+                  ),
                 ),
                 ListTile(
                   onTap: () {
@@ -339,12 +361,23 @@ class _ProfileState extends State<Profile> {
                     //         content: Text(
                     //             'number of branches: ${allBranches!.data!.length}'))));
                   },
-                  leading: const Text("Request Payment",
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff32324D))),
+                  leading: Row(
+                    children: [
+                      const Icon(
+                        Icons.payment,
+                        color: Color(0xff32324D),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 10 / 375,
+                      ),
+                      const Text("Request Payment",
+                          style: TextStyle(
+                              fontFamily: 'Mulish',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xff32324D))),
+                    ],
+                  ),
                 ),
                 // const Spacer(),
                 SizedBox(
@@ -371,7 +404,14 @@ class _ProfileState extends State<Profile> {
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
-                      children: const [
+                      children: [
+                        const Icon(
+                          Icons.logout,
+                          color: Color(0xff32324D),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 10 / 375,
+                        ),
                         Text(
                           'Log out',
                           textAlign: TextAlign.left,
