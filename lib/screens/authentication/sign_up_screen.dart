@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:SiBuy/models/category_model.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
+import 'package:intl/intl.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import '../../services/categories/category_services.dart';
@@ -327,6 +328,61 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         return 'Please a strong password';
                       }
                       return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 26),
+                  child: TextFormField(
+                    controller: passCtr,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      hintText: 'Confirm Password',
+                      // suffix: Icon(Icons.visibility)
+                    ),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please a strong password';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16, bottom: 16),
+                  child: TextField(
+                    controller: dobCtr,
+                    textInputAction: TextInputAction.next,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                        icon: const Icon(Icons.calendar_today_rounded),
+                        labelText: 'Date of Birth',
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        )),
+                    onTap: () async {
+                      DateTime? pickdate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1970),
+                          lastDate: DateTime(2030));
+                      if (pickdate != null) {
+                        setState(() {
+                          dobCtr.text =
+                              DateFormat('dd-MM-yyyy').format(pickdate);
+                        });
+                      }
                     },
                   ),
                 ),
