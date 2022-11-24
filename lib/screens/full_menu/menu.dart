@@ -65,14 +65,14 @@ class Menu extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
-                            title: 'total unredeemed withholding',
+                            title: 'Total unredeemed withholding',
                             totalActiveDeals: snapshot.data!['data']
                                     ['totalDealSale']
                                 .toString(),
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
-                            title: 'total transaction fee',
+                            title: 'Total transaction fee',
                             totalActiveDeals: snapshot.data!['data']
                                     ['totalDealSale']
                                 .toString(),

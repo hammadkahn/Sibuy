@@ -32,6 +32,9 @@ class _order_detailsState extends State<order_details> {
             child: Padding(
               padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
               child: ExpandablePanel(
+                controller: ExpandableController(
+                  initialExpanded: true,
+                ),
                 header: const Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(

@@ -37,7 +37,7 @@ class _user_authState extends State<user_auth> {
                 ),
               ),
               const Text(
-                'Let’s Get Started 😁',
+                'Let’s get your started!',
                 style: TextStyle(
                     fontFamily: 'Dmsans',
                     fontSize: 26,
@@ -45,8 +45,7 @@ class _user_authState extends State<user_auth> {
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 14, bottom: 49),
-                child: Text(
-                    'Sign up or login into to have a full  digital \nexperience in our restaurant',
+                child: Text('A world of discounts is waiting for you!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontFamily: 'Mulish',
@@ -82,7 +81,7 @@ class _user_authState extends State<user_auth> {
                 ]),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 54, top: 20),
+                padding: const EdgeInsets.only(top: 20),
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => const User_create_acc())),
@@ -92,9 +91,12 @@ class _user_authState extends State<user_auth> {
                         fontFamily: 'Mulish',
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF8981AE)),
+                        color: Colors.black),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 20 / 812,
               ),
               GestureDetector(
                 // onTap: () {
@@ -107,10 +109,12 @@ class _user_authState extends State<user_auth> {
                       fontFamily: 'Mulish',
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF8981AE)),
+                      color: Colors.black),
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 20 / 812,
+              ),
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(
@@ -122,8 +126,11 @@ class _user_authState extends State<user_auth> {
                       fontFamily: 'Mulish',
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF8981AE)),
+                      color: Colors.black),
                 ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 20 / 812,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

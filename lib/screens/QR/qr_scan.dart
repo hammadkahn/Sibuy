@@ -33,32 +33,66 @@ class _QR_scan extends State<QR_scan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 5,
-            child: QRView(
-              key: qrKey,
-              overlay: QrScannerOverlayShape(
-                borderColor: Colors.red,
-                borderRadius: 10,
-                borderLength: 30,
-                borderWidth: 10,
-                cutOutSize: 400,
-              ),
-              onQRViewCreated: _onQRViewCreated,
-            ),
-          ),
-          IconButton(
-              icon: Icon(Icons.flash_on, color: Colors.black),
+        body: Stack(
+      children: [
+        BuildQRview(context),
+        Positioned(
+          height: 100,
+          left: 200,
+          bottom: 20,
+          child: IconButton(
+              iconSize: 50,
+              color: Colors.white,
+              icon: const Icon(Icons.flash_on),
               onPressed: () async {
                 await controller!.toggleFlash();
                 setState(() {
                   controller!.getFlashStatus().then((value) => print(value));
                 });
               }),
-        ],
+        ),
+      ],
+    )
+        // Column(
+        //   children: <Widget>[
+        //     Expanded(
+        //       flex: 5,
+        //       child: QRView(
+        //         key: qrKey,
+        //         overlay: QrScannerOverlayShape(
+        //           borderColor: Colors.red,
+        //           borderRadius: 10,
+        //           borderLength: 30,
+        //           borderWidth: 10,
+        //           cutOutSize: 400,
+        //         ),
+        //         onQRViewCreated: _onQRViewCreated,
+        //       ),
+        //     ),
+        // IconButton(
+        //     icon: Icon(Icons.flash_on, color: Colors.black),
+        //     onPressed: () async {
+        //       await controller!.toggleFlash();
+        //       setState(() {
+        //         controller!.getFlashStatus().then((value) => print(value));
+        //       });
+        //     }),
+        //   ],
+        // ),
+        );
+  }
+
+  Widget BuildQRview(BuildContext context) {
+    return QRView(
+      key: qrKey,
+      overlay: QrScannerOverlayShape(
+        borderColor: Colors.red,
+        borderRadius: 10,
+        borderLength: 30,
+        borderWidth: 10,
+        cutOutSize: 400,
       ),
+      onQRViewCreated: _onQRViewCreated,
     );
   }
 

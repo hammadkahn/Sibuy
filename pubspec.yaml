@@ -57,6 +57,7 @@ dependencies:
   toggle_switch: ^2.0.1
   url_launcher: ^6.1.5
   image_picker: ^0.8.6
+  file_picker: ^5.2.2
   
 
 dev_dependencies:
