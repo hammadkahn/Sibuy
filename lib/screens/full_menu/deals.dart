@@ -12,7 +12,7 @@ class Deals extends StatefulWidget {
       {Key? key, required this.merchantListOfDeals, required this.token})
       : super(key: key);
 
-  final Data merchantListOfDeals;
+  final MerchantListDealData merchantListOfDeals;
   final String token;
 
   @override

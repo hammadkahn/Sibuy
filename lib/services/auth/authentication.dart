@@ -61,14 +61,14 @@ class MerchantAuthServices {
     try {
       final response = await http.post(
         ApiUrls.login,
-        body: {'email': email, 'password': password},
+        body: {'phone_no': email, 'password': password},
       );
       final result = jsonDecode(response.body) as Map<String, dynamic>;
       if (response.statusCode == 200) {
         print('result : ${result['data']['token']}');
 
         preferences.setString('token', result['data']['token']);
-        preferences.setString('email', result['data']['email']);
+        preferences.setString('email', result['data']['phone']);
         preferences.setString('status', result['data']['StatusName']);
         preferences.setString('user_type', result['data']['type'].toString());
         preferences.setInt('userId', result['data']['id']);
@@ -174,6 +174,35 @@ class MerchantAuthServices {
         return 'Password sent ${result['message']}fully, please check your email';
       } else {
         return result['error'];
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<String> changePassword(
+    String token,
+    String currPass,
+    String newPass,
+    String confirmPass,
+  ) async {
+    try {
+      print('$token, $currPass, $newPass, $confirmPass');
+      final response = await http.post(ApiUrls.changePass, body: {
+        'old_password': currPass,
+        'password': newPass,
+        'password_confirmation': confirmPass,
+      }, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $token'
+      });
+
+      final result = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (response.statusCode == 200) {
+        debugPrint(response.body);
+        return result['meassge'];
+      } else {
+        return response.reasonPhrase.toString();
       }
     } catch (e) {
       throw Exception(e);

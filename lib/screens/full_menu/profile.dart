@@ -6,14 +6,12 @@ import 'package:SiBuy/models/merchant_profile_model.dart';
 import 'package:SiBuy/screens/active_deals.dart';
 import 'package:SiBuy/services/branch/branch_services.dart';
 import 'package:SiBuy/services/get_profile/get_user_info.dart';
-import 'package:SiBuy/user_app/splash_screen/splash.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../apis/api_urls.dart';
 import '../../services/auth/authentication.dart';
 
-import '../../support/contact.dart';
-import '../../support/support.dart';
 import '../../user_app/user_auth/user_auth.dart';
 import '../my_branches.dart';
 import 'all_offers.dart';
@@ -69,10 +67,12 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                   ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 SizedBox(
+                  width: double.maxFinite,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   child: FutureBuilder<ProfileModel>(
                     future:
                         UserInformation().getMerchantInformation(widget.token),
@@ -90,9 +90,11 @@ class _ProfileState extends State<Profile> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Color(0xffff6000),
+                                  color: const Color(0xffff6000),
                                 ),
                                 child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     Column(
                                       children: [
@@ -106,17 +108,18 @@ class _ProfileState extends State<Profile> {
                                                   fontWeight: FontWeight.w500,
                                                   color: Color(0xff32324D))),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
-                                        Text('${data.branches![0].address}',
+                                        Text(
+                                            '${data.userLocations == null ? 'no location specified' : data.userLocations![0].address}',
                                             textAlign: TextAlign.center,
                                             style: const TextStyle(
                                                 fontFamily: 'DMSans',
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.white)),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
                                         Text('${data.phone}',
@@ -126,7 +129,7 @@ class _ProfileState extends State<Profile> {
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.white)),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
                                         Text('${data.email}',
@@ -136,7 +139,7 @@ class _ProfileState extends State<Profile> {
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.white)),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         )
                                       ],
@@ -196,6 +199,7 @@ class _ProfileState extends State<Profile> {
                       }
                       return SizedBox(
                         width: double.maxFinite,
+                        height: MediaQuery.of(context).size.height * 0.4,
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -204,57 +208,43 @@ class _ProfileState extends State<Profile> {
                     },
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 ListTile(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
                             ActiveMerchantDeals(token: widget.token)));
                   },
-                  title: Row(
-                    children: [
-                      const Icon(
-                        Icons.discount,
-                        color: Color(0xff32324D),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 10 / 375,
-                      ),
-                      const Text("Active Offers",
-                          style: TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xff32324D))),
-                    ],
+                  leading: const Icon(
+                    Icons.discount,
+                    color: Color(0xff32324D),
                   ),
+                  title: const Text("Active Offers",
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff32324D))),
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => All_offer()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const All_offer()));
                     // branches().whenComplete(() =>
                     //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     //         content: Text(
                     //             'number of branches: ${allBranches!.data!.length}'))));
                   },
-                  leading: Row(
-                    children: [
-                      const Icon(
-                        Icons.local_offer_sharp,
-                        color: Color(0xff32324D),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 10 / 375,
-                      ),
-                      const Text("All Offer",
-                          style: TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xff32324D))),
-                    ],
+                  leading: const Icon(
+                    Icons.local_offer_sharp,
+                    color: Color(0xff32324D),
                   ),
+                  title: const Text("All Offer",
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff32324D))),
                 ),
                 ListTile(
                   onTap: () {
@@ -265,23 +255,16 @@ class _ProfileState extends State<Profile> {
                     //         content: Text(
                     //             'number of branches: ${allBranches!.data!.length}'))));
                   },
-                  leading: Row(
-                    children: [
-                      const Icon(
-                        Icons.travel_explore_outlined,
-                        color: Color(0xff32324D),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 10 / 375,
-                      ),
-                      const Text("My Branches",
-                          style: TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xff32324D))),
-                    ],
+                  leading: const Icon(
+                    Icons.travel_explore_outlined,
+                    color: Color(0xff32324D),
                   ),
+                  title: const Text("My Branches",
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff32324D))),
                 ),
                 // ListTile(
                 //   onTap: () {
@@ -300,87 +283,69 @@ class _ProfileState extends State<Profile> {
                 // ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Add_deal()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => Add_deal(token: widget.token)));
                     // branches().whenComplete(() =>
                     //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     //         content: Text(
                     //             'number of branches: ${allBranches!.data!.length}'))));
                   },
-                  leading: Row(
-                    children: [
-                      const Icon(
-                        Icons.local_offer_rounded,
-                        color: Color(0xff32324D),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 10 / 375,
-                      ),
-                      const Text("Add New Offer",
-                          style: TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xff32324D))),
-                    ],
+                  leading: const Icon(
+                    Icons.local_offer_rounded,
+                    color: Color(0xff32324D),
                   ),
+                  title: const Text("Add New Offer",
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff32324D))),
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Change_pass()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => Change_pass(
+                              token: widget.token,
+                            )));
                     // branches().whenComplete(() =>
                     //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     //         content: Text(
                     //             'number of branches: ${allBranches!.data!.length}'))));
                   },
-                  leading: Row(
-                    children: [
-                      const Icon(
-                        Icons.lock,
-                        color: Color(0xff32324D),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 10 / 375,
-                      ),
-                      const Text("Change Password",
-                          style: TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xff32324D))),
-                    ],
+                  leading: const Icon(
+                    Icons.lock,
+                    color: Color(0xff32324D),
                   ),
+                  title: const Text("Change Password",
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff32324D))),
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Request_pay()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            Request_pay(token: widget.token)));
                     // branches().whenComplete(() =>
                     //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     //         content: Text(
                     //             'number of branches: ${allBranches!.data!.length}'))));
                   },
-                  leading: Row(
-                    children: [
-                      const Icon(
-                        Icons.payment,
-                        color: Color(0xff32324D),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 10 / 375,
-                      ),
-                      const Text("Request Payment",
-                          style: TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xff32324D))),
-                    ],
+                  leading: const Icon(
+                    Icons.payment,
+                    color: Color(0xff32324D),
                   ),
+                  title: const Text("Request Payment",
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff32324D))),
                 ),
                 // const Spacer(),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 GestureDetector(
@@ -412,7 +377,7 @@ class _ProfileState extends State<Profile> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 10 / 375,
                         ),
-                        Text(
+                        const Text(
                           'Log out',
                           textAlign: TextAlign.left,
                           style: TextStyle(
@@ -426,7 +391,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: 20),
               ],
             ),
           ),

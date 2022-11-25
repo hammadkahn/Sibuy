@@ -206,14 +206,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     hintText: 'Email (Optional)',
                   ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        !value.contains('@')) {
-                      return 'email is required';
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(height: 8),
                 Column(
@@ -241,7 +233,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     Text(
-                      'For get your pricise location, Please Fetch your location',
+                      'To get your pricise location, Please Fetch your location',
                       style: TextStyle(fontSize: 10, color: Colors.grey[350]),
                     )
                   ],

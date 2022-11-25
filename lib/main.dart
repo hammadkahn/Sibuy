@@ -5,7 +5,7 @@ import 'package:SiBuy/providers/order.dart';
 import 'package:provider/provider.dart';
 
 import 'constant/theme.dart';
-import 'user_app/splash_screen/splash.dart';
+
 import 'user_app/splash_screen/splashh.dart';
 
 void main() {

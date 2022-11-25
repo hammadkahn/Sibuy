@@ -98,7 +98,7 @@ class _ham_userState extends State<ham_user> {
                                     375,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Color(0xFFff6600),
+                                  color: const Color(0xFFff6600),
                                 ),
                                 child: Row(
                                   children: [
@@ -137,7 +137,7 @@ class _ham_userState extends State<ham_user> {
                                                 color: Color(0xffFFFFFF))),
                                       ],
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     data.profilePicture == null ||
                                             data.profilePicture!.isEmpty
                                         ? Image.asset(
@@ -262,7 +262,7 @@ class _ham_userState extends State<ham_user> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                          builder: (context) => Payments()),
+                                          builder: (context) => const Payments()),
                                     );
                                   },
                                   child: Row(
@@ -301,7 +301,7 @@ class _ham_userState extends State<ham_user> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => Referal(),
+                                        builder: (context) => const Referal(),
                                       ),
                                     );
                                   },
@@ -340,7 +340,7 @@ class _ham_userState extends State<ham_user> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => Change_pass(),
+                                        builder: (context) => Change_pass(token: widget.token ),
                                       ),
                                     );
                                   },
@@ -365,7 +365,7 @@ class _ham_userState extends State<ham_user> {
                                     ],
                                   ),
                                 ),
-                                Padding(
+                                const Padding(
                                     padding:
                                         EdgeInsets.only(top: 18, bottom: 18),
                                     child: Divider(
@@ -379,7 +379,7 @@ class _ham_userState extends State<ham_user> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => Points(),
+                                        builder: (context) => const Points(),
                                       ),
                                     );
                                   },
@@ -418,7 +418,7 @@ class _ham_userState extends State<ham_user> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => Insights(),
+                                        builder: (context) => const Insights(),
                                       ),
                                     );
                                   },

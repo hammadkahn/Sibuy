@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:SiBuy/services/categories/category_services.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/cart_model.dart';
 import 'package:SiBuy/models/puchase_model.dart';
@@ -9,6 +10,7 @@ import 'package:SiBuy/models/wish_list_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../apis/api_urls.dart';
+import '../models/category_model.dart';
 import '../models/deal_model.dart';
 import '../services/user_merchant_services.dart';
 
@@ -313,13 +315,17 @@ class DealProvider with ChangeNotifier {
     String discountOnPrice,
     dynamic price,
   ) {
-    print('price :$price');
+    print('price :$discountOnPrice');
     double? priceAfterDiscount = 0;
     double? getPrice;
     double? percentage;
-    percentage = int.parse(discountOnPrice) / 100;
-    getPrice = percentage * int.parse(price);
-    priceAfterDiscount = (int.parse(price) - getPrice);
+    percentage = double.parse(discountOnPrice) / 100;
+    getPrice = percentage * double.parse(price);
+    priceAfterDiscount = (double.parse(price) - getPrice);
+
+    print(percentage);
+    print(getPrice);
+    print(priceAfterDiscount);
 
     return priceAfterDiscount.toStringAsFixed(2);
   }
@@ -379,6 +385,62 @@ class DealProvider with ChangeNotifier {
         }
       default:
         return list;
+    }
+  }
+
+  List<String>? _languages;
+  List<String> get languages => _languages!;
+
+  Map<String, dynamic>? _languageData;
+  Map<String, dynamic> get languageData => _languageData!;
+
+  //general apis
+  Future<void> getAllLanguages() async {
+    List<String> languageList = [];
+    try {
+      final response = await http.get(
+        Uri.parse('${ApiUrls.baseUrl}getAllLanguages'),
+      );
+
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (response.statusCode == 200) {
+        print(response.body);
+        List.generate(data['data'].length, (i) {
+          languageList.add(data['data'][i]['name']);
+          print(data['data'][i]['name']);
+        });
+        _languages = languageList;
+        _languageData = data;
+        notifyListeners();
+      } else {
+        print(response.statusCode);
+        _languages = [];
+        notifyListeners();
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  List<String>? _allCategories;
+  List<String> get allCategories => _allCategories!;
+
+  GetAllCategoriesModel? _catData;
+  GetAllCategoriesModel get catData => _catData!;
+
+  Future<void> getAllCat() async {
+    List<String> catList = [];
+    final result = await CategoryServices().getAllCategories();
+    if (result.status == true) {
+      print(result.data);
+      List.generate(result.data!.length,
+          (index) => catList.add(result.data![index].name!));
+
+      _allCategories = catList;
+      _catData = result;
+      notifyListeners();
+    } else {
+      print(result.message);
     }
   }
 }

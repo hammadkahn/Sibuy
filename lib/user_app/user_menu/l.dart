@@ -19,9 +19,9 @@ class _C_sliderState extends State<C_slider> {
   DateTime now = DateTime.now();
   DateTime? now_1w;
   List weekDeals = [
-    Demo_Deals(),
-    Demo_Deals(),
-    Demo_Deals(),
+    // Demo_Deals(),
+    // Demo_Deals(),
+    // Demo_Deals(),
   ];
   String? reviews;
   CarouselController? controller = CarouselController();

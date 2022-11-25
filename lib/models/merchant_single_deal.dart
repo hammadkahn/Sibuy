@@ -1,17 +1,14 @@
-import 'package:SiBuy/models/category_model.dart';
+import 'package:SiBuy/models/image_model.dart';
 
-import 'branch_model.dart';
-import 'image_model.dart';
-
-class MerchantSingleDeal {
+class SingleDealModel {
   bool? status;
   int? responseCode;
   String? message;
   MerchantSingleDealData? data;
 
-  MerchantSingleDeal({this.status, this.responseCode, this.message, this.data});
+  SingleDealModel({this.status, this.responseCode, this.message, this.data});
 
-  MerchantSingleDeal.fromJson(Map<String, dynamic> json) {
+  SingleDealModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     responseCode = json['responseCode'];
     message = json['message'];
@@ -37,7 +34,7 @@ class MerchantSingleDealData {
   String? name;
   int? discount;
   String? type;
-  dynamic price;
+  int? price;
   int? additionalDiscount;
   dynamic additionalDiscountDate;
   int? discountOnPrice;
@@ -55,10 +52,17 @@ class MerchantSingleDealData {
   String? createdAt;
   String? updatedAt;
   String? expiry;
+  String? redeemExpiry;
+  String? isRedeemExpiryNotificationDispatch;
+  int? isSponsored;
+  String? uniqueCode;
+  String? languageId;
   String? categoryName;
+  String? languageName;
   List<ImageModel>? images;
   List<Tags>? tags;
-  List<BranchData>? branches;
+  List<Products>? products;
+  dynamic reviewAndCount;
   int? dealIsExpired;
   String? typeName;
   String? activationRequestFor;
@@ -86,10 +90,17 @@ class MerchantSingleDealData {
       this.createdAt,
       this.updatedAt,
       this.expiry,
+      this.redeemExpiry,
+      this.isRedeemExpiryNotificationDispatch,
+      this.isSponsored,
+      this.uniqueCode,
+      this.languageId,
       this.categoryName,
+      this.languageName,
       this.images,
       this.tags,
-      this.branches,
+      this.products,
+      this.reviewAndCount,
       this.dealIsExpired,
       this.typeName,
       this.activationRequestFor});
@@ -117,7 +128,14 @@ class MerchantSingleDealData {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     expiry = json['expiry'];
+    redeemExpiry = json['redeem_expiry'];
+    isRedeemExpiryNotificationDispatch =
+        json['is_redeem_expiry_notification_dispatch'];
+    isSponsored = json['is_sponsored'];
+    uniqueCode = json['unique_code'];
+    languageId = json['language_id'];
     categoryName = json['category_name'];
+    languageName = json['language_name'];
     if (json['images'] != null) {
       images = <ImageModel>[];
       json['images'].forEach((v) {
@@ -130,12 +148,13 @@ class MerchantSingleDealData {
         tags!.add(Tags.fromJson(v));
       });
     }
-    if (json['branches'] != null) {
-      branches = <BranchData>[];
-      json['branches'].forEach((v) {
-        branches!.add(BranchData.fromJson(v));
+    if (json['products'] != null) {
+      products = <Products>[];
+      json['products'].forEach((v) {
+        products!.add(Products.fromJson(v));
       });
     }
+    reviewAndCount = json['reviewAndCount'];
     dealIsExpired = json['dealIsExpired'];
     typeName = json['TypeName'];
     activationRequestFor = json['activationRequestFor'];
@@ -165,19 +184,92 @@ class MerchantSingleDealData {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['expiry'] = expiry;
+    data['redeem_expiry'] = redeemExpiry;
+    data['is_redeem_expiry_notification_dispatch'] =
+        isRedeemExpiryNotificationDispatch;
+    data['is_sponsored'] = isSponsored;
+    data['unique_code'] = uniqueCode;
+    data['language_id'] = languageId;
     data['category_name'] = categoryName;
+    data['language_name'] = languageName;
     if (images != null) {
       data['images'] = images!.map((v) => v.toJson()).toList();
     }
     if (tags != null) {
       data['tags'] = tags!.map((v) => v.toJson()).toList();
     }
-    if (branches != null) {
-      data['branches'] = branches!.map((v) => v.toJson()).toList();
+    if (products != null) {
+      data['products'] = products!.map((v) => v.toJson()).toList();
     }
+    data['reviewAndCount'] = reviewAndCount;
     data['dealIsExpired'] = dealIsExpired;
     data['TypeName'] = typeName;
     data['activationRequestFor'] = activationRequestFor;
+    return data;
+  }
+}
+
+class Tags {
+  int? id;
+  int? dealId;
+  String? tag;
+  String? createdAt;
+  String? updatedAt;
+
+  Tags({this.id, this.dealId, this.tag, this.createdAt, this.updatedAt});
+
+  Tags.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    dealId = json['deal_id'];
+    tag = json['tag'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['deal_id'] = dealId;
+    data['tag'] = tag;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    return data;
+  }
+}
+
+class Products {
+  int? id;
+  int? dealId;
+  String? productName;
+  String? productPrice;
+  String? createdAt;
+  String? updatedAt;
+
+  Products(
+      {this.id,
+      this.dealId,
+      this.productName,
+      this.productPrice,
+      this.createdAt,
+      this.updatedAt});
+
+  Products.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    dealId = json['deal_id'];
+    productName = json['product_name'];
+    productPrice = json['product_price'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['deal_id'] = dealId;
+    data['product_name'] = productName;
+    data['product_price'] = productPrice;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

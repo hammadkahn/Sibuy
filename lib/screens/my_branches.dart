@@ -16,7 +16,7 @@ class MyBranches extends StatelessWidget {
           'Branches',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Color(0xFFff6600),
+        backgroundColor: const Color(0xFFff6600),
         iconTheme: Theme.of(context).iconTheme,
       ),
       body: Container(
