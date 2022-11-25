@@ -522,7 +522,7 @@ class _ham_userState extends State<ham_user> {
                     flex: 2,
                     child: Padding(
                       padding:
-                          const EdgeInsets.only(left: 35, top: 100, bottom: 56),
+                          const EdgeInsets.only(left: 35, top: 50, bottom: 56),
                       child: GestureDetector(
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -553,9 +553,9 @@ class _ham_userState extends State<ham_user> {
                             const Text('Log out',
                                 style: TextStyle(
                                     fontFamily: 'Mulish',
-                                    fontSize: 12,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w600,
-                                    color: Color(0xff9E9E9E))),
+                                    color: Colors.black)),
                           ],
                         ),
                       ),

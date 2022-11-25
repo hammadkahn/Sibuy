@@ -1,13 +1,18 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:SiBuy/models/category_model.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
+import 'package:intl/intl.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import '../../services/categories/category_services.dart';
 import '../../user_app/verify _code/user_verification.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -17,6 +22,62 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  File? image;
+  int radioValue = 0;
+
+  Future pickimage() async {
+    try {
+      final Image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (Image == null) return;
+      final imageTemporary = File(Image.path);
+      setState(() {
+        this.image = imageTemporary;
+      });
+      this.image = imageTemporary;
+    } on PlatformException catch (e) {
+      print("failed to load $e");
+    }
+  }
+
+  File? imagee;
+  Future pickimagee() async {
+    try {
+      final Image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (Image == null) return;
+      final imageTemporary = File(Image.path);
+      setState(() {
+        this.imagee = imageTemporary;
+      });
+      this.imagee = imageTemporary;
+    } on PlatformException catch (e) {
+      print("failed to load $e");
+    }
+  }
+
+  FilePickerResult? result;
+  PlatformFile? file;
+  void pickfile() async {
+    result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc'],
+        allowMultiple: true);
+    if (result == null) return;
+    file = result!.files.first;
+    setState(() {});
+  }
+
+  FilePickerResult? resultt;
+  PlatformFile? filee;
+  void pickfilee() async {
+    resultt = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc'],
+        allowMultiple: true);
+    if (result == null) return;
+    filee = resultt!.files.first;
+    setState(() {});
+  }
+
   final _key = GlobalKey<FormState>();
   final nameCtr = TextEditingController();
   final countryCtr = TextEditingController();
@@ -49,11 +110,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+  String dropdownvaluee = 'Item 1';
+
+  // List of items in our dropdown menu
+  var itemss = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+  ];
   // Initial Selected Value
   String dropdownvalue = 'Item 1';
 
   // List of items in our dropdown menu
   var items = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+  ];
+  String lang_dropdownvaluee = 'Item 1';
+
+  // List of items in our dropdown menu
+  var lang = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+  ];
+  String op_dropdownvalue = 'Item 1';
+
+  // List of items in our dropdown menu
+  var op = [
     'Item 1',
     'Item 2',
     'Item 3',
@@ -325,13 +416,68 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 26),
                   child: TextFormField(
+                    controller: passCtr,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      hintText: 'Confirm Password',
+                      // suffix: Icon(Icons.visibility)
+                    ),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please a strong password';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16, bottom: 16),
+                  child: TextField(
+                    controller: dobCtr,
+                    textInputAction: TextInputAction.next,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                        icon: const Icon(Icons.calendar_today_rounded),
+                        labelText: 'Date of Birth',
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        )),
+                    onTap: () async {
+                      DateTime? pickdate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1970),
+                          lastDate: DateTime(2030));
+                      if (pickdate != null) {
+                        setState(() {
+                          dobCtr.text =
+                              DateFormat('dd-MM-yyyy').format(pickdate);
+                        });
+                      }
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 26),
+                  child: TextFormField(
                     controller: branchCtr,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      hintText: 'Branch Name',
+                      hintText: 'Address',
                       // suffix: Icon(Icons.visibility)
                     ),
                     validator: (value) {
@@ -353,6 +499,187 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       hintText: 'Description',
+                      // suffix: Icon(Icons.visibility)
+                    ),
+                  ),
+                ),
+                Text(
+                  'Category 1',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Container(
+                  child: DropdownButton(
+                    isExpanded: true,
+                    // Initial Value
+                    value: dropdownvalue,
+
+                    // Down Arrow Icon
+                    icon: const Icon(Icons.keyboard_arrow_down),
+
+                    // Array list of items
+                    items: items.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    // After selecting the desired option,it will
+                    // change button value to selected value
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownvalue = newValue!;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  'Category 2',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Container(
+                  child: DropdownButton(
+                    isExpanded: true,
+                    // Initial Value
+                    value: dropdownvaluee,
+
+                    // Down Arrow Icon
+                    icon: const Icon(Icons.keyboard_arrow_down),
+
+                    // Array list of items
+                    items: itemss.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    // After selecting the desired option,it will
+                    // change button value to selected value
+                    onChanged: (String? newValuee) {
+                      setState(() {
+                        dropdownvaluee = newValuee!;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  'Language',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Container(
+                  child: DropdownButton(
+                    isExpanded: true,
+                    // Initial Value
+                    value: lang_dropdownvaluee,
+
+                    // Down Arrow Icon
+                    icon: const Icon(Icons.keyboard_arrow_down),
+
+                    // Array list of items
+                    items: lang.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    // After selecting the desired option,it will
+                    // change button value to selected value
+                    onChanged: (String? newValueee) {
+                      setState(() {
+                        lang_dropdownvaluee = newValueee!;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  'Operation Days',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Container(
+                  child: DropdownButton(
+                    isExpanded: true,
+                    // Initial Value
+                    value: op_dropdownvalue,
+
+                    // Down Arrow Icon
+                    icon: const Icon(Icons.keyboard_arrow_down),
+
+                    // Array list of items
+                    items: op.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    // After selecting the desired option,it will
+                    // change button value to selected value
+                    onChanged: (String? newValueeee) {
+                      setState(() {
+                        op_dropdownvalue = newValueeee!;
+                      });
+                    },
+                  ),
+                ),
+                Text(
+                  'Opening Time',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 26),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: branchCtr,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      hintText: 'Opening Time',
+                      // suffix: Icon(Icons.visibility)
+                    ),
+                  ),
+                ),
+                Text(
+                  'Closing Time',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 26),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: branchCtr,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      hintText: 'Opening Time',
                       // suffix: Icon(Icons.visibility)
                     ),
                   ),
@@ -381,29 +708,240 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 //                 '${catData![index].id}: ${catData![index].name}');
                 //           }),
                 // ),
-                Container(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    // Initial Value
-                    value: dropdownvalue,
-
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
-
-                    // Array list of items
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownvalue = newValue!;
-                      });
-                    },
+                InkWell(
+                  onTap: () {
+                    pickimage();
+                  },
+                  child: Container(
+                    width: 300,
+                    child: Row(children: [
+                      Container(
+                        //rounded container for image
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey[200],
+                        ),
+                        child: image != null
+                            ? Image.file(
+                                image!,
+                                fit: BoxFit.cover,
+                              )
+                            : const Icon(
+                                Icons.camera_alt,
+                                color: Colors.grey,
+                              ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      const Text(
+                        'Profile pic',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      const Icon(
+                        Icons.upload_file,
+                        size: 30,
+                      ),
+                    ]),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                InkWell(
+                  onTap: () {
+                    pickimagee();
+                  },
+                  child: Container(
+                    width: 300,
+                    child: Row(children: [
+                      Container(
+                        //rounded container for image
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey[200],
+                        ),
+                        child: imagee != null
+                            ? Image.file(
+                                imagee!,
+                                fit: BoxFit.cover,
+                              )
+                            : const Icon(
+                                Icons.camera_alt,
+                                color: Colors.grey,
+                              ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      const Text(
+                        'logo',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      const Icon(
+                        Icons.upload_file,
+                        size: 30,
+                      ),
+                    ]),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  'Registration Type',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(
+                      children: [
+                        Radio(
+                          value: 1,
+                          groupValue: radioValue,
+                          onChanged: (value) {
+                            setState(() {
+                              radioValue = value as int;
+                            });
+                          },
+                        ),
+                        const Text('Yes'),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Radio(
+                          value: 2,
+                          groupValue: radioValue,
+                          onChanged: (value) {
+                            setState(() {
+                              radioValue = value as int;
+                            });
+                          },
+                        ),
+                        const Text('No'),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 26),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      hintText: 'Regeistration number',
+                      // suffix: Icon(Icons.visibility)
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 26),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      hintText: 'Patent Number',
+                      // suffix: Icon(Icons.visibility)
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                InkWell(
+                  onTap: () {
+                    pickfile();
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Document Upload 0',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      const Icon(
+                        Icons.upload_file,
+                        size: 30,
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  'Document Name: $file',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                InkWell(
+                  onTap: () {
+                    pickfilee();
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Document Upload 1',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      const Icon(
+                        Icons.upload_file,
+                        size: 30,
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  'Document Name: $filee',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
 

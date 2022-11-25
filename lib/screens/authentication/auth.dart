@@ -129,7 +129,7 @@ class _auth_pageState extends State<auth_page> {
                           fontFamily: 'Mulish',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF8981AE)),
+                          color: Colors.black),
                     ),
                   ),
                   const SizedBox(
