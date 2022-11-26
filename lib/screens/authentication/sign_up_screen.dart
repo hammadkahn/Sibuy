@@ -141,16 +141,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     'Item 4',
     'Item 5',
   ];
-  String op_dropdownvalue = 'Item 1';
+  // String op_dropdownvalue = 'Item 1';
 
-  // List of items in our dropdown menu
-  var op = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
+  // // List of items in our dropdown menu
+  // var op = [
+  //   'Item 1',
+  //   'Item 2',
+  //   'Item 3',
+  //   'Item 4',
+  //   'Item 5',
+  // ];
 
   @override
   void initState() {
@@ -171,6 +171,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     super.initState();
   }
+
+  TimeOfDay? _timeOfDay = TimeOfDay(hour: 9, minute: 00);
+  void _showtimepicker() {
+    showTimePicker(context: context, initialTime: TimeOfDay.now())
+        .then((value) => setState(() {
+              _timeOfDay = value;
+            }));
+  }
+
+  TimeOfDay? _closetimeOfDay = TimeOfDay(hour: 6, minute: 00);
+  void _closetimepicker() {
+    showTimePicker(context: context, initialTime: TimeOfDay.now())
+        .then((value) => setState(() {
+              _closetimeOfDay = value;
+            }));
+  }
+
+  final notifications = [
+    CheckBoxState(title: 'Monday'),
+    CheckBoxState(title: 'Tuesday'),
+    CheckBoxState(title: 'Wednesday'),
+    CheckBoxState(title: 'Thursday'),
+    CheckBoxState(title: 'Friday'),
+    CheckBoxState(title: 'Saturday'),
+    CheckBoxState(title: 'Sunday'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -623,31 +649,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    // Initial Value
-                    value: op_dropdownvalue,
+                ...notifications.map(buildSingleCheckbox).toList(),
 
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
-
-                    // Array list of items
-                    items: op.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValueeee) {
-                      setState(() {
-                        op_dropdownvalue = newValueeee!;
-                      });
-                    },
-                  ),
-                ),
                 Text(
                   'Opening Time',
                   style: TextStyle(
@@ -655,20 +658,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 26),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: branchCtr,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'From : ',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
                       ),
-                      hintText: 'Opening Time',
-                      // suffix: Icon(Icons.visibility)
                     ),
-                  ),
+                    Text(
+                      _timeOfDay!.format(context).toString(),
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Spacer(),
+                    MaterialButton(
+                      onPressed: _showtimepicker,
+                      child: Text('Opening Time'),
+                      color: Colors.orange,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
                 ),
                 Text(
                   'Closing Time',
@@ -677,20 +695,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 26),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: branchCtr,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'To : ',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
                       ),
-                      hintText: 'Opening Time',
-                      // suffix: Icon(Icons.visibility)
                     ),
-                  ),
+                    Text(
+                      _closetimeOfDay!.format(context).toString(),
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Spacer(),
+                    MaterialButton(
+                      onPressed: _closetimepicker,
+                      child: Text('Closing Time'),
+                      color: Colors.orange,
+                    ),
+                  ],
                 ),
                 // Container(
                 //   width: double.infinity,
@@ -1137,4 +1167,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ));
     }
   }
+
+  Widget buildSingleCheckbox(CheckBoxState checkbox) => CheckboxListTile(
+        title: Text(checkbox.title),
+        value: checkbox.value,
+        onChanged: (value) => setState(() => checkbox.value = value!),
+        controlAffinity:
+            ListTileControlAffinity.leading, //  <-- leading Checkbox
+      );
+}
+
+class CheckBoxState {
+  final String title;
+  bool value;
+
+  CheckBoxState({required this.title, this.value = false});
 }
