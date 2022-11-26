@@ -37,7 +37,7 @@ class _QR_scan extends State<QR_scan> {
         BuildQRview(context),
         //Visa and credit card icons on top of the camera
         Positioned(
-          top: 700,
+          bottom: 150,
           left: 0,
           right: 0,
           child: Container(
@@ -68,7 +68,7 @@ class _QR_scan extends State<QR_scan> {
 
         Positioned(
           height: 100,
-          left: 200,
+          left: 150,
           bottom: 20,
           child: Container(
             width: 100,
