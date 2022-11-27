@@ -21,13 +21,12 @@ class _QR_scan extends State<QR_scan> {
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
   @override
-  void reassemble() {
+  void reassemble() async {
     super.reassemble();
     if (Platform.isAndroid) {
-      controller!.pauseCamera();
-    } else if (Platform.isIOS) {
-      controller!.resumeCamera();
+      await controller!.pauseCamera();
     }
+    controller!.resumeCamera();
   }
 
   @override
@@ -36,20 +35,59 @@ class _QR_scan extends State<QR_scan> {
         body: Stack(
       children: [
         BuildQRview(context),
+        //Visa and credit card icons on top of the camera
+        Positioned(
+          bottom: 150,
+          left: 0,
+          right: 0,
+          child: Container(
+            height: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Image.asset(
+                  'assets/images/credit.png',
+                  height: 50,
+                ),
+                Image.asset(
+                  'assets/images/card.png',
+                  height: 50,
+                ),
+                Image.asset(
+                  'assets/images/paypal.png',
+                  height: 50,
+                ),
+                Image.asset(
+                  'assets/images/visa.png',
+                  height: 50,
+                ),
+              ],
+            ),
+          ),
+        ),
+
         Positioned(
           height: 100,
-          left: 200,
+          left: 150,
           bottom: 20,
-          child: IconButton(
-              iconSize: 50,
-              color: Colors.white,
-              icon: const Icon(Icons.flash_on),
-              onPressed: () async {
-                await controller!.toggleFlash();
-                setState(() {
-                  controller!.getFlashStatus().then((value) => print(value));
-                });
-              }),
+          child: Container(
+            width: 100,
+            //rounded container with grey background
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: IconButton(
+                iconSize: 50,
+                color: Colors.black,
+                icon: const Icon(Icons.flash_on),
+                onPressed: () async {
+                  await controller!.toggleFlash();
+                  setState(() {
+                    controller!.getFlashStatus().then((value) => print(value));
+                  });
+                }),
+          ),
         ),
       ],
     )
