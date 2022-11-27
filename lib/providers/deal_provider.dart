@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:SiBuy/services/categories/category_services.dart';
@@ -311,6 +312,7 @@ class DealProvider with ChangeNotifier {
     // }
   }
 
+//calculate discount
   String calculateDiscount(
     String discountOnPrice,
     dynamic price,
@@ -330,6 +332,7 @@ class DealProvider with ChangeNotifier {
     return priceAfterDiscount.toStringAsFixed(2);
   }
 
+//rating stars
   List<Image> getStars(int stars) {
     List<Image> list = List.empty(growable: true);
     switch (stars) {
@@ -404,16 +407,16 @@ class DealProvider with ChangeNotifier {
 
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       if (response.statusCode == 200) {
-        print(response.body);
+        log(response.body);
         List.generate(data['data'].length, (i) {
           languageList.add(data['data'][i]['name']);
-          print(data['data'][i]['name']);
+          log(data['data'][i]['name']);
         });
         _languages = languageList;
         _languageData = data;
         notifyListeners();
       } else {
-        print(response.statusCode);
+        log(response.statusCode.toString());
         _languages = [];
         notifyListeners();
       }

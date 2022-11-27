@@ -1,15 +1,17 @@
+import 'dart:developer';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:SiBuy/models/category_model.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
-import '../../services/categories/category_services.dart';
+import 'package:provider/provider.dart';
+import '../../providers/deal_provider.dart';
 import '../../user_app/verify _code/user_verification.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -22,62 +24,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  File? image;
-  int radioValue = 0;
-
-  Future pickimage() async {
-    try {
-      final Image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (Image == null) return;
-      final imageTemporary = File(Image.path);
-      setState(() {
-        this.image = imageTemporary;
-      });
-      this.image = imageTemporary;
-    } on PlatformException catch (e) {
-      print("failed to load $e");
-    }
-  }
-
-  File? imagee;
-  Future pickimagee() async {
-    try {
-      final Image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (Image == null) return;
-      final imageTemporary = File(Image.path);
-      setState(() {
-        this.imagee = imageTemporary;
-      });
-      this.imagee = imageTemporary;
-    } on PlatformException catch (e) {
-      print("failed to load $e");
-    }
-  }
-
-  FilePickerResult? result;
-  PlatformFile? file;
-  void pickfile() async {
-    result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['pdf', 'doc'],
-        allowMultiple: true);
-    if (result == null) return;
-    file = result!.files.first;
-    setState(() {});
-  }
-
-  FilePickerResult? resultt;
-  PlatformFile? filee;
-  void pickfilee() async {
-    resultt = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['pdf', 'doc'],
-        allowMultiple: true);
-    if (result == null) return;
-    filee = resultt!.files.first;
-    setState(() {});
-  }
-
+  DealProvider? _provider;
   final _key = GlobalKey<FormState>();
   final nameCtr = TextEditingController();
   final countryCtr = TextEditingController();
@@ -91,56 +38,102 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final branchCtr = TextEditingController();
   final catCtr = TextEditingController();
   final catCtr2 = TextEditingController();
+  final patentCtr = TextEditingController();
+  final registerationCtr = TextEditingController();
+  final openingTimeCtr = TextEditingController();
+  final closingTimeCtr = TextEditingController();
 
   double? longitude;
   double? latitued;
   Country? selectedCountry;
-  @override
+  String? categoyId_1;
+  String? categoyId_2;
+  String? languageId;
 
-  //Signup
-  var isLoading = false;
-  bool catLoaded = false;
-  List<CategoryData>? catData;
+  File? logoImage;
+  int radioValue = 0;
 
-  Future<void> loadAllCategories() async {
-    final result = await CategoryServices().getAllCategories();
-
-    setState(() {
-      catData = result.data;
-    });
+  //logo picker
+  Future _logoPicker() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      setState(() {
+        logoImage = imageTemporary;
+      });
+      logoImage = imageTemporary;
+    } on PlatformException catch (e) {
+      print("failed to load $e");
+    }
   }
 
-  String dropdownvaluee = 'Item 1';
+  File? profile_image;
+  //profile image picker
+  Future profilePicker() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      setState(() {
+        profile_image = imageTemporary;
+      });
+      profile_image = imageTemporary;
+    } on PlatformException catch (e) {
+      log("failed to load $e");
+    }
+  }
 
-  // List of items in our dropdown menu
-  var itemss = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
+  FilePickerResult? result;
+  PlatformFile? file;
+
+  //document 1 picker
+  void pickDocument_1() async {
+    result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'docx'],
+        allowMultiple: true);
+    if (result == null) return;
+    file = result!.files.first;
+    setState(() {});
+  }
+
+  FilePickerResult? resultt;
+  PlatformFile? filee;
+
+  //docunmet 2 picker
+  void pickDocument_2() async {
+    resultt = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'docx'],
+        allowMultiple: true);
+    if (result == null) return;
+    filee = resultt!.files.first;
+    setState(() {});
+  }
+
+  //Signup
+  bool isLoading = false;
+  bool catLoaded = false;
+
+  ValueNotifier<bool> isLoaded = ValueNotifier(false);
+
+  // Future<void> loadAllCategories() async {
+  //   final result = await CategoryServices().getAllCategories();
+
+  //   setState(() {
+  //     catData = result.data;
+  //   });
+  // }
+
+  String category_2 = 'For Men';
+
   // Initial Selected Value
-  String dropdownvalue = 'Item 1';
+  String category_1 = 'For Men';
+
+  String langDropdownvaluee = 'English';
 
   // List of items in our dropdown menu
-  var items = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-  String lang_dropdownvaluee = 'Item 1';
-
-  // List of items in our dropdown menu
-  var lang = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
   String op_dropdownvalue = 'Item 1';
 
   // List of items in our dropdown menu
@@ -154,6 +147,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void initState() {
+    _provider = Provider.of<DealProvider>(context, listen: false);
     selectedCountry = const Country(
       name: "Azerbaijan",
       flag: "🇦🇿",
@@ -163,13 +157,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
       maxLength: 9,
     );
     debugPrint(countryCtr.text);
-    loadAllCategories().whenComplete(() {
-      setState(() {
-        catLoaded = true;
-      });
-    });
+    // loadAllCategories().whenComplete(() {
+    //   setState(() {
+    //     catLoaded = true;
+    //   });
+    // });
 
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _provider!
+        .getAllLanguages()
+        .then((value) => _provider!.getAllCat().whenComplete(() {
+              isLoaded.value = true;
+              // setState(() {
+              //   // items = Provider.of<DealProvider>(context, listen: false).languages;
+              // });
+            }));
+    super.didChangeDependencies();
   }
 
   @override
@@ -482,7 +489,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your branch name';
+                        return 'Please enter your address';
                       }
                       return null;
                     },
@@ -503,112 +510,192 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                Text(
+                const Text(
                   'Category 1',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    // Initial Value
-                    value: dropdownvalue,
 
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
+                // category 1 dropdown
+                SizedBox(
+                  width: double.maxFinite,
+                  child: ValueListenableBuilder(
+                    valueListenable: isLoaded,
+                    builder: (BuildContext context, bool value, Widget? child) {
+                      return isLoaded.value == false
+                          ? const CircularProgressIndicator()
+                          : DropdownButton<String>(
+                              isExpanded: true,
+                              // Initial Value
+                              value: category_1,
 
-                    // Array list of items
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownvalue = newValue!;
-                      });
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: _provider!.allCategories
+                                  .map<DropdownMenuItem<String>>(
+                                      (String items) {
+                                return DropdownMenuItem<String>(
+                                  value: items,
+                                  child: Text(items),
+                                  onTap: () {
+                                    for (int i = 0;
+                                        i < _provider!.allCategories.length;
+                                        i++) {
+                                      if (items ==
+                                          _provider!.allCategories[i]) {
+                                        categoyId_1 = _provider!
+                                            .catData.data![i].id
+                                            .toString();
+                                        break;
+                                      }
+                                    }
+                                    print(categoyId_1);
+                                  },
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  category_1 = newValue!;
+                                });
+                              },
+                            );
                     },
                   ),
                 ),
-                SizedBox(
+
+                const SizedBox(
                   width: 10,
                 ),
-                Text(
+                const Text(
                   'Category 2',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    // Initial Value
-                    value: dropdownvaluee,
 
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
+                //category 2 dropdown
+                SizedBox(
+                  width: double.maxFinite,
+                  child: ValueListenableBuilder(
+                    valueListenable: isLoaded,
+                    builder: (BuildContext context, bool value, Widget? child) {
+                      return isLoaded.value == false
+                          ? const CircularProgressIndicator()
+                          : DropdownButton<String>(
+                              isExpanded: true,
+                              // Initial Value
+                              value: category_2,
 
-                    // Array list of items
-                    items: itemss.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValuee) {
-                      setState(() {
-                        dropdownvaluee = newValuee!;
-                      });
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: _provider!.allCategories
+                                  .map<DropdownMenuItem<String>>(
+                                      (String items) {
+                                return DropdownMenuItem<String>(
+                                  value: items,
+                                  child: Text(items),
+                                  onTap: () {
+                                    for (int i = 0;
+                                        i < _provider!.allCategories.length;
+                                        i++) {
+                                      if (items ==
+                                          _provider!.allCategories[i]) {
+                                        categoyId_1 = _provider!
+                                            .catData.data![i].id
+                                            .toString();
+                                        break;
+                                      }
+                                    }
+                                    print(categoyId_1);
+                                  },
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  category_2 = newValue!;
+                                });
+                              },
+                            );
                     },
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                Text(
+                const Text(
                   'Language',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    // Initial Value
-                    value: lang_dropdownvaluee,
 
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
+                //language dropdwon
+                SizedBox(
+                  width: double.maxFinite,
+                  child: ValueListenableBuilder(
+                    valueListenable: isLoaded,
+                    builder: (BuildContext context, bool value, Widget? child) {
+                      return isLoaded.value == false
+                          ? const CircularProgressIndicator()
+                          : DropdownButton<String>(
+                              isExpanded: true,
+                              // Initial Value
+                              value: langDropdownvaluee,
 
-                    // Array list of items
-                    items: lang.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValueee) {
-                      setState(() {
-                        lang_dropdownvaluee = newValueee!;
-                      });
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: _provider!.languages
+                                  .map<DropdownMenuItem<String>>(
+                                      (String items) {
+                                return DropdownMenuItem<String>(
+                                  value: items,
+                                  child: Text(items),
+                                  onTap: () {
+                                    for (int i = 0;
+                                        i < _provider!.allCategories.length;
+                                        i++) {
+                                      if (items ==
+                                          _provider!.allCategories[i]) {
+                                        languageId = _provider!
+                                            .catData.data![i].id
+                                            .toString();
+                                        break;
+                                      }
+                                    }
+                                    print(languageId);
+                                  },
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  langDropdownvaluee = newValue!;
+                                });
+                              },
+                            );
                     },
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                Text(
+                //operation days
+                const Text(
                   'Operation Days',
                   style: TextStyle(
                     fontSize: 15,
@@ -640,7 +727,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                 ),
-                Text(
+
+                const Text(
                   'Opening Time',
                   style: TextStyle(
                     fontSize: 15,
@@ -651,7 +739,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   padding: const EdgeInsets.only(bottom: 26),
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    controller: branchCtr,
+                    controller: openingTimeCtr,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
@@ -662,7 +750,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                Text(
+                const Text(
                   'Closing Time',
                   style: TextStyle(
                     fontSize: 15,
@@ -673,7 +761,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   padding: const EdgeInsets.only(bottom: 26),
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    controller: branchCtr,
+                    controller: closingTimeCtr,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
@@ -684,35 +772,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                // Container(
-                //   width: double.infinity,
-                //   height: 150,
-                //   margin:
-                //       const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                //   child: catLoaded == false
-                //       ? const Center(child: CircularProgressIndicator())
-                //       : GridView.builder(
-                //           itemCount: catData!.length,
-                //           physics: const BouncingScrollPhysics(),
-                //           gridDelegate:
-                //               SliverGridDelegateWithFixedCrossAxisCount(
-                //             crossAxisCount: 2,
-                //             crossAxisSpacing: 8,
-                //             childAspectRatio:
-                //                 MediaQuery.of(context).size.width /
-                //                     (MediaQuery.of(context).size.height / 10),
-                //             mainAxisSpacing: 8,
-                //           ),
-                //           itemBuilder: (context, index) {
-                //             return Text(
-                //                 '${catData![index].id}: ${catData![index].name}');
-                //           }),
-                // ),
+
+                // profile pic
                 InkWell(
                   onTap: () {
-                    pickimage();
+                    profilePicker();
                   },
-                  child: Container(
+                  child: SizedBox(
                     width: 300,
                     child: Row(children: [
                       Container(
@@ -723,9 +789,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.grey[200],
                         ),
-                        child: image != null
+                        child: profile_image != null
                             ? Image.file(
-                                image!,
+                                profile_image!,
                                 fit: BoxFit.cover,
                               )
                             : const Icon(
@@ -733,7 +799,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: Colors.grey,
                               ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       const Text(
@@ -753,14 +819,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ]),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
+
+                //logo pic
                 InkWell(
                   onTap: () {
-                    pickimagee();
+                    _logoPicker();
                   },
-                  child: Container(
+                  child: SizedBox(
                     width: 300,
                     child: Row(children: [
                       Container(
@@ -771,9 +839,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.grey[200],
                         ),
-                        child: imagee != null
+                        child: logoImage != null
                             ? Image.file(
-                                imagee!,
+                                logoImage!,
                                 fit: BoxFit.cover,
                               )
                             : const Icon(
@@ -781,7 +849,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: Colors.grey,
                               ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       const Text(
@@ -801,17 +869,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ]),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
-                Text(
-                  'Registration Type',
+                const Text(
+                  'Is registered with ministry of Commerce?',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Row(
@@ -840,6 +908,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             setState(() {
                               radioValue = value as int;
                             });
+                            log(radioValue.toString());
                           },
                         ),
                         const Text('No'),
@@ -847,146 +916,116 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 26),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
+                if (radioValue == 1)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 26),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        hintText: 'Regeistration number',
+                        // suffix: Icon(Icons.visibility)
                       ),
-                      hintText: 'Regeistration number',
-                      // suffix: Icon(Icons.visibility)
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 26),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
+                if (radioValue == 1)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 26),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        hintText: 'Patent Number',
+                        // suffix: Icon(Icons.visibility)
                       ),
-                      hintText: 'Patent Number',
-                      // suffix: Icon(Icons.visibility)
                     ),
                   ),
-                ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
-                ),
-                InkWell(
-                  onTap: () {
-                    pickfile();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Document Upload 0',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      const Icon(
-                        Icons.upload_file,
-                        size: 30,
-                      ),
-                    ],
-                  ),
-                ),
-                Text(
-                  'Document Name: $file',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                InkWell(
-                  onTap: () {
-                    pickfilee();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Document Upload 1',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      const Icon(
-                        Icons.upload_file,
-                        size: 30,
-                      ),
-                    ],
-                  ),
-                ),
-                Text(
-                  'Document Name: $filee',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
 
-                // Padding(
-                //   padding: const EdgeInsets.only(bottom: 26),
-                //   child: TextFormField(
-                //     controller: catCtr,
-                //     keyboardType: TextInputType.number,
-                //     decoration: InputDecoration(
-                //       enabledBorder: OutlineInputBorder(
-                //         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                //         borderRadius: BorderRadius.circular(16),
-                //       ),
-                //       hintText: 'Enter only one Category id from above list',
-                //       // suffix: Icon(Icons.visibility)
-                //     ),
-                //     validator: (value) {
-                //       if (value == null || value.isEmpty) {
-                //         return 'Please enter category';
-                //       }
-                //       return null;
-                //     },
-                //   ),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(bottom: 26),
-                //   child: TextFormField(
-                //     controller: catCtr2,
-                //     keyboardType: TextInputType.number,
-                //     decoration: InputDecoration(
-                //       enabledBorder: OutlineInputBorder(
-                //         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                //         borderRadius: BorderRadius.circular(16),
-                //       ),
-                //       hintText: 'Enter Second Category id',
-                //       // suffix: Icon(Icons.visibility)
-                //     ),
-                //     validator: (value) {
-                //       if (value == null || value.isEmpty) {
-                //         return 'Please enter category';
-                //       }
-                //       return null;
-                //     },
-                //   ),
-                // ),
+                //document 1 picker
+                if (radioValue == 1)
+                  InkWell(
+                    onTap: () {
+                      pickDocument_1();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Document Upload 0',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Icon(
+                          Icons.upload_file,
+                          size: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                if (radioValue == 1)
+                  Text(
+                    'Document Name: $file',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                const SizedBox(
+                  height: 15,
+                ),
+
+                //document 2 picker
+                if (radioValue == 1)
+                  InkWell(
+                    onTap: () {
+                      pickDocument_2();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Document Upload 1',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Icon(
+                          Icons.upload_file,
+                          size: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                if (radioValue == 1)
+                  Text(
+                    'Document Name: $filee',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
                 CustomButton(
                   isLoading: isLoading,
                   text: 'Next',
@@ -1063,20 +1102,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'name': nameCtr.text,
         'email': emailCtr.text,
         'phone_no': phoneNumberCtr.text,
-
         'password': passCtr.text,
         'password_confirmation': passCtr.text,
-        'branch_name': branchCtr.text,
-        'address': '$latitued, $longitude, ${cityCtr.text}, ${countryCtr.text}',
+        'address': branchCtr.text,
         'description': desCtr.text,
-        // 'profile_picture': '',
-        // 'logo': '',
+        'profile_picture': profile_image!.path,
+        'logo': logoImage!.path,
         'country': countryCtr.text,
         'city': cityCtr.text,
-        'lat': '${latitued ?? ''}',
-        'long': '${longitude ?? ''}',
-        'categories[0]': catCtr.text,
-        'categories[1]': catCtr.text,
+        'categories[0]': categoyId_1,
+        'categories[1]': categoyId_2,
+        'documents[0]': file!.path,
+        'documents[1]': filee!.path,
+        'registration_number': registerationCtr.text,
+        'patent_number': patentCtr.text,
+        'is_registered_with_ministry_of_commerce': radioValue,
+        'opnening_time': openingTimeCtr.text,
+        'closing_time': closingTimeCtr.text,
+        'operation_days': op_dropdownvalue,
+        'language': languageId,
       };
 
       //get response from ApiClient
