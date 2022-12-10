@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/models/top_mecrchant_model.dart';
 import 'package:SiBuy/user_app/user_menu/profile.dart';
 
+import '../../../apis/api_urls.dart';
+
 class DetailsCardWidget extends StatefulWidget {
   const DetailsCardWidget(
       {Key? key,
@@ -18,8 +20,6 @@ class DetailsCardWidget extends StatefulWidget {
 }
 
 class _DetailsCardWidgetState extends State<DetailsCardWidget> {
-  static const baseUrl = 'http://gigi-api.cryslistechnologies.com/';
-
   @override
   void initState() {
     // getMerchantProfile();
@@ -53,7 +53,7 @@ class _DetailsCardWidgetState extends State<DetailsCardWidget> {
               child: widget.data.profilePicture != null &&
                       widget.data.profilePicture!.isNotEmpty
                   ? Image.network(
-                      '$baseUrl${widget.data.profilePicturePath!}/${widget.data.profilePicture}',
+                      '${ApiUrls.imgBaseUrl}${widget.data.profilePicturePath!}/${widget.data.profilePicture}',
                       height: 120,
                       width: 120)
                   : Image.asset(

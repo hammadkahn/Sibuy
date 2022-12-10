@@ -30,7 +30,7 @@ class _user_splashState extends State<user_splash>
         email == null || token == null
             ? Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const user_auth()))
-            : userType == 2
+            : userType == '2'
                 ? Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -61,7 +61,7 @@ class _user_splashState extends State<user_splash>
 
   String? token;
   String? email;
-  int? userType;
+  String? userType;
   String? status;
   int? userId;
 
@@ -71,11 +71,11 @@ class _user_splashState extends State<user_splash>
 
     token = prefs.getString('token');
     email = prefs.getString('email');
-    userType = int.parse(prefs.getString('user_type') ?? '');
+    userType = prefs.getString('user_type') ?? '';
     status = prefs.getString('status');
     userId = prefs.getInt('userId');
     debugPrint('user type: $status');
-    debugPrint(prefs.getString('country'));
+
     debugPrint(token);
     debugPrint(email);
     debugPrint(userType.toString());

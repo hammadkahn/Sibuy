@@ -40,7 +40,7 @@ class stats3 extends StatelessWidget {
                         fontFamily: 'Mulish',
                         color: Color(0xFFff6600))),
                 const Text(
-                  'is Successfuly added in MyGiGI',
+                  'is Successfuly added in SiBuy365',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

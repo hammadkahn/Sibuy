@@ -67,7 +67,7 @@ class _C_sliderState extends State<C_slider> {
           : CarouselSlider.builder(
               itemCount: weekDeals.length,
               itemBuilder: ((context, index, realIndex) {
-                return Demo_Deals();
+                return const Demo_Deals();
                 // return dealsUser(
                 //   token: widget.token,
                 //   dealData: weekDeals[index],

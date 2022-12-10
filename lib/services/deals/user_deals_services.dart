@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:SiBuy/models/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:SiBuy/apis/api_urls.dart';
 import 'package:http/http.dart' as http;
@@ -40,7 +41,7 @@ class UserDealServices {
 
   Future<UserListOfDeals> getAllUserDeals(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    debugPrint('statement: ${prefs.getString('long')}');
+
     try {
       final response = await http.get(
         Uri.parse(
@@ -109,16 +110,16 @@ class UserDealServices {
     }
   }
 
-  Future<Map<String, dynamic>> getSystemCities(
+  //shifted to deal provider class
+  Future<UserLocationsModel> getSystemCities(
       String token, String country) async {
     try {
       final response = await http.get(
-          Uri.parse(
-              '${ApiUrls.baseUrl}getSystemCitiesByCountry?country=$country'),
+          Uri.parse('${ApiUrls.baseUrl}user/getUserLocations'),
           headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
-      final result = jsonDecode(response.body) as Map<String, dynamic>;
+      final result = UserLocationsModel.fromJson(jsonDecode(response.body));
       if (response.statusCode == 200) {
-        debugPrint(result['message']);
+        debugPrint(result.message);
         return result;
       } else {
         debugPrint(response.reasonPhrase);

@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:SiBuy/models/deal_model.dart';
+
+import '../../models/user_model.dart';
 
 class bottom_detail extends StatelessWidget {
   const bottom_detail(
       {Key? key,
       required this.dealData,
       required this.price,
-      required this.totalReviews,
-      required this.length,
       required this.token})
       : super(key: key);
-  final DealDetails dealData;
+  final UserSingleDealData dealData;
   final String? price;
-  final String totalReviews;
-  final String length;
+
   final String token;
 
   @override
@@ -37,52 +35,46 @@ class bottom_detail extends StatelessWidget {
           ),
           Padding(
               padding: const EdgeInsets.only(top: 4),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      dealData.name ?? 'no name',
-                      softWrap: true,
-                      style: const TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF4A4A6A)),
-                    ),
-                  ),
-                  const Spacer(),
-                  Radio(value: 1, groupValue: value, onChanged: (value) {})
-                ],
+              child: Text(
+                dealData.name ?? 'no name',
+                softWrap: true,
+                style: const TextStyle(
+                    fontFamily: 'Mulish',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF4A4A6A)),
               )),
-          Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Row(
-                children: [
-                  Image.asset(
-                    'assets/images/menu_location.png',
-                    width: 8,
-                    height: 8,
-                  ),
-                  Expanded(
-                    child: Text(
-                      dealData.branches![0].address ?? 'loading',
-                      softWrap: true,
-                      style: const TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF8E8EA9)),
-                    ),
-                  ),
-                ],
-              )),
+          // Padding(
+          //     padding: const EdgeInsets.only(top: 4),
+          //     child: Row(
+          //       children: [
+          //         Image.asset(
+          //           'assets/images/menu_location.png',
+          //           width: 8,
+          //           height: 8,
+          //         ),
+          //         Expanded(
+          //           child: Text(
+          //             'location',
+          //             softWrap: true,
+          //             style: const TextStyle(
+          //                 fontFamily: 'Mulish',
+          //                 fontSize: 10,
+          //                 fontWeight: FontWeight.w600,
+          //                 color: Color(0xFF8E8EA9)),
+          //           ),
+          //         ),
+          //       ],
+          //     )),
           Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Row(
                 children: [
                   Image.asset('assets/images/rating.png', width: 6, height: 6),
                   Text(
-                    totalReviews,
+                    dealData.reviewAndCount == null
+                        ? '0'
+                        : dealData.reviewAndCount!.rating!,
                     style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 7,
@@ -90,7 +82,7 @@ class bottom_detail extends StatelessWidget {
                         color: Color(0xFF5F5F5F)),
                   ),
                   Text(
-                    '($length reviews)',
+                    '(${dealData.reviewAndCount == null ? '0' : dealData.reviewAndCount!.count} reviews)',
                     style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 4,

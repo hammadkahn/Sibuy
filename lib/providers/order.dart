@@ -51,6 +51,7 @@ class Cart with ChangeNotifier {
     String? afterDiscount = '0',
     String? reviewsCount = '0',
     bool isWishList = false,
+    int? qty,
   }) {
     print('id : $id');
 
@@ -71,13 +72,12 @@ class Cart with ChangeNotifier {
                 merchantId: merchantId,
               ));
     } else {
-      print('id : $id');
       _cartMap.putIfAbsent(
         id!,
         () => CartItems(
           reviewsCount: reviewsCount ?? '0',
           priceAfterDiscount: calculateDiscount(discountOnPrice!, price!),
-          qty: isWishList == true ? '1' : '$qty',
+          qty: isWishList == true ? '1' : '1',
           id: id,
           path: path!,
           image: image ?? '',
@@ -88,7 +88,6 @@ class Cart with ChangeNotifier {
           merchantId: merchantId,
         ),
       );
-      print(cartMap[id]!.title ?? 'null values');
     }
     // _cartItemsList.add(
     //   CartItems(

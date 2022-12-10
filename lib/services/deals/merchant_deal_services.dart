@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -105,6 +106,32 @@ class DealServices {
           headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
           body: {'branch': branchId});
 
+      final result = jsonDecode(response.body) as Map<String, dynamic>;
+      if (response.statusCode == 200) {
+        debugPrint(response.body);
+        return result['message'];
+      } else {
+        debugPrint(response.body);
+        return result['error'];
+      }
+    } catch (e) {
+      debugPrint('err: $e');
+      throw Exception(e);
+    }
+  }
+
+  Future<String> redeemWithCode(String token, String uniqueCode) async {
+    log('$token, $uniqueCode');
+    try {
+      final url =
+          Uri.parse('${ApiUrls.baseUrl}merchant/redeemDealByUniqueCode');
+      final response = await http.post(url,
+          headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+          body: {'uniqueCode': uniqueCode});
+      log(response.statusCode.toString());
+      if (response.statusCode >= 400 && response.statusCode < 500) {
+        return 'This unique code does not exists';
+      }
       final result = jsonDecode(response.body) as Map<String, dynamic>;
       if (response.statusCode == 200) {
         debugPrint(response.body);

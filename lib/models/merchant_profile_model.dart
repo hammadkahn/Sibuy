@@ -43,7 +43,7 @@ class Data {
   int? status;
   String? createdAt;
   String? updatedAt;
-  int? averageRating;
+  double? averageRating;
   List<Reviews>? reviews;
   int? activeOffers;
   int? dealRadeems;
@@ -52,6 +52,8 @@ class Data {
   List<BusinessDetails>? businessDetails;
   List<UserLocations>? userLocations;
   List<UserLanguages>? userLanguages;
+  Bank? bank;
+  Charges? charges;
   String? profilePicturePath;
   String? statusName;
 
@@ -249,12 +251,12 @@ class Documents {
 class UserLocations {
   int? id;
   String? address;
-  String? countryId;
+  int? countryId;
   String? countryName;
-  String? cityId;
+  int? cityId;
   String? cityName;
-  double? lat;
-  double? long;
+  dynamic lat;
+  dynamic long;
 
   UserLocations(
       {this.id,
@@ -320,6 +322,109 @@ class UserLanguages {
     data['languageId'] = languageId;
     data['languageCode'] = languageCode;
     data['languageName'] = languageName;
+    return data;
+  }
+}
+
+//bank
+class Bank {
+  int? id;
+  String? merchantId;
+  String? accountName;
+  String? accountType;
+  String? bank;
+  String? accountNumber;
+  String? accountCurrency;
+  String? cardNumer;
+  String? createdAt;
+  String? updatedAt;
+
+  Bank(
+      {this.id,
+      this.merchantId,
+      this.accountName,
+      this.accountType,
+      this.bank,
+      this.accountNumber,
+      this.accountCurrency,
+      this.cardNumer,
+      this.createdAt,
+      this.updatedAt});
+
+  Bank.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    merchantId = json['merchant_id'];
+    accountName = json['account_name'];
+    accountType = json['account_type'];
+    bank = json['bank'];
+    accountNumber = json['account_number'];
+    accountCurrency = json['account_currency'];
+    cardNumer = json['card_numer'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['merchant_id'] = merchantId;
+    data['account_name'] = accountName;
+    data['account_type'] = accountType;
+    data['bank'] = bank;
+    data['account_number'] = accountNumber;
+    data['account_currency'] = accountCurrency;
+    data['card_numer'] = cardNumer;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    return data;
+  }
+}
+
+class Charges {
+  int? id;
+  String? merchantId;
+  String? monthlyCharges;
+  String? adminBeforeRedeemPercentage;
+  String? merchantBeforeRedeemPercentage;
+  String? adminAfterRedeemPercentage;
+  String? merchantAfterRedeemPercentage;
+  String? createdAt;
+  String? updatedAt;
+
+  Charges(
+      {this.id,
+      this.merchantId,
+      this.monthlyCharges,
+      this.adminBeforeRedeemPercentage,
+      this.merchantBeforeRedeemPercentage,
+      this.adminAfterRedeemPercentage,
+      this.merchantAfterRedeemPercentage,
+      this.createdAt,
+      this.updatedAt});
+
+  Charges.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    merchantId = json['merchant_id'];
+    monthlyCharges = json['monthly_charges'];
+    adminBeforeRedeemPercentage = json['admin_before_redeem_percentage'];
+    merchantBeforeRedeemPercentage = json['merchant_before_redeem_percentage'];
+    adminAfterRedeemPercentage = json['admin_after_redeem_percentage'];
+    merchantAfterRedeemPercentage = json['merchant_after_redeem_percentage'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['merchant_id'] = merchantId;
+    data['monthly_charges'] = monthlyCharges;
+    data['admin_before_redeem_percentage'] = adminBeforeRedeemPercentage;
+    data['merchant_before_redeem_percentage'] = merchantBeforeRedeemPercentage;
+    data['admin_after_redeem_percentage'] = adminAfterRedeemPercentage;
+    data['merchant_after_redeem_percentage'] = merchantAfterRedeemPercentage;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

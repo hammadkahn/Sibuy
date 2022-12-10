@@ -22,7 +22,7 @@ class ApiUrls {
   );
   static final purchaseDeal = Uri.parse('${baseUrl}user/purchaseDeal');
   static final cartList = Uri.parse(
-      '${baseUrl}user/getCustomerPurchasedDeals?limit=?returnType=customPagination');
+      '${baseUrl}user/getCustomerPurchasedDeals?returnType=customPagination&timeSort=desc');
 
   //whilist urls
   static final addToWishList = Uri.parse('${baseUrl}user/addToWishlist');

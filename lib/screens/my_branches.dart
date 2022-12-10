@@ -35,7 +35,7 @@ class MyBranches extends StatelessWidget {
                     child: Text(snapshot.error.toString()),
                   );
                 } else if (snapshot.data!.data!.isEmpty) {
-                  return const Center(child: Text('No deals available'));
+                  return const Center(child: Text('No branch found'));
                 } else {
                   print(snapshot.data!.data!.length);
                   return ListView.builder(

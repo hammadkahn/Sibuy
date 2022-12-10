@@ -1,6 +1,7 @@
+import 'package:SiBuy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/apis/api_urls.dart';
-import 'package:SiBuy/models/deal_model.dart';
+
 import 'package:SiBuy/models/reviews_model.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 class trending_user extends StatefulWidget {
   const trending_user({Key? key, required this.data, required this.token})
       : super(key: key);
-  final DealData data;
+  final UserDealListData data;
   final String token;
 
   @override
@@ -78,21 +79,17 @@ class _trending_userState extends State<trending_user> {
           const SizedBox(
             height: 4,
           ),
-          Row(
-            children: [
-              Text(
-                widget.data.type!.toString(),
-                softWrap: true,
-                style: const TextStyle(
-                    fontFamily: 'Mulish',
-                    fontSize: 7,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFFFF6767)),
-              ),
-            ],
+          Text(
+            widget.data.type!.toString(),
+            softWrap: true,
+            style: const TextStyle(
+                fontFamily: 'Mulish',
+                fontSize: 7,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFFFF6767)),
           ),
           const SizedBox(
-            height: 4,
+            height: 2,
           ),
           Row(
             children: [
@@ -116,7 +113,7 @@ class _trending_userState extends State<trending_user> {
             ],
           ),
           const SizedBox(
-            height: 4,
+            height: 2,
           ),
           Row(
             children: [
@@ -147,7 +144,7 @@ class _trending_userState extends State<trending_user> {
               ),
               Text(
                 Provider.of<DealProvider>(context).calculateDiscount(
-                    '${widget.data.discountOnPrice ?? '0'}',
+                    '${widget.data.discount ?? '0'}',
                     '${widget.data.price ?? '0'}'),
                 style: const TextStyle(
                     fontFamily: 'Mulish',
@@ -163,7 +160,7 @@ class _trending_userState extends State<trending_user> {
                     borderRadius: BorderRadius.all(Radius.circular(3))),
                 child: Center(
                   child: Text(
-                    '${widget.data.discountOnPrice ?? 0}% OFF',
+                    '${widget.data.discount ?? 0}% OFF',
                     style: const TextStyle(
                         fontSize: 5,
                         fontFamily: 'Mulish',
@@ -173,9 +170,6 @@ class _trending_userState extends State<trending_user> {
                 ),
               ),
             ],
-          ),
-          const SizedBox(
-            height: 4,
           ),
           Text(
             'Coupons Left:  ${widget.data.limit}',

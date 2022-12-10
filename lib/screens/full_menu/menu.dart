@@ -1,3 +1,4 @@
+import 'package:SiBuy/models/dashbaord_stats_model.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/screens/full_menu/location_bar.dart';
@@ -31,7 +32,7 @@ class Menu extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 550 / 812,
-                  child: FutureBuilder<Map<String, dynamic>>(
+                  child: FutureBuilder<DashboardStatsModel>(
                     future: DashBoardStats().getDashBoardStats(token),
                     builder: (context, snapshot) {
                       List<Widget> children;
@@ -39,40 +40,39 @@ class Menu extends StatelessWidget {
                         children = [
                           Dashboard(
                             totalSale:
-                                snapshot.data!['data']['totalSale'].toString(),
+                                snapshot.data!.data!.totalSales.toString(),
                           ),
                           const SizedBox(height: 8),
                           Stacked_container(
-                            discountAvailed: snapshot.data!['data']
-                                    ['totalDealRadeem']
+                            discountAvailed: snapshot
+                                .data!.data!.totalCouponRadeemed
                                 .toString(),
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
                             title: 'Total Active Deals',
-                            totalActiveDeals: snapshot.data!['data']
-                                    ['totalActiveDeals']
+                            totalActiveDeals: snapshot
+                                .data!.data!.totalActiveOffers
                                 .toString(),
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
                             title: 'Total Deal Sale',
-                            totalActiveDeals: snapshot.data!['data']
-                                    ['totalDealSale']
+                            totalActiveDeals:
+                                snapshot.data!.data!.totalDealSale.toString(),
+                          ),
+                          const SizedBox(height: 8),
+                          Stacked_container2(
+                            title: 'Total Unredeemed Withholding',
+                            totalActiveDeals: snapshot
+                                .data!.data!.totalUnredeemedWithHolding
                                 .toString(),
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
-                            title: 'Total unredeemed withholding',
-                            totalActiveDeals: snapshot.data!['data']
-                                    ['totalDealSale']
-                                .toString(),
-                          ),
-                          const SizedBox(height: 8),
-                          Stacked_container2(
-                            title: 'Total transaction fee',
-                            totalActiveDeals: snapshot.data!['data']
-                                    ['totalDealSale']
+                            title: 'Total Transaction Fee',
+                            totalActiveDeals: snapshot
+                                .data!.data!.totalTransactionFee
                                 .toString(),
                           ),
                         ];
@@ -134,6 +134,7 @@ class Menu extends StatelessWidget {
                             return ListView.builder(
                               itemCount: snapshot.data!.data!.length,
                               shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 var data = snapshot.data!.data![index];
                                 return InkWell(

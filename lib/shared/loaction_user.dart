@@ -25,7 +25,7 @@ class _Location_bar_userState extends State<Location_bar_user> {
   void initState() {
     super.initState();
     // getCountry().whenComplete(() {
-    fetchCitiesAndCountries();
+    // fetchCitiesAndCountries();
     // });
   }
 
@@ -131,7 +131,7 @@ class _Location_bar_userState extends State<Location_bar_user> {
         await UserDealServices().getSystemCities(widget.token, 'Pakistan');
 
     setState(() {
-      items = result['data'];
+      items = result.data;
     });
   }
 }

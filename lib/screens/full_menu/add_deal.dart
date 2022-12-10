@@ -90,14 +90,16 @@ class _Add_dealState extends State<Add_deal> {
 
   @override
   void didChangeDependencies() {
-    _provider!
-        .getAllLanguages()
-        .then((value) => _provider!.getAllCat().whenComplete(() {
-              isLoaded.value = true;
-              // setState(() {
-              //   // items = Provider.of<DealProvider>(context, listen: false).languages;
-              // });
-            }));
+    _provider!.getAllLanguages().then((value) => _provider!
+            .getAllCat()
+            .then((value) => _provider!.getAllTags())
+            .whenComplete(() {
+          isLoaded.value = true;
+          category = _provider!.allCategories[0];
+          // setState(() {
+          //   // items = Provider.of<DealProvider>(context, listen: false).languages;
+          // });
+        }));
     super.didChangeDependencies();
   }
 
@@ -224,7 +226,7 @@ class _Add_dealState extends State<Add_deal> {
 
                   //product price
                   const Text(
-                    'Procuct Price',
+                    'Product Price',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -381,6 +383,41 @@ class _Add_dealState extends State<Add_deal> {
                           Expanded(
                             child: TextFormField(
                               controller: tag0Ctr,
+                              onTap: () => isLoaded.value == false
+                                  ? ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Loading...'),
+                                      ),
+                                    )
+                                  : showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      context: context,
+                                      builder: (context) => SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                1.3,
+                                        child: ListView.builder(
+                                          itemCount: _provider!.allTags.length,
+                                          itemBuilder: ((context, index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                tag0Ctr.text =
+                                                    _provider!.allTags[index];
+
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Container(
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        15, 12, 15, 8),
+                                                child: Text(
+                                                    _provider!.allTags[index]),
+                                              ),
+                                            );
+                                          }),
+                                        ),
+                                      ),
+                                    ),
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: 'Enter Tags',
@@ -396,33 +433,93 @@ class _Add_dealState extends State<Add_deal> {
                           const SizedBox(width: 4),
                           Expanded(
                             child: TextFormField(
+                              onTap: () => isLoaded.value == false
+                                  ? ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Loading...'),
+                                      ),
+                                    )
+                                  : showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      context: context,
+                                      builder: (context) => SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                1.3,
+                                        child: ListView.builder(
+                                          itemCount: _provider!
+                                              .allCountries.data!.length,
+                                          itemBuilder: ((context, index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                tag1Ctr.text =
+                                                    _provider!.allTags[index];
+
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Container(
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        15, 12, 15, 8),
+                                                child: Text(
+                                                    _provider!.allTags[index]),
+                                              ),
+                                            );
+                                          }),
+                                        ),
+                                      ),
+                                    ),
                               controller: tag1Ctr,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: 'Enter Tags',
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter details';
-                                }
-                                return null;
-                              },
                             ),
                           ),
                           const SizedBox(width: 4),
                           Expanded(
                             child: TextFormField(
+                              onTap: () => isLoaded.value == false
+                                  ? ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Loading...'),
+                                      ),
+                                    )
+                                  : showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      context: context,
+                                      builder: (context) => SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                1.3,
+                                        child: ListView.builder(
+                                          itemCount: _provider!
+                                              .allCountries.data!.length,
+                                          itemBuilder: ((context, index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                tag2Ctr.text =
+                                                    _provider!.allTags[index];
+
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Container(
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        15, 12, 15, 8),
+                                                child: Text(
+                                                    _provider!.allTags[index]),
+                                              ),
+                                            );
+                                          }),
+                                        ),
+                                      ),
+                                    ),
                               controller: tag2Ctr,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: 'Enter Tags',
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter details';
-                                }
-                                return null;
-                              },
                             ),
                           )
                         ],
@@ -708,7 +805,7 @@ class _Add_dealState extends State<Add_deal> {
                     onChanged: (newValue) =>
                         setState(() => switchListTileValue = newValue),
                     title: Text(
-                      'is sponsered?',
+                      'Want this deal to featured as Sponsored Deal?',
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             color: const Color(0xFFBE5F26),
                           ),

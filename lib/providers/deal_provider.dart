@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:SiBuy/models/country_model.dart';
 import 'package:SiBuy/services/categories/category_services.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/cart_model.dart';
@@ -13,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../apis/api_urls.dart';
 import '../models/category_model.dart';
 import '../models/deal_model.dart';
+import '../models/user_model.dart';
 import '../services/user_merchant_services.dart';
 
 class DealProvider with ChangeNotifier {
@@ -71,6 +73,7 @@ class DealProvider with ChangeNotifier {
       );
 
       final result = jsonDecode(response.body) as Map<String, dynamic>;
+      log(response.statusCode.toString());
       if (response.statusCode == 200) {
         debugPrint(response.body);
         _msg = '${result['message']}';
@@ -122,6 +125,7 @@ class DealProvider with ChangeNotifier {
       );
       final result = CartListModel.fromJson(jsonDecode(response.body));
       if (response.statusCode == 200) {
+        log(response.body);
         for (var element in result.data!) {
           _cartData.removeWhere((e) => element.name == e.name);
           _cartData.add(element);
@@ -137,7 +141,12 @@ class DealProvider with ChangeNotifier {
   }
 
   Future<void> wishList(String token, Map<String, dynamic> data) async {
-    await tryCatch(token, ApiUrls.addToWishList, data: data);
+    //ApiUrls.addToWishList
+    await tryCatch(
+      token,
+      ApiUrls.addToWishList,
+      data: data,
+    );
   }
 
   Future<WishListModel> getWishList(String token) async {
@@ -157,23 +166,28 @@ class DealProvider with ChangeNotifier {
     }
   }
 
-  Future<SingleDeal> singleDealDetails(String token, String id) async {
+  UserSingleDealModel? _dealModel;
+  UserSingleDealModel get dealModel => _dealModel!;
+
+  Future<UserSingleDealModel> singleDealDetails(String token, String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
-      final url = Uri.parse('${ApiUrls.baseUrl}user/getDeal/$id');
+      final url = Uri.parse('${ApiUrls.baseUrl}user/getDeal?deal_id=$id}');
       final response = await http.get(
         url,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
       );
-      final result = SingleDeal.fromJson(jsonDecode(response.body));
+      final result = UserSingleDealModel.fromJson(jsonDecode(response.body));
       if (response.statusCode == 200) {
-        _dealData = result.data;
-        print('dealData: $dealData');
+        _dealModel = result;
+        log('dealData: ${result.data}');
         notifyListeners();
         return result;
       } else {
         throw Exception(response.statusCode);
       }
     } catch (e) {
+      log(e.toString());
       throw Exception(e);
     }
   }
@@ -251,21 +265,19 @@ class DealProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  TrendingDealsModel? _userListOfDeals;
+  Map<String, dynamic>? _userListOfDeals;
 
-  TrendingDealsModel get userListOfDeals => _userListOfDeals!;
+  Map<String, dynamic> get userListOfDeals => _userListOfDeals!;
 
-  Future<void> getAllUserDeals(String token) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    debugPrint('statement: ${prefs.getString('country')}');
+  Future<void> getCarousalsDeals(String token) async {
     try {
+      //getTrendingDeals?country=${prefs.getString('country')}&cities[1]=${prefs.getString('city')}&cities[0]=${prefs.getString('city')}
       final response = await http.get(
-        Uri.parse(
-            '${ApiUrls.baseUrl}user/getTrendingDeals?country=${prefs.getString('country')}&cities[1]=${prefs.getString('city')}&cities[0]=${prefs.getString('city')}'),
-        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+        Uri.parse('${ApiUrls.baseUrl}user/getCarousals'),
+        // headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
       );
       debugPrint('status code : ${response.statusCode}');
-      final result = TrendingDealsModel.fromJson(jsonDecode(response.body));
+      final result = (jsonDecode(response.body)) as Map<String, dynamic>;
 
       if (response.statusCode == 429) {
         debugPrint(
@@ -274,7 +286,7 @@ class DealProvider with ChangeNotifier {
       }
 
       if (response.statusCode == 200) {
-        debugPrint(result.message);
+        debugPrint(result['message']);
         _userListOfDeals = result;
         notifyListeners();
       } else {
@@ -317,17 +329,12 @@ class DealProvider with ChangeNotifier {
     String discountOnPrice,
     dynamic price,
   ) {
-    print('price :$discountOnPrice');
     double? priceAfterDiscount = 0;
     double? getPrice;
     double? percentage;
     percentage = double.parse(discountOnPrice) / 100;
     getPrice = percentage * double.parse(price);
     priceAfterDiscount = (double.parse(price) - getPrice);
-
-    print(percentage);
-    print(getPrice);
-    print(priceAfterDiscount);
 
     return priceAfterDiscount.toStringAsFixed(2);
   }
@@ -444,6 +451,140 @@ class DealProvider with ChangeNotifier {
       notifyListeners();
     } else {
       print(result.message);
+    }
+  }
+
+  CountryModel? _allCountries;
+  CountryModel get allCountries => _allCountries!;
+
+  Future<void> getAllCountries() async {
+    final result = await http.get(Uri.parse('${ApiUrls.baseUrl}getCountries'));
+    final responseData = CountryModel.fromJson(jsonDecode(result.body));
+    if (result.statusCode == 200) {
+      log(responseData.data![0].name!);
+      // List.generate(responseData.data!.length,
+      //     (index) => countryList.add(responseData.data![index].name!));
+
+      _allCountries = responseData;
+      notifyListeners();
+    } else {
+      print(responseData.message);
+    }
+  }
+
+  CountryModel? _allCities;
+  CountryModel get allCities => _allCities!;
+
+  List<String>? _citiesList;
+  List<String> get citiesList => _citiesList!;
+
+  Future<void> getAllCities(String id) async {
+    final List<String> listData = [];
+    final result = await http
+        .get(Uri.parse('${ApiUrls.baseUrl}getCityByCountryID?id=$id'));
+    final responseData = CountryModel.fromJson(jsonDecode(result.body));
+    if (result.statusCode == 200) {
+      if (responseData.data!.isEmpty) {
+        log('No cities in this country');
+        _msg = 'No cities in this country';
+      }
+      List.generate(responseData.data!.length,
+          (index) => listData.add(responseData.data![index].name!));
+      _citiesList = listData;
+      _allCities = responseData;
+      notifyListeners();
+    } else {
+      print(responseData.message);
+      _msg = responseData.message!;
+      notifyListeners();
+    }
+  }
+
+  List<String>? _userCities;
+  List<String> get userCities => _userCities!;
+
+  UserLocationsModel? _userCitiesData;
+  UserLocationsModel get userCitiesData => _userCitiesData!;
+
+  //location dropdown
+  Future<void> getSystemCities(String token) async {
+    try {
+      final List<String> res = [];
+      final response = await http.get(
+          Uri.parse('${ApiUrls.baseUrl}user/getUserLocations'),
+          headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
+      final result = UserLocationsModel.fromJson(jsonDecode(response.body));
+      if (response.statusCode == 200) {
+        debugPrint(result.message);
+        List.generate(
+          result.data!.length,
+          (index) => res.add(result.data![index].cityName!),
+        );
+        _userCities = res;
+        _userCitiesData = result;
+        // return result;
+        notifyListeners();
+      } else {
+        debugPrint(response.reasonPhrase);
+        throw Exception(response.statusCode);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  //list of deals category wise
+  Future<UserDealListModel> cityWiseDealsList(
+      {String? languageId, String? cityCode}) async {
+    log('$cityCode');
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '${ApiUrls.baseUrl}user/getDeals?returnType=customPagination&timeSort=asc&language_id=${languageId ?? 1}&city[0]=${cityCode ?? 64967}'),
+        // headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}
+      );
+      final result = UserDealListModel.fromJson(jsonDecode(response.body));
+      if (response.statusCode == 200) {
+        debugPrint(result.message);
+        return result;
+      } else {
+        debugPrint(response.reasonPhrase);
+        throw Exception(response.statusCode);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  List<String>? _allTags;
+  List<String> get allTags => _allTags!;
+
+  //get all tags
+
+  Future<void> getAllTags({String? token}) async {
+    try {
+      final List<String> res = [];
+      final response = await http.get(
+        Uri.parse('${ApiUrls.baseUrl}tagsAutoComplete'),
+        // headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+      );
+      final result = (jsonDecode(response.body)) as Map<String, dynamic>;
+      if (response.statusCode == 200) {
+        debugPrint(response.body);
+        List.generate(
+          result['data']!.length,
+          (index) => res.add(result['data'][index]['name']),
+        );
+        _allTags = res;
+
+        // return result;
+        notifyListeners();
+      } else {
+        debugPrint(response.reasonPhrase);
+        throw Exception(response.statusCode);
+      }
+    } catch (e) {
+      throw Exception(e);
     }
   }
 }

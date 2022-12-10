@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
@@ -29,19 +30,21 @@ class CategoryServices {
     }
   }
 
-  Future<SearchModel> searchDeal(
-      String token, String search, String country, String city,
+  Future<SearchModel> searchDeal(String token, String search,
+      // String country, String city,
       {String? startingDiscount,
       String? endingDiscount,
       String? priceOrder}) async {
     try {
-      debugPrint(
-          'city and country : $country, $city, $endingDiscount, $startingDiscount, $priceOrder');
+      // debugPrint(
+      //     'city and country : $country, $city, $endingDiscount, $startingDiscount, $priceOrder');
       final response = await http.get(
         Uri.parse(
-            '${ApiUrls.baseUrl}user/getNearByDeals?cities[0]=$city&cities[1]=$city&returnType=customPagination&priceSort=$priceOrder&searchText=$search&country=$country&startingDiscount=$startingDiscount&endingDiscount=$endingDiscount'),
+            //getNearByDeals?returnType=customPagination&priceSort=&searchText=$search?cities[0]=$city&cities[1]=$city, country=$country&startingDiscount=$startingDiscount&endingDiscount=$endingDiscount
+            '${ApiUrls.baseUrl}user/getDeals?returnType=customPagination&timeSort=asc&searchText=$search'),
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
       );
+      log(response.body);
       final result = SearchModel.fromJson(jsonDecode(response.body));
 
       if (response.statusCode == 200) {

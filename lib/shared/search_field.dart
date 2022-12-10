@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/category_model.dart';
-import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/services/categories/category_services.dart';
 import 'package:SiBuy/shared/search_result.dart';
-import 'package:SiBuy/user_app/user_menu/filter.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/size_constants.dart';
@@ -66,40 +63,42 @@ class _SearchFieldState extends State<SearchField> {
           suffixIcon: IconButton(
               icon: const Icon(Icons.search, color: Color(0xFFC0C0CF)),
               onPressed:
-                  Provider.of<DealProvider>(context).filterCheck == false ||
-                          city == null ||
-                          city!.isEmpty ||
-                          country!.isEmpty
-                      ? () => ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Set Filters first')))
-                      : () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('searching...')));
-                          searchData().whenComplete(() {
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => SearchResult(
-                                  searchModel: searchModel!,
-                                  token: widget.token,
-                                ),
-                              ),
-                            );
-                            controller.clear();
-                          });
-                        }),
-          prefixIcon: GestureDetector(
-            onTap: () => showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                builder: (context) {
-                  return filter_list(token: widget.token);
-                }),
-            child: const Icon(
-              Icons.filter_list,
-              color: Color(0xFFC0C0CF),
-            ),
-          ),
+                  // Provider.of<DealProvider>(context).filterCheck == false ||
+                  //         city == null ||
+                  //         city!.isEmpty ||
+                  //         country!.isEmpty
+                  //     ? () => ScaffoldMessenger.of(context).showSnackBar(
+                  //         const SnackBar(content: Text('Set Filters first')))
+                  // :
+                  () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('searching...')));
+                searchData().whenComplete(() {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => SearchResult(
+                        searchModel: searchModel!,
+                        token: widget.token,
+                      ),
+                    ),
+                  );
+                  controller.clear();
+                });
+              }),
+          // prefixIcon: GestureDetector(
+          //   onTap: () => showModalBottomSheet(
+          //       isScrollControlled: true,
+          //       context: context,
+          //       builder: (context) {
+          //         return filter_list(token: widget.token);
+          //       }
+          // ),
+          // child: const Icon(
+          //   Icons.filter_list,
+          //   color: Color(0xFFC0C0CF),
+          // ),
+
           hintText: 'Search Deals',
         ),
       ),
@@ -109,18 +108,18 @@ class _SearchFieldState extends State<SearchField> {
   SearchModel? searchModel;
 
   Future<void> searchData() async {
-    final provider = Provider.of<DealProvider>(context, listen: false);
+    // final provider = Provider.of<DealProvider>(context, listen: false);
 
     final result = await CategoryServices().searchDeal(
       widget.token,
       controller.text,
-      provider.filters![3],
-      provider.filters![4],
-      startingDiscount: provider.filters![1],
-      // provider.startingDiscount.toString(),
-      priceOrder: provider.filters![2],
-      // provider.priceOrder ?? priceFilter,
-      endingDiscount: provider.filters![0],
+      // provider.filters![3],
+      // provider.filters![4],
+      // startingDiscount: provider.filters![1],
+      // // provider.startingDiscount.toString(),
+      // priceOrder: provider.filters![2],
+      // // provider.priceOrder ?? priceFilter,
+      // endingDiscount: provider.filters![0],
     );
     // provider.endignDiscount.toString());
 

@@ -1,11 +1,18 @@
+import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/screens/QR/qr_scan.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 
-class QR extends StatelessWidget {
+class QR extends StatefulWidget {
   const QR({Key? key, required this.token}) : super(key: key);
   final String token;
 
+  @override
+  State<QR> createState() => _QRState();
+}
+
+class _QRState extends State<QR> {
+  final uniqueCodeCtr = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +23,7 @@ class QR extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
                 const Text(
@@ -51,20 +58,15 @@ class QR extends StatelessWidget {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: const Text('Enter the code'),
-                            content: TextField(
+                            content: TextFormField(
+                              controller: uniqueCodeCtr,
                               onChanged: (value) {
                                 //code = value;
                               },
                             ),
                             actions: [
                               TextButton(
-                                onPressed: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) => QRScan()),
-                                  // );
-                                },
+                                onPressed: uniqueCodePurchased,
                                 child: const Text('Submit'),
                               )
                             ],
@@ -97,11 +99,14 @@ class QR extends StatelessWidget {
                   child: CustomButton(
                     text: 'Scan Now',
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
                           builder: (_) => QR_scan(
-                                title: "QR Scanner",
-                                token: token,
-                              )));
+                            title: "QR Scanner",
+                            token: widget.token,
+                          ),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -116,6 +121,26 @@ class QR extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Future<void> uniqueCodePurchased() async {
+    final result = await DealServices()
+        .redeemWithCode(widget.token, uniqueCodeCtr.text)
+        .whenComplete(() => Navigator.of(context).pop());
+
+    if (result == 'This unique code does not exists') {
+      showSnackBar('This unique code does not exists');
+    } else {
+      showSnackBar('Redeemed successfully');
+    }
+  }
+
+  showSnackBar(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
       ),
     );
   }

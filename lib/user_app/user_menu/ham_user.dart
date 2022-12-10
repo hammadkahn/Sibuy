@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/models/user_model.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/services/get_profile/get_user_info.dart';
-import 'package:SiBuy/user_app/splash_screen/splash.dart';
 import 'package:SiBuy/user_app/user_menu/my_qrs.dart';
-import 'package:SiBuy/user_app/user_menu/support_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../apis/api_urls.dart';
@@ -86,8 +84,17 @@ class _ham_userState extends State<ham_user> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            const My_Profile()));
+                                        builder: (context) => My_Profile(
+                                              token: widget.token,
+                                              userData: {
+                                                'name': data.name,
+                                                'phone_no': data.phone,
+                                                'dob': data.dateOfBirth ?? '',
+                                                'gender': data.gender,
+                                              },
+                                            ))).then((value) {
+                                  setState(() {});
+                                });
                               },
                               child: Container(
                                 height: MediaQuery.of(context).size.height *
@@ -121,7 +128,8 @@ class _ham_userState extends State<ham_user> {
                                                   fontWeight: FontWeight.w500,
                                                   color: Color(0xffFFFFFF))),
                                         ),
-                                        Text('$address\n${data.phone!}',
+                                        Text(
+                                            '${data.userLocations == null || data.userLocations!.isEmpty ? 'no address found' : data.userLocations![0].address ?? 'no address found'}\n${data.phone!}',
                                             textAlign: TextAlign.start,
                                             style: const TextStyle(
                                                 fontFamily: 'DMSans',
@@ -262,7 +270,8 @@ class _ham_userState extends State<ham_user> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                          builder: (context) => const Payments()),
+                                          builder: (context) =>
+                                              const Payments()),
                                     );
                                   },
                                   child: Row(
@@ -340,7 +349,8 @@ class _ham_userState extends State<ham_user> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => Change_pass(token: widget.token ),
+                                        builder: (context) =>
+                                            Change_pass(token: widget.token),
                                       ),
                                     );
                                   },
@@ -499,9 +509,7 @@ class _ham_userState extends State<ham_user> {
                           ];
                         } else {
                           children = const <Widget>[
-                            SizedBox(
-                              width: 60,
-                              height: 60,
+                            Center(
                               child: CircularProgressIndicator(),
                             ),
                             Padding(

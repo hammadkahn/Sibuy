@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -6,6 +8,7 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(totalSale);
     return Padding(
       padding: const EdgeInsets.only(right: 6, left: 6),
       child: Container(

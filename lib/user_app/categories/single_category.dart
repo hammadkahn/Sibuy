@@ -1,9 +1,10 @@
+import 'package:SiBuy/apis/api_urls.dart';
+import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/category_model.dart';
-import 'package:SiBuy/services/deals/user_deals_services.dart';
-import 'package:SiBuy/user_app/user_menu/deals_details.dart';
+import 'package:provider/provider.dart';
 
-import '../../models/deal_model.dart';
+import '../../models/user_model.dart';
 
 class SingleCategory extends StatelessWidget {
   const SingleCategory(
@@ -23,8 +24,9 @@ class SingleCategory extends StatelessWidget {
         width: double.infinity,
         height: MediaQuery.of(context).size.height,
         margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        child: FutureBuilder<UserListOfDeals>(
-            future: UserDealServices().getAllUserDeals(token),
+        child: FutureBuilder<UserDealListModel>(
+            future: Provider.of<DealProvider>(context, listen: false)
+                .cityWiseDealsList(),
             builder: ((context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -40,12 +42,10 @@ class SingleCategory extends StatelessWidget {
                       itemBuilder: ((context, index) {
                         if (snapshot.data!.data![index].categoryName ==
                             categoryData.name) {
-                          return Details_deals(
-                            token: token,
-                            dealId: snapshot.data!.data![index].id.toString(),
-                          );
-                        } else {
-                          //container with text list of deals
+                          // return Details_deals(
+                          //   token: token,
+                          //   dealId: snapshot.data!.data![index].id.toString(),
+                          // );
                           return Container(
                             width: double.infinity,
                             height: 100,
@@ -69,13 +69,18 @@ class SingleCategory extends StatelessWidget {
                                   width: 100,
                                   height: 100,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage('assets/images/kfc.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: snapshot
+                                                  .data!.data![index].image ==
+                                              null
+                                          ? const DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/kfc.png'),
+                                              fit: BoxFit.cover,
+                                            )
+                                          : DecorationImage(
+                                              image: NetworkImage(
+                                                  '${ApiUrls.imgBaseUrl}${snapshot.data!.data![index].image!.path!}/${snapshot.data!.data![index].image!.image!}'))),
                                 ),
                                 const SizedBox(
                                   width: 10,
@@ -106,6 +111,9 @@ class SingleCategory extends StatelessWidget {
                               ],
                             ),
                           );
+                        } else {
+                          //container with text list of deals
+                          return const SizedBox();
                         }
                       }),
                     );

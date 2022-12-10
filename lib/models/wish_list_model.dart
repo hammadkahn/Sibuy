@@ -55,6 +55,11 @@ class WishData {
   String? createdAt;
   String? updatedAt;
   String? expiry;
+  String? redeemExpiry;
+  String? isRedeemExpiryNotificationDispatch;
+  int? isSponsored;
+  String? languageId;
+  String? isUpdated;
   int? wishlistId;
   int? userId;
   ImageModel? image;
@@ -82,6 +87,11 @@ class WishData {
       this.createdAt,
       this.updatedAt,
       this.expiry,
+      this.redeemExpiry,
+      this.isRedeemExpiryNotificationDispatch,
+      this.isSponsored,
+      this.languageId,
+      this.isUpdated,
       this.wishlistId,
       this.userId,
       this.image});
@@ -109,13 +119,19 @@ class WishData {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     expiry = json['expiry'];
+    redeemExpiry = json['redeem_expiry'];
+    isRedeemExpiryNotificationDispatch =
+        json['is_redeem_expiry_notification_dispatch'];
+    isSponsored = json['is_sponsored'];
+    languageId = json['language_id'];
+    isUpdated = json['is_updated'];
     wishlistId = json['wishlist_id'];
     userId = json['user_id'];
     image = json['image'] != null ? ImageModel.fromJson(json['image']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
     data['discount'] = discount;
@@ -138,6 +154,12 @@ class WishData {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['expiry'] = expiry;
+    data['redeem_expiry'] = redeemExpiry;
+    data['is_redeem_expiry_notification_dispatch'] =
+        isRedeemExpiryNotificationDispatch;
+    data['is_sponsored'] = isSponsored;
+    data['language_id'] = languageId;
+    data['is_updated'] = isUpdated;
     data['wishlist_id'] = wishlistId;
     data['user_id'] = userId;
     if (image != null) {

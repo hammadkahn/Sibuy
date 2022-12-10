@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -44,20 +45,28 @@ class UserInformation {
     }
   }
 
-  Future<UserProfileModel> updateUserProfile(
+  Future<Map<String, dynamic>> updateUserProfile(
     String token,
     Map<String, dynamic> data,
   ) async {
     try {
-      final response = await http.post(ApiUrls.updateUserProfile,
-          body: data,
-          headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
-      final userProfile = UserProfileModel.fromJson(jsonDecode(response.body));
+      final response = await http.post(ApiUrls.updateUserProfile, body: {
+        'name': data['name'],
+        'phone_no': data['phone_no'],
+        'date_of_birth': data['date_of_birth'],
+        'gender': data['gender'],
+        'languages': data['languages'],
+        'locations': data['locations'],
+      }, headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $token'
+      });
+      print(data);
+      final userProfile = (jsonDecode(response.body)) as Map<String, dynamic>;
       if (response.statusCode == 200) {
-        debugPrint(userProfile.message);
+        log(response.body);
         return userProfile;
       } else {
-        debugPrint(userProfile.message);
+        debugPrint(userProfile['message']);
         return userProfile;
       }
     } catch (e) {
@@ -85,23 +94,5 @@ class UserInformation {
     }
   }
 
-  Future<void> updatePassword(
-    String token,
-    Map<String, dynamic> data,
-  ) async {
-    try {
-      final response = await http.post(ApiUrls.updateUserProfile,
-          body: data,
-          headers: {HttpHeaders.authorizationHeader: 'Bearer $token'});
-
-      if (response.statusCode == 200) {
-        debugPrint(response.body);
-      } else {
-        debugPrint(response.body);
-        throw Exception(response.statusCode);
-      }
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
+  Future<void> getUserLocation() async {}
 }

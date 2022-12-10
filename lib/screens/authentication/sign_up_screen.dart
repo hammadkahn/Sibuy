@@ -3,13 +3,8 @@ import 'dart:developer';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
-import 'package:intl/intl.dart';
-import 'package:intl_phone_field/countries.dart';
-import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:provider/provider.dart';
 import '../../providers/deal_provider.dart';
 import '../../user_app/verify _code/user_verification.dart';
@@ -45,10 +40,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   double? longitude;
   double? latitued;
-  Country? selectedCountry;
+  String? selectedCountry;
+  String? cityCode;
   String? categoyId_1;
   String? categoyId_2;
   String? languageId;
+  List<String> days = [];
 
   File? logoImage;
   int radioValue = 0;
@@ -148,15 +145,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     _provider = Provider.of<DealProvider>(context, listen: false);
-    selectedCountry = const Country(
-      name: "Azerbaijan",
-      flag: "🇦🇿",
-      code: "AZ",
-      dialCode: "994",
-      minLength: 9,
-      maxLength: 9,
-    );
+    // selectedCountry = const Country(
+    //   name: "Azerbaijan",
+    //   flag: "🇦🇿",
+    //   code: "AZ",
+    //   dialCode: "994",
+    //   minLength: 9,
+    //   maxLength: 9,
+    // );
     debugPrint(countryCtr.text);
+
     // loadAllCategories().whenComplete(() {
     //   setState(() {
     //     catLoaded = true;
@@ -194,14 +192,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void didChangeDependencies() {
-    _provider!
-        .getAllLanguages()
-        .then((value) => _provider!.getAllCat().whenComplete(() {
-              isLoaded.value = true;
-              // setState(() {
-              //   // items = Provider.of<DealProvider>(context, listen: false).languages;
-              // });
-            }));
+    _provider!.getAllLanguages().then((value) => _provider!
+            .getAllCat()
+            .then((value) => _provider!.getAllCountries())
+            .whenComplete(() {
+          isLoaded.value = true;
+          // setState(() {
+          //   // items = Provider.of<DealProvider>(context, listen: false).languages;
+          // });
+        }));
     super.didChangeDependencies();
   }
 
@@ -272,54 +271,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                 ),
-                // TextFormField(
-                //   controller: genderCtr,
-                //   decoration: InputDecoration(
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                //       borderRadius: BorderRadius.circular(16),
-                //     ),
-                //     hintText: 'gender',
-                //   ),
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please speicify your gender';
-                //     }
-                //     return null;
-                //   },
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 16, bottom: 16),
-                //   child: TextField(
-                //     controller: dobCtr,
-                //     decoration: InputDecoration(
-                //         icon: const Icon(Icons.calendar_today_rounded),
-                //         labelText: 'Date of Birth',
-                //         enabledBorder: OutlineInputBorder(
-                //           borderSide:
-                //               const BorderSide(color: Color(0xFFEAEAEF)),
-                //           borderRadius: BorderRadius.circular(16),
-                //         ),
-                //         focusedBorder: OutlineInputBorder(
-                //           borderSide:
-                //               const BorderSide(color: Color(0xFFEAEAEF)),
-                //           borderRadius: BorderRadius.circular(16),
-                //         )),
-                //     onTap: () async {
-                //       DateTime? pickdate = await showDatePicker(
-                //           context: context,
-                //           initialDate: DateTime.now(),
-                //           firstDate: DateTime(1970),
-                //           lastDate: DateTime(2030));
-                //       if (pickdate != null) {
-                //         setState(() {
-                //           dobCtr.text =
-                //               DateFormat('dd-MM-yyyy').format(pickdate);
-                //         });
-                //       }
-                //     },
-                //   ),
-                // ),
+
                 TextFormField(
                   controller: emailCtr,
                   keyboardType: TextInputType.emailAddress,
@@ -328,85 +280,160 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    hintText: 'Email (Optional)',
+                    hintText: 'Email',
                   ),
+                  validator: (value) {
+                    if (value == null || !value.contains('@')) {
+                      return 'Please enter a valid email';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 8),
-                Column(
-                  children: [
-                    TextButton.icon(
-                      icon: const Icon(
-                        Icons.location_pin,
-                        color: Colors.orange,
-                      ),
-                      onPressed: () {
-                        _determinePosition()
-                            .whenComplete(() => debugPrint('fetched'))
-                            .then(
-                              (value) =>
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(value),
+                // Column(
+                //   children: [
+                //     TextButton.icon(
+                //       icon: const Icon(
+                //         Icons.location_pin,
+                //         color: Colors.orange,
+                //       ),
+                //       onPressed: () {
+                //         _determinePosition()
+                //             .whenComplete(() => debugPrint('fetched'))
+                //             .then(
+                //               (value) =>
+                //                   ScaffoldMessenger.of(context).showSnackBar(
+                //                 SnackBar(
+                //                   content: Text(value),
+                //                 ),
+                //               ),
+                //             );
+                //       },
+                //       label: const Text(
+                //         'Fetch your current location',
+                //         style: TextStyle(color: Colors.orange),
+                //       ),
+                //     ),
+                //     Text(
+                //       'To get your pricise location, Please Fetch your location',
+                //       style: TextStyle(fontSize: 10, color: Colors.grey[350]),
+                //     )
+                //   ],
+                // ),
+
+                ValueListenableBuilder(
+                  valueListenable: isLoaded,
+                  builder:
+                      (BuildContext context, dynamic value, Widget? child) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 16, bottom: 16),
+                      child: TextFormField(
+                        onTap: () => value == false
+                            ? ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Loading...'),
+                                ),
+                              )
+                            : showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) => SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height / 1.3,
+                                  child: ListView.builder(
+                                    itemCount:
+                                        _provider!.allCountries.data!.length,
+                                    itemBuilder: ((context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          selectedCountry = _provider!
+                                              .allCountries.data![index].id
+                                              .toString();
+                                          countryCtr.text = _provider!
+                                              .allCountries.data![index].name!;
+                                          if (selectedCountry != null) {
+                                            _provider!.getAllCities(_provider!
+                                                .allCountries.data![index].id
+                                                .toString());
+                                          }
+
+                                          log(selectedCountry!);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              15, 12, 15, 8),
+                                          child: Text(_provider!
+                                              .allCountries.data![index].name!),
+                                        ),
+                                      );
+                                    }),
+                                  ),
                                 ),
                               ),
-                            );
-                      },
-                      label: const Text(
-                        'Fetch your current location',
-                        style: TextStyle(color: Colors.orange),
-                      ),
-                    ),
-                    Text(
-                      'To get your pricise location, Please Fetch your location',
-                      style: TextStyle(fontSize: 10, color: Colors.grey[350]),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 16),
-                  child: TextFormField(
-                    textInputAction: TextInputAction.next,
-                    controller: countryCtr,
-                    decoration: InputDecoration(
-                      prefixIcon: IconButton(
-                        icon: const Icon(Icons.arrow_drop_down),
-                        onPressed: () => showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (context) => SizedBox(
-                            height: MediaQuery.of(context).size.height / 1.3,
-                            child: CountryPickerDialog(
-                                searchText: 'Search Country',
-                                countryList: countries,
-                                onCountryChanged: (value) {
-                                  setState(() {
-                                    selectedCountry = value;
-                                    countryCtr.text = value.name;
-                                  });
-                                },
-                                selectedCountry: selectedCountry!,
-                                filteredCountries: countries),
+                        textInputAction: TextInputAction.next,
+                        controller: countryCtr,
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          labelText: 'Country',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Color(0xFFEAEAEF)),
+                            borderRadius: BorderRadius.circular(16),
                           ),
+                          hintText: countryCtr.text,
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'country field is required';
+                          }
+                          return null;
+                        },
                       ),
-                      labelText: 'Country',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      hintText: countryCtr.text,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'country field is required';
-                      }
-                      return null;
-                    },
-                  ),
+                    );
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 26),
                   child: TextFormField(
+                    onTap: () => selectedCountry == null ||
+                            selectedCountry!.isEmpty
+                        ? ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please select your country first'),
+                            ),
+                          )
+                        : showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) => SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height / 1.3,
+                                  child: ListView.builder(
+                                    itemCount:
+                                        _provider!.allCities.data!.length,
+                                    itemBuilder: ((context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          cityCode = _provider!
+                                              .allCities.data![index].id
+                                              .toString();
+                                          cityCtr.text = _provider!
+                                              .allCities.data![index].name!;
+
+                                          log(selectedCountry!);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              15, 12, 15, 8),
+                                          child: Text(_provider!
+                                              .allCities.data![index].name!),
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                )),
                     readOnly: true,
                     controller: cityCtr,
                     decoration: InputDecoration(
@@ -467,40 +494,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 16),
-                  child: TextField(
-                    controller: dobCtr,
-                    textInputAction: TextInputAction.next,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                        icon: const Icon(Icons.calendar_today_rounded),
-                        labelText: 'Date of Birth',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFFEAEAEF)),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFFEAEAEF)),
-                          borderRadius: BorderRadius.circular(16),
-                        )),
-                    onTap: () async {
-                      DateTime? pickdate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1970),
-                          lastDate: DateTime(2030));
-                      if (pickdate != null) {
-                        setState(() {
-                          dobCtr.text =
-                              DateFormat('dd-MM-yyyy').format(pickdate);
-                        });
-                      }
-                    },
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 16, bottom: 16),
+                //   child: TextField(
+                //     controller: dobCtr,
+                //     textInputAction: TextInputAction.next,
+                //     readOnly: true,
+                //     decoration: InputDecoration(
+                //         icon: const Icon(Icons.calendar_today_rounded),
+                //         labelText: 'Date of Birth',
+                //         enabledBorder: OutlineInputBorder(
+                //           borderSide:
+                //               const BorderSide(color: Color(0xFFEAEAEF)),
+                //           borderRadius: BorderRadius.circular(16),
+                //         ),
+                //         focusedBorder: OutlineInputBorder(
+                //           borderSide:
+                //               const BorderSide(color: Color(0xFFEAEAEF)),
+                //           borderRadius: BorderRadius.circular(16),
+                //         )),
+                //     onTap: () async {
+                //       DateTime? pickdate = await showDatePicker(
+                //           context: context,
+                //           initialDate: DateTime.now(),
+                //           firstDate: DateTime(1970),
+                //           lastDate: DateTime(2030));
+                //       if (pickdate != null) {
+                //         setState(() {
+                //           dobCtr.text =
+                //               DateFormat('dd-MM-yyyy').format(pickdate);
+                //         });
+                //       }
+                //     },
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 26),
                   child: TextFormField(
@@ -521,21 +548,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 26),
-                  child: TextFormField(
-                    controller: desCtr,
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      hintText: 'Description',
-                      // suffix: Icon(Icons.visibility)
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 26),
+                //   child: TextFormField(
+                //     controller: desCtr,
+                //     maxLines: 3,
+                //     decoration: InputDecoration(
+                //       enabledBorder: OutlineInputBorder(
+                //         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                //         borderRadius: BorderRadius.circular(16),
+                //       ),
+                //       hintText: 'Description',
+                //       // suffix: Icon(Icons.visibility)
+                //     ),
+                //   ),
+                // ),
                 const Text(
                   'Category 1',
                   style: TextStyle(
@@ -635,13 +662,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         i++) {
                                       if (items ==
                                           _provider!.allCategories[i]) {
-                                        categoyId_1 = _provider!
+                                        categoyId_2 = _provider!
                                             .catData.data![i].id
                                             .toString();
                                         break;
                                       }
                                     }
-                                    print(categoyId_1);
+                                    print(categoyId_2);
                                   },
                                 );
                               }).toList(),
@@ -692,12 +719,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   child: Text(items),
                                   onTap: () {
                                     for (int i = 0;
-                                        i < _provider!.allCategories.length;
+                                        i <
+                                            _provider!
+                                                .languageData['data'].length;
                                         i++) {
                                       if (items ==
-                                          _provider!.allCategories[i]) {
+                                          _provider!.languageData['data'][i]
+                                              ['name']) {
                                         languageId = _provider!
-                                            .catData.data![i].id
+                                            .languageData['data'][i]['id']
                                             .toString();
                                         break;
                                       }
@@ -760,7 +790,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     MaterialButton(
                       onPressed: _showtimepicker,
                       color: Colors.orange,
-                      child: Text('Opening Time'),
+                      child: const Text('Opening Time'),
                     ),
                   ],
                 ),
@@ -797,7 +827,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     MaterialButton(
                       onPressed: _closetimepicker,
                       color: Colors.orange,
-                      child: Text('Closing Time'),
+                      child: const Text('Closing Time'),
                     ),
                   ],
                 ),
@@ -1068,58 +1098,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Future<String> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
-      return 'Location services are disabled.';
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        return 'Location permissions are denied';
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      return 'Location permissions are permanently denied, we cannot request permissions.';
-    }
-// When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    Position currentLocation = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    final address = await placemarkFromCoordinates(
-        currentLocation.latitude, currentLocation.longitude);
-    debugPrint(address[0].country);
-    debugPrint(address[0].subLocality);
-    latitued = currentLocation.latitude;
-    longitude = currentLocation.longitude;
-    countryCtr.text = address[0].country!;
-    cityCtr.text = address[0].locality!;
-
-    return 'Location fetched successfully';
-  }
-
   Future<void> _handleRegister() async {
     if (_key.currentState!.validate()) {
-      setState(() {
-        isLoading = true;
-      });
       //show snackbar to indicate loading
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text('Processing Data'),
@@ -1134,33 +1114,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'password': passCtr.text,
         'password_confirmation': passCtr.text,
         'address': branchCtr.text,
-        'description': desCtr.text,
-        'profile_picture': profile_image!.path,
-        'logo': logoImage!.path,
-        'country': countryCtr.text,
-        'city': cityCtr.text,
+        // 'description': desCtr.text,
+        'profile_picture': profile_image == null || profile_image!.path.isEmpty
+            ? ''
+            : profile_image!.path,
+        'logo':
+            logoImage == null || logoImage!.path.isEmpty ? '' : logoImage!.path,
+        'country': selectedCountry,
+        'city': cityCode,
         'categories[0]': categoyId_1,
         'categories[1]': categoyId_2,
-        'documents[0]': file!.path,
-        'documents[1]': filee!.path,
+        'documents[0]': file == null ? '' : file!.path ?? '',
+        'documents[1]': filee == null ? '' : filee!.path ?? '',
         'registration_number': registerationCtr.text,
         'patent_number': patentCtr.text,
-        'is_registered_with_ministry_of_commerce': radioValue,
-        'opnening_time': openingTimeCtr.text,
-        'closing_time': closingTimeCtr.text,
-        'operation_days': op_dropdownvalue,
+        'is_registered_with_ministry_of_commerce': '$radioValue',
+        'opnening_time': '${_timeOfDay!.hour}:${_timeOfDay!.minute}',
+        'closing_time': '${_closetimeOfDay!.hour}:${_closetimeOfDay!.minute}',
+        'operation_days': days.toString(),
         'language': languageId,
       };
 
       //get response from ApiClient
-      dynamic res = await MerchantAuthServices()
-          .merchantRegisteration(data: userData)
-          .onError((error, stackTrace) {
-        setState(() {
-          isLoading = false;
-        });
-        return error as Map<String, dynamic>;
-      });
+      dynamic res = await MerchantAuthServices().merchantRegisteration(
+        data: userData,
+        isRegistered: radioValue == 2 ? false : true,
+        image: profile_image == null ? false : true,
+        logo: logoImage == null ? false : true,
+      );
       showSignUpResult(res);
     }
   }
@@ -1188,16 +1169,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
         content: Text('Message: ${res['error']}'),
         backgroundColor: Colors.red.shade300,
         action: SnackBarAction(
-          label: res['error'] == 'The email has already been taken'
+          label: res['error'] == 'The email has already been taken.'
               ? 'Next'
               : 'Close',
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        User_Verification(email: emailCtr.text)));
-          },
+          onPressed: res['error'] == 'The email has already been taken.'
+              ? () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                }
+              : () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              User_Verification(email: emailCtr.text)));
+                },
         ),
       ));
     }
@@ -1206,7 +1191,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget buildSingleCheckbox(CheckBoxState checkbox) => CheckboxListTile(
         title: Text(checkbox.title),
         value: checkbox.value,
-        onChanged: (value) => setState(() => checkbox.value = value!),
+        onChanged: (value) {
+          setState(() => checkbox.value = value!);
+          if (value == false) {
+            days.remove(checkbox.title);
+          } else {
+            days.add(checkbox.title);
+          }
+          log(value.toString());
+          log(checkbox.title);
+          print(days);
+        },
         controlAffinity:
             ListTileControlAffinity.leading, //  <-- leading Checkbox
       );

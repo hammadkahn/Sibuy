@@ -25,9 +25,9 @@ class _qr_contState extends State<qr_cont> {
       token: widget.token,
     );
 
-    setState(() {
-      address = result.data!.branches![0].address;
-    });
+    // setState(() {
+    //   // address = result.data!.branches![0].address;
+    // });
   }
 
   @override

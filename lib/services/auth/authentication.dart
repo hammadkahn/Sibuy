@@ -9,47 +9,67 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MerchantAuthServices {
   Future<Map<String, dynamic>> merchantRegisteration(
-      {required Map<String, dynamic> data}) async {
+      {required Map<String, dynamic> data,
+      required bool isRegistered,
+      required bool image,
+      required bool logo}) async {
     try {
-      var request = http.MultipartRequest(
-          'POST', Uri.parse('${ApiUrls.baseUrl}merchantRegister'));
-      request.fields.addAll({
-        'name': data['name'],
-        'email': data['email'],
-        'phone_no': data['phone_no'],
-        'password': data['password'],
-        'password_confirmation': data['password_confirmation'],
-        'address': data['address'],
-        'country': data['country'],
-        'city': data['city'],
-        'categories[0]': data['categories[0]'],
-        'categories[1]': data['categories[1]'],
-        'language': data['language'],
-        'operation_days': data['operation_days'],
-        'opnening_time': data['opnening_time'],
-        'closing_time': data['closing_time'],
-        'is_registered_with_ministry_of_commerce':
-            data['is_registered_with_ministry_of_commerce'],
-        'registration_number': data['registration_number'],
-        'patent_number': data['parent_number'],
+      data.forEach((key, value) {
+        log(value.runtimeType.toString());
       });
-      request.files.add(await http.MultipartFile.fromPath(
-          'profile_picture', data['profile_picture']));
-      request.files
-          .add(await http.MultipartFile.fromPath('logo', data['logo']));
-      request.files.add(await http.MultipartFile.fromPath(
-          'documents[0]', data['documents[0]']));
-      request.files.add(await http.MultipartFile.fromPath(
-          'documents[1]', data['documents[1]']));
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('http://api.sibuy365.com/api/merchantRegister'))
+        ..headers
+            .addAll({'Content-Type': 'multipart/form-data', 'Accept': '*/*'})
+        ..fields.addAll({
+          'name': data['name'],
+          'email': data['email'],
+          'phone_no': data['phone_no'],
+          'password': data['password'],
+          'password_confirmation': data['password_confirmation'],
+          'address': data['address'],
+          'country': data['country'],
+          'city': data['city'],
+          'categories[0]': data['categories[0]'],
+          'categories[1]': data['categories[1]'],
+          'language': data['language'],
+          'operation_days': data['operation_days'],
+          'opnening_time': data['opnening_time'],
+          'closing_time': data['closing_time'],
+          'is_registered_with_ministry_of_commerce':
+              data['is_registered_with_ministry_of_commerce'],
+        });
+
+      if (image == true) {
+        request.files.add(await http.MultipartFile.fromPath(
+            'profile_picture', data['profile_picture']));
+      }
+      if (logo == true) {
+        request.files
+            .add(await http.MultipartFile.fromPath('logo', data['logo']));
+      }
+
+      if (isRegistered == true) {
+        request.fields.addAll({
+          'registration_number': data['registration_number'],
+          'patent_number': data['parent_number'],
+        });
+        request.files.add(await http.MultipartFile.fromPath(
+            'documents[0]', data['documents[0]']));
+        request.files.add(await http.MultipartFile.fromPath(
+            'documents[1]', data['documents[1]']));
+      }
 
       http.StreamedResponse response = await request.send();
       final result = await http.Response.fromStream(response);
+      log(result.statusCode.toString());
       final responseData = jsonDecode(result.body) as Map<String, dynamic>;
       if (response.statusCode == 200) {
         log(result.body);
         return responseData;
       } else {
         print(response.reasonPhrase);
+        log(result.body);
         return responseData;
       }
     } catch (e) {
@@ -96,25 +116,18 @@ class MerchantAuthServices {
       if (response.statusCode == 200) {
         print('result : ${result['data']['token']}');
 
-        preferences.setString('token', result['data']['token']);
-        preferences.setString('email', result['data']['phone']);
-        preferences.setString('status', result['data']['StatusName']);
+        preferences.setString('token', result['data']['token'].toString());
+        preferences.setString('email', result['data']['phone'].toString());
+        preferences.setString(
+            'status', result['data']['StatusName'].toString());
         preferences.setString('user_type', result['data']['type'].toString());
         preferences.setInt('userId', result['data']['id']);
-
-        if (result['data']['type'] == 1) {
+        if (result['data']['userLocations'] != null ||
+            result['data']['userLocations'].isNotEmpty) {
           preferences.setString(
-              'country', result['data']['location']['country']);
-          preferences.setString('city', result['data']['location']['city']);
-          preferences.setString(
-              'lat', result['data']['location']['lat'].toString());
-          preferences.setString(
-              'long', result['data']['location']['long'].toString());
-
-          if (result['data']['location']['address'] != null) {
-            preferences.setString('address',
-                result['data']['location']['address'] ?? 'no address given');
-          }
+              'country', result['data']['userLocations'][0]['countryName']);
+          preferences.setString('countryCode',
+              result['data']['userLocations'][0]['country'].toString());
         }
 
         return result;
