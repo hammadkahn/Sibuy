@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../apis/api_urls.dart';
 import '../../constant/size_constants.dart';
 import '../../models/wish_list_model.dart';
 import '../../providers/order.dart';
-import '../../services/user_merchant_services.dart';
 import '../../shared/custom_button.dart';
 import 'cart_user.dart';
 
@@ -14,29 +14,28 @@ class Wishlist extends StatefulWidget {
       : super(key: key);
   final WishData wishData;
   final String token;
-  static const url = 'http://gigi-api.cryslistechnologies.com/';
 
   @override
   State<Wishlist> createState() => _WishlistState();
 }
 
 class _WishlistState extends State<Wishlist> {
-  String? address = 'Loading...';
+  String? address = 'Address';
 
-  Future<void> getMerchantAddress() async {
-    final result = await UserMerchantServices().singleMerchantProfile(
-      id: widget.wishData.merchantId.toString(),
-      token: widget.token,
-    );
+  // Future<void> getMerchantAddress() async {
+  //   final result = await UserMerchantServices().singleMerchantProfile(
+  //     id: widget.wishData.merchantId.toString(),
+  //     token: widget.token,
+  //   );
 
-    setState(() {
-      address = result.data!.branches![0].address;
-    });
-  }
+  //   setState(() {
+  //     address = result.data!.branches![0].address;
+  //   });
+  // }
 
   @override
   void didChangeDependencies() {
-    getMerchantAddress();
+    // getMerchantAddress();
     super.didChangeDependencies();
   }
 
@@ -60,7 +59,7 @@ class _WishlistState extends State<Wishlist> {
                   width: 90,
                   height: 119,
                   child: Image.network(
-                      '${Wishlist.url}${widget.wishData.image!.path}/${widget.wishData.image!.image}'),
+                      '${ApiUrls.imgBaseUrl}${widget.wishData.image!.path}/${widget.wishData.image!.image}'),
                 ),
           Padding(
             padding: const EdgeInsets.only(left: 15),
@@ -89,7 +88,7 @@ class _WishlistState extends State<Wishlist> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width - 200,
                           child: Text(
-                            address ?? 'Loading',
+                            address ?? 'Address',
                             softWrap: true,
                             style: const TextStyle(
                                 fontFamily: 'Mulish',
@@ -155,7 +154,7 @@ class _WishlistState extends State<Wishlist> {
                         ),
                         Text(
                           Provider.of<DealProvider>(context).calculateDiscount(
-                            widget.wishData.discountOnPrice!.toString(),
+                            widget.wishData.discount!.toString(),
                             widget.wishData.price!.toString(),
                           ),
                           style: const TextStyle(
@@ -173,7 +172,7 @@ class _WishlistState extends State<Wishlist> {
                                   BorderRadius.all(Radius.circular(3))),
                           child: Center(
                             child: Text(
-                              '${widget.wishData.discountOnPrice}% OFF',
+                              '${widget.wishData.discount}% OFF',
                               style: const TextStyle(
                                   fontSize: 5,
                                   fontFamily: 'Mulish',

@@ -1,13 +1,16 @@
 class ApiUrls {
-  static const String imgBaseUrl = 'https://api.gigi.az/';
+  static const String imgBaseUrl = 'http://api.sibuy365.com/';
 
-  static const String baseUrl = 'https://api.gigi.az/api/';
+  static const String baseUrl = 'http://api.sibuy365.com/api/';
 
   //merchant auth urls
   static final login = Uri.parse('${baseUrl}login');
   static final merchantSignUp = Uri.parse('${baseUrl}merchantRegister');
   static final logOut = Uri.parse('${baseUrl}logout');
   static final getMerchantProfile = Uri.parse('${baseUrl}merchant/getProfile');
+
+  //password update url
+  static final changePass = Uri.parse('${baseUrl}user/updatePassword');
 
   //deal urls
   static final getSingleDeal = Uri.parse('${baseUrl}merchant/getDeal/');
@@ -19,7 +22,7 @@ class ApiUrls {
   );
   static final purchaseDeal = Uri.parse('${baseUrl}user/purchaseDeal');
   static final cartList = Uri.parse(
-      '${baseUrl}user/getCustomerPurchasedDeals?limit=?returnType=customPagination');
+      '${baseUrl}user/getCustomerPurchasedDeals?returnType=customPagination&timeSort=desc');
 
   //whilist urls
   static final addToWishList = Uri.parse('${baseUrl}user/addToWishlist');

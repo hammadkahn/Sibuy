@@ -49,7 +49,7 @@ class _sheet_dealsState extends State<sheet_deals> {
             endIndent: 120,
           ),
           Expanded(
-            child: FutureBuilder<MerchantSingleDeal>(
+            child: FutureBuilder<SingleDealModel>(
               future: DealServices().getSingleDeal(
                   dealId: widget.dealId.toString(), token: widget.token),
               builder: (context, snapshot) {
@@ -103,9 +103,9 @@ class _sheet_dealsState extends State<sheet_deals> {
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width - 60,
-                              child: Text(
-                                data.branches![0].address ?? 'no addres found',
-                                style: const TextStyle(
+                              child: const Text(
+                                'no addres found',
+                                style: TextStyle(
                                     fontFamily: 'Mulish',
                                     fontSize: 10,
                                     fontWeight: FontWeight.w600,
@@ -155,7 +155,7 @@ class _sheet_dealsState extends State<sheet_deals> {
                                   color: Color(0xFFFF6767)),
                             ),
                             Text(
-                              data.price.toStringAsFixed(2),
+                              data.price!.toStringAsFixed(2),
                               style: const TextStyle(
                                   decoration: TextDecoration.lineThrough,
                                   fontFamily: 'Mulish',

@@ -19,9 +19,9 @@ class _C_sliderState extends State<C_slider> {
   DateTime now = DateTime.now();
   DateTime? now_1w;
   List weekDeals = [
-    Demo_Deals(),
-    Demo_Deals(),
-    Demo_Deals(),
+    // Demo_Deals(),
+    // Demo_Deals(),
+    // Demo_Deals(),
   ];
   String? reviews;
   CarouselController? controller = CarouselController();
@@ -67,7 +67,7 @@ class _C_sliderState extends State<C_slider> {
           : CarouselSlider.builder(
               itemCount: weekDeals.length,
               itemBuilder: ((context, index, realIndex) {
-                return Demo_Deals();
+                return const Demo_Deals();
                 // return dealsUser(
                 //   token: widget.token,
                 //   dealData: weekDeals[index],

@@ -4,7 +4,6 @@ import 'package:SiBuy/screens/QR/qr.dart';
 import 'package:SiBuy/screens/full_menu/menu.dart';
 import 'package:SiBuy/screens/full_menu/profile.dart';
 
-import '../../support/contact.dart';
 import 'add_deal.dart';
 
 class Bar extends StatefulWidget {
@@ -50,7 +49,7 @@ class _BarState extends State<Bar> {
       Menu(
         token: widget.token,
       ),
-      const Add_deal(),
+      Add_deal(token: widget.token),
       QR(token: widget.token),
       UserListScreen(token: widget.token),
       Profile(
@@ -112,7 +111,7 @@ class _BarState extends State<Bar> {
                   onPressed: () {
                     setState(() {
                       currentIndex = 1;
-                      currentScreen = const Add_deal();
+                      currentScreen = Add_deal(token: widget.token);
                     });
                   },
                   child: Icon(

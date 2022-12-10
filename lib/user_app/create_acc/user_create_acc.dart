@@ -1,11 +1,13 @@
+import 'dart:developer';
+
+import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:intl/intl.dart';
-import 'package:intl_phone_field/countries.dart';
-import 'package:intl_phone_field/country_picker_dialog.dart';
+
+import 'package:provider/provider.dart';
 import '../verify _code/user_verification.dart';
 
 class User_create_acc extends StatefulWidget {
@@ -24,25 +26,42 @@ class _User_create_accState extends State<User_create_acc> {
   final dobCtr = TextEditingController();
   final emailCtr = TextEditingController();
   final phoneNumberCtr = TextEditingController();
-  final genderCtr = TextEditingController();
+  final referralCodeCtr = TextEditingController();
 
   var isLoading = false;
 
-  double? latitued = 0.0;
-  double? longitude = 0.0;
-  Country? selectedCountry;
+  String? langDropdownvaluee = 'English';
+  String genderDropdown = 'Male';
+  String? cityCode;
+  DealProvider? _provider;
+  ValueNotifier<bool> isLoaded = ValueNotifier(false);
+
+  var items = [
+    'Male',
+    'Female',
+    'Other',
+  ];
+  String? selectedCountry;
+  String? languageId;
   @override
   void initState() {
-    selectedCountry = const Country(
-      name: "Azerbaijan",
-      flag: "🇦🇿",
-      code: "AZ",
-      dialCode: "994",
-      minLength: 9,
-      maxLength: 9,
-    );
+    _provider = Provider.of<DealProvider>(context, listen: false);
     debugPrint(countryCtr.text);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _provider!
+        .getAllLanguages()
+        .then((value) => _provider!.getAllCountries())
+        .whenComplete(() {
+      isLoaded.value = true;
+      // setState(() {
+      //   // items = Provider.of<DealProvider>(context, listen: false).languages;
+      // });
+    });
+    super.didChangeDependencies();
   }
 
   @override
@@ -95,6 +114,27 @@ class _User_create_accState extends State<User_create_acc> {
                 Padding(
                   padding: const EdgeInsets.only(top: 16, bottom: 16),
                   child: TextFormField(
+                    controller: emailCtr,
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      hintText: 'Email',
+                    ),
+                    validator: (value) {
+                      if (value == null || !value.contains('@')) {
+                        return 'Please a vaild enter email';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16, bottom: 16),
+                  child: TextFormField(
                     controller: phoneNumberCtr,
                     textInputAction: TextInputAction.next,
                     maxLength: 11,
@@ -114,22 +154,49 @@ class _User_create_accState extends State<User_create_acc> {
                     },
                   ),
                 ),
-                TextFormField(
-                  controller: genderCtr,
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                      borderRadius: BorderRadius.circular(16),
+                Container(
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(
+                        color: Color(0xFFEAEAEF),
+                        width: 2.0,
+                      ),
                     ),
-                    hintText: 'gender',
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please speicify your gender';
-                    }
-                    return null;
-                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: DropdownButton(
+                      dropdownColor: Color(0xFFff6600),
+
+                      elevation: 3,
+                      underline: Container(),
+                      isExpanded: true,
+                      // Initial Value
+                      value: genderDropdown,
+
+                      // Down Arrow Icon
+                      icon: const Icon(Icons.keyboard_arrow_down),
+
+                      // Array list of items
+                      items: items.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(
+                            items,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        );
+                      }).toList(),
+                      // After selecting the desired option,it will
+                      // change button value to selected value
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          genderDropdown = newValue!;
+                        });
+                      },
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16, bottom: 16),
@@ -164,26 +231,6 @@ class _User_create_accState extends State<User_create_acc> {
                       }
                     },
                   ),
-                ),
-                TextFormField(
-                  controller: emailCtr,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    hintText: 'Email (Optional)',
-                  ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        !value.contains('@')) {
-                      return 'email is required';
-                    }
-                    return null;
-                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 26, top: 16),
@@ -229,6 +276,145 @@ class _User_create_accState extends State<User_create_acc> {
                     },
                   ),
                 ),
+
+                const SizedBox(height: 8),
+
+                //country dropdown
+                ValueListenableBuilder(
+                  valueListenable: isLoaded,
+                  builder:
+                      (BuildContext context, dynamic value, Widget? child) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 16, bottom: 16),
+                      child: TextFormField(
+                        onTap: () => value == false
+                            ? ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Loading...'),
+                                ),
+                              )
+                            : showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) => SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height / 1.3,
+                                  child: ListView.builder(
+                                    itemCount:
+                                        _provider!.allCountries.data!.length,
+                                    itemBuilder: ((context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          selectedCountry = _provider!
+                                              .allCountries.data![index].id
+                                              .toString();
+                                          countryCtr.text = _provider!
+                                              .allCountries.data![index].name!;
+                                          if (selectedCountry != null) {
+                                            _provider!.getAllCities(_provider!
+                                                .allCountries.data![index].id
+                                                .toString());
+                                          }
+
+                                          log(selectedCountry!);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              15, 12, 15, 8),
+                                          child: Text(_provider!
+                                              .allCountries.data![index].name!),
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ),
+                        textInputAction: TextInputAction.next,
+                        controller: countryCtr,
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          labelText: 'Country',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Color(0xFFEAEAEF)),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          hintText: countryCtr.text,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'country field is required';
+                          }
+                          return null;
+                        },
+                      ),
+                    );
+                  },
+                ),
+
+                //city dropdown
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 26),
+                  child: TextFormField(
+                    onTap: () => selectedCountry == null ||
+                            selectedCountry!.isEmpty
+                        ? ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please select your country first'),
+                            ),
+                          )
+                        : showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) => SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height / 1.3,
+                                  child: ListView.builder(
+                                    itemCount:
+                                        _provider!.allCities.data!.length,
+                                    itemBuilder: ((context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          cityCode = _provider!
+                                              .allCities.data![index].id
+                                              .toString();
+                                          cityCtr.text = _provider!
+                                              .allCities.data![index].name!;
+
+                                          log(selectedCountry!);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              15, 12, 15, 8),
+                                          child: Text(_provider!
+                                              .allCities.data![index].name!),
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                )),
+                    readOnly: true,
+                    controller: cityCtr,
+                    decoration: InputDecoration(
+                      labelText: 'City',
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      hintText: cityCtr.text,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'city field required';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+
+                //reference code container
                 TextFormField(
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
@@ -240,168 +426,90 @@ class _User_create_accState extends State<User_create_acc> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Column(
-                  children: [
-                    TextButton.icon(
-                      icon: const Icon(Icons.location_pin),
-                      onPressed: () {
-                        _determinePosition()
-                            .whenComplete(() => debugPrint('fetched'))
-                            .then(
-                              (value) =>
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(value),
+                SizedBox(
+                  width: double.maxFinite,
+                  child: ValueListenableBuilder(
+                    valueListenable: isLoaded,
+                    builder: (BuildContext context, bool value, Widget? child) {
+                      return isLoaded.value == false
+                          ? const CircularProgressIndicator()
+                          : Container(
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(
+                                    color: Color(0xFFEAEAEF),
+                                    width: 2.0,
+                                  ),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: DropdownButton<String>(
+                                  dropdownColor: Color(0xFFff6600),
+
+                                  elevation: 3,
+                                  underline: Container(),
+
+                                  isExpanded: true,
+                                  // Initial Value
+                                  value: langDropdownvaluee,
+
+                                  // Down Arrow Icon
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+
+                                  // Array list of items
+                                  items: _provider!.languages
+                                      .map<DropdownMenuItem<String>>(
+                                          (String items) {
+                                    return DropdownMenuItem<String>(
+                                      value: items,
+                                      child: Text(items),
+                                      onTap: () {
+                                        for (int i = 0;
+                                            i <
+                                                _provider!.languageData['data']
+                                                    .length;
+                                            i++) {
+                                          if (items ==
+                                              _provider!.languageData['data'][i]
+                                                  ['name']) {
+                                            languageId = _provider!
+                                                .languageData['data'][i]['id']
+                                                .toString();
+                                            break;
+                                          }
+                                        }
+                                        print(languageId);
+                                      },
+                                    );
+                                  }).toList(),
+                                  // After selecting the desired option,it will
+                                  // change button value to selected value
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      langDropdownvaluee = newValue!;
+                                    });
+                                  },
                                 ),
                               ),
                             );
-                      },
-                      label: const Text('Fetch your current location'),
-                    ),
-                    Text(
-                      'For get your pricise location, Please Fetch your location',
-                      style: TextStyle(fontSize: 10, color: Colors.grey[350]),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 16),
-                  child: TextFormField(
-                    textInputAction: TextInputAction.next,
-                    controller: countryCtr,
-                    decoration: InputDecoration(
-                      prefixIcon: IconButton(
-                        icon: const Icon(Icons.arrow_drop_down),
-                        onPressed: () => showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (context) => SizedBox(
-                            height: MediaQuery.of(context).size.height / 1.3,
-                            child: CountryPickerDialog(
-                                searchText: 'Search Country',
-                                countryList: countries,
-                                onCountryChanged: (value) {
-                                  setState(() {
-                                    selectedCountry = value;
-                                    countryCtr.text = value.name;
-                                  });
-                                },
-                                selectedCountry: selectedCountry!,
-                                filteredCountries: countries),
-                          ),
-                        ),
-                      ),
-                      labelText: 'Country',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      hintText: countryCtr.text,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'country field is required';
-                      }
-                      return null;
                     },
                   ),
                 ),
-                TextFormField(
-                  controller: cityCtr,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    labelText: 'City',
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    hintText: cityCtr.text,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'city field required';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                // SelectState(
-                //   onCountryChanged: (value) {
-                //     setState(() {
-                //       // countryValue = value;
-                //     });
-                //   },
-                //   onStateChanged: (value) {
-                //     setState(() {
-                //       // stateValue = value;
-                //     });
-                //   },
-                //   onCityChanged: (value) {
-                //     setState(() {
-                //       // cityValue = value;
-                //     });
-                //   },
-                // ),
+                SizedBox(height: 15),
                 CustomButton(
                   isLoading: isLoading,
                   text: 'Next',
                   onPressed: _handleRegister,
                 ),
+                SizedBox(height: 15),
               ],
             ),
           ),
         ),
       ),
     );
-  }
-
-  Future<String> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
-      return 'Location services are disabled.';
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        return 'Location permissions are denied';
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      return 'Location permissions are permanently denied, we cannot request permissions.';
-    }
-// When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    Position currentLocation = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    final address = await placemarkFromCoordinates(
-        currentLocation.latitude, currentLocation.longitude);
-    debugPrint(address[0].country);
-    debugPrint(address[0].locality);
-    latitued = currentLocation.latitude;
-    longitude = currentLocation.longitude;
-    countryCtr.text = address[0].country!;
-    cityCtr.text = address[0].subAdministrativeArea!;
-
-    return 'Location fetched successfully';
   }
 
   Future<void> _handleRegister() async {
@@ -423,12 +531,12 @@ class _User_create_accState extends State<User_create_acc> {
         'date_of_birth': dobCtr.text,
         'password': passCtr.text,
         'password_confirmation': passCtr.text,
-        'gender': genderCtr.text,
-        'address': '$latitued, $longitude, ${cityCtr.text}, ${countryCtr.text}',
-        'country': countryCtr.text,
-        'city': cityCtr.text,
-        'lat': latitued.toString(),
-        'long': longitude.toString(),
+        'gender': genderDropdown.toLowerCase(),
+        'address': '${cityCtr.text}, ${countryCtr.text}',
+        'country': selectedCountry,
+        'city': cityCode,
+        'reference_code': referralCodeCtr.text,
+        'language': languageId,
       };
 
       //get response from ApiClient

@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:SiBuy/user_app/user_auth/user_auth.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-import 'package:SiBuy/User_APP/user_onboarding/user-onboarding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../screens/full_menu/bar.dart';
+import '../user_menu/user_menu.dart';
 
 class user_splash extends StatefulWidget {
   const user_splash({Key? key}) : super(key: key);
@@ -15,38 +16,90 @@ class user_splash extends StatefulWidget {
 class _user_splashState extends State<user_splash>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
-    
+
   @override
   void initState() {
     super.initState();
     // navigate to next page after 5 seconds
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const user_auth()));
-    });
-    animationController = new AnimationController(
+    animationController = AnimationController(
       vsync: this,
-      duration: new Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     );
-    animationController.forward();
+    checkLogIn().whenComplete(() {
+      Timer(const Duration(seconds: 3), () {
+        email == null || token == null
+            ? Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const user_auth()))
+            : userType == '2'
+                ? Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Bar(
+                        token: token!,
+                      ),
+                    ),
+                  )
+                : Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => User_bar(
+                        token: token!,
+                      ),
+                    ),
+                  );
+      });
+
+      animationController.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  String? token;
+  String? email;
+  String? userType;
+  String? status;
+  int? userId;
+
+  var isChecked = false;
+  Future<void> checkLogIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    token = prefs.getString('token');
+    email = prefs.getString('email');
+    userType = prefs.getString('user_type') ?? '';
+    status = prefs.getString('status');
+    userId = prefs.getInt('userId');
+    debugPrint('user type: $status');
+
+    debugPrint(token);
+    debugPrint(email);
+    debugPrint(userType.toString());
+    setState(() {
+      isChecked = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return Container(
       alignment: Alignment.center,
       color: Colors.white,
-      child: new AnimatedBuilder(
+      child: AnimatedBuilder(
         animation: animationController,
-        child: new Container(
+        child: SizedBox(
           height: 150.0,
           width: 150.0,
-          child: new Image.asset('assets/images/gigi-logo.png'),
+          child: Image.asset('assets/images/gigi-logo.png'),
         ),
-        builder: (BuildContext context, Widget? _widget) {
-          return new Transform.rotate(
+        builder: (BuildContext context, Widget? widget) {
+          return Transform.rotate(
             angle: animationController.value * 6.3,
-            child: _widget,
+            child: widget,
           );
         },
       ),

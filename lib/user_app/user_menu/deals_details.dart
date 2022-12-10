@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/cart_model.dart';
-import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/reviews_model.dart';
+import '../../apis/api_urls.dart';
+import '../../models/user_model.dart';
 import '../../providers/order.dart';
 import 'details_bottom.dart';
 
@@ -19,7 +21,6 @@ class Details_deals extends StatefulWidget {
 }
 
 class _Details_dealsState extends State<Details_deals> {
-  static const baseUrl = 'http://gigi-api.cryslistechnologies.com/';
   double? percentage;
   double? price;
   double? priceAfterDiscount;
@@ -31,7 +32,7 @@ class _Details_dealsState extends State<Details_deals> {
   @override
   void initState() {
     dealProvider = Provider.of<DealProvider>(context, listen: false);
-    getRating();
+    // getRating();
     super.initState();
   }
 
@@ -56,7 +57,7 @@ class _Details_dealsState extends State<Details_deals> {
           SizedBox(
             width: double.maxFinite,
             height: MediaQuery.of(context).size.height - 200,
-            child: FutureBuilder<SingleDeal>(
+            child: FutureBuilder<UserSingleDealModel>(
               future:
                   dealProvider!.singleDealDetails(widget.token, widget.dealId!),
               builder: ((context, snapshot) {
@@ -77,7 +78,7 @@ class _Details_dealsState extends State<Details_deals> {
                                   width: MediaQuery.of(context).size.width,
                                 )
                               : Image.network(
-                                  '$baseUrl${data.images![0].path!}/${data.images![0].image}',
+                                  '${ApiUrls.imgBaseUrl}${data.images![0].path!}/${data.images![0].image}',
                                   height: 248,
                                   width: MediaQuery.of(context).size.width,
                                 ),
@@ -98,11 +99,14 @@ class _Details_dealsState extends State<Details_deals> {
                                   size: 20,
                                 ),
                                 onPressed: () {
+                                  // dealProvider!.wishList(
+                                  //   widget.token,
+                                  //   {'dealId': widget.dealId},
+                                  // );
                                   Provider.of<DealProvider>(context,
                                           listen: false)
                                       .wishList(widget.token, {
-                                    "deals[0]":
-                                        dealProvider!.dealData.id.toString()
+                                    "deals[0]": widget.dealId,
                                   }).whenComplete(() {
                                     setState(() {
                                       isLaoding = true;
@@ -115,17 +119,16 @@ class _Details_dealsState extends State<Details_deals> {
                         ],
                       ),
                     ),
-                    rating == null
-                        ? const Center(child: CircularProgressIndicator())
-                        : bottom_detail(
-                            token: widget.token,
-                            totalReviews: Reviews().getRating(rating!.data),
-                            length: rating!.data!.length.toString(),
-                            dealData: data,
-                            price: dealProvider!.calculateDiscount(
-                                data.discountOnPrice.toString(),
-                                data.price!.toStringAsFixed(0)),
-                          ),
+                    bottom_detail(
+                      token: widget.token,
+                      // totalReviews: Reviews().getRating(rating!.data),
+                      // length: rating!.data!.length.toString(),
+                      dealData: data,
+                      price: dealProvider!.calculateDiscount(
+                          data.discount.toString(),
+                          data.price!.toStringAsFixed(0)),
+                    ),
+                    const Spacer(),
                     const Divider(
                       color: Color(0xFFC0C0CF),
                       thickness: 1,
@@ -168,6 +171,8 @@ class _Details_dealsState extends State<Details_deals> {
               }),
             ),
           ),
+
+          //cart container
           Container(
             width: double.infinity,
             height: 86,
@@ -181,10 +186,81 @@ class _Details_dealsState extends State<Details_deals> {
                   future: dealProvider!.getCartItemsList(widget.token),
                   builder: (BuildContext context,
                       AsyncSnapshot<CartListModel> snapshot) {
-                    if (snapshot.hasData) {
-                      String name = dealProvider!.dealData.name!;
+                    if (snapshot.data == null || snapshot.data!.data!.isEmpty) {
+                      return Container(
+                        height: 52,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: const Color(0xFFF5F5F5)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: 200,
+                              height: 54,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFFff6600),
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Center(
+                                child: InkWell(
+                                  onTap: () {
+                                    if (dealProvider!
+                                            .dealModel.data!.dealIsExpired ==
+                                        0) {
+                                      value.addTCart(
+                                          id: dealProvider!.dealModel.data!.id
+                                              .toString(),
+                                          merchantId: dealProvider!
+                                              .dealModel.data!.merchantId
+                                              .toString(),
+                                          price: dealProvider!.dealModel.data!.price!
+                                              .toStringAsFixed(0),
+                                          discountOnPrice: dealProvider!
+                                              .dealModel.data!.discount!
+                                              .toString(),
+                                          title: dealProvider!
+                                              .dealModel.data!.name!,
+                                          reviews: '0',
+                                          image: dealProvider!.dealModel.data!.images == null || dealProvider!.dealModel.data!.images!.isEmpty
+                                              ? ''
+                                              : dealProvider!.dealModel.data!
+                                                  .images![0].image!,
+                                          reviewsCount: '0',
+                                          path: dealProvider!.dealModel.data!.images == null ||
+                                                  dealProvider!.dealModel.data!.images!.isEmpty
+                                              ? ''
+                                              : dealProvider!.dealModel.data!.images![0].path!);
+                                      value.checkIsAddedToCart(context);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Deal is expired'),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: const Text(
+                                    'Add to Cart',
+                                    style: TextStyle(
+                                        fontFamily: 'Mulish',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFFFFFFFF)),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    } else if (snapshot.hasData) {
+                      log('snapshot : ${snapshot.data!.data!.isNotEmpty}');
+
+                      String name = dealProvider!.dealModel.data!.name!;
                       final list = snapshot.data!.data;
                       bool isPurchased = false;
+
                       for (int i = 0; i < list!.length; i++) {
                         if (list[i].id == dealProvider!.dealData.id ||
                             list[i].name == name) {
@@ -192,7 +268,7 @@ class _Details_dealsState extends State<Details_deals> {
                           break;
                         }
                       }
-
+                      log(isPurchased.toString());
                       return isPurchased == true
                           ? const Center(
                               child: Text('You can get a deal once'),
@@ -273,29 +349,38 @@ class _Details_dealsState extends State<Details_deals> {
                                                   .dealData.dealIsExpired ==
                                               0) {
                                             value.addTCart(
-                                                id: dealProvider!.dealData.id
-                                                    .toString(),
-                                                merchantId: dealProvider!
-                                                    .dealData.merchantId
-                                                    .toString(),
-                                                price: dealProvider!
-                                                    .dealData.price!
-                                                    .toStringAsFixed(0),
-                                                discountOnPrice: dealProvider!
-                                                    .dealData.discountOnPrice!
-                                                    .toString(),
-                                                title: dealProvider!
-                                                    .dealData.name!,
-                                                reviews: '0',
-                                                image: dealProvider!.dealData.images == null || dealProvider!.dealData.images!.isEmpty
-                                                    ? ''
-                                                    : dealProvider!.dealData
-                                                        .images![0].image!,
-                                                reviewsCount: '0',
-                                                path: dealProvider!.dealData.images == null ||
-                                                        dealProvider!.dealData.images!.isEmpty
-                                                    ? ''
-                                                    : dealProvider!.dealData.images![0].path!);
+                                              id: dealProvider!.dealData.id
+                                                  .toString(),
+                                              merchantId: dealProvider!
+                                                  .dealData.merchantId
+                                                  .toString(),
+                                              price: dealProvider!
+                                                  .dealData.price!
+                                                  .toStringAsFixed(0),
+                                              discountOnPrice: dealProvider!
+                                                  .dealData.discountOnPrice!
+                                                  .toString(),
+                                              title:
+                                                  dealProvider!.dealData.name!,
+                                              reviews: '0',
+                                              image: dealProvider!.dealData
+                                                              .images ==
+                                                          null ||
+                                                      dealProvider!.dealData
+                                                          .images!.isEmpty
+                                                  ? ''
+                                                  : dealProvider!.dealData
+                                                      .images![0].image!,
+                                              reviewsCount: '0',
+                                              path: dealProvider!.dealData
+                                                              .images ==
+                                                          null ||
+                                                      dealProvider!.dealData
+                                                          .images!.isEmpty
+                                                  ? ''
+                                                  : dealProvider!.dealData
+                                                      .images![0].path!,
+                                            );
                                             value.checkIsAddedToCart(context);
                                           } else {
                                             ScaffoldMessenger.of(context)
@@ -338,13 +423,13 @@ class _Details_dealsState extends State<Details_deals> {
     );
   }
 
-  ReviewsModel? rating;
-  Future<void> getRating() async {
-    final result = await Provider.of<DealProvider>(context, listen: false)
-        .getDealRating(widget.token, widget.dealId.toString());
+  // ReviewsModel? rating;
+  // Future<void> getRating() async {
+  //   final result = await Provider.of<DealProvider>(context, listen: false)
+  //       .getDealRating(widget.token, widget.dealId.toString());
 
-    setState(() {
-      rating = result;
-    });
-  }
+  //   setState(() {
+  //     rating = result;
+  //   });
+  // }
 }

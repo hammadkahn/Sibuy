@@ -1,13 +1,11 @@
+import 'dart:developer';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/shared/custom_button.dart';
-import 'package:intl_phone_field/countries.dart';
-import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../services/deals/user_deals_services.dart';
 
 class filter_list extends StatefulWidget {
   const filter_list({Key? key, required this.token}) : super(key: key);
@@ -20,49 +18,44 @@ class filter_list extends StatefulWidget {
 class _filter_listState extends State<filter_list> {
   final List<String> items = ['asc', 'desc'];
   String? selectedValue;
-  Country? selectedCountry;
+  String? selectedCountry;
   String? currentCountry = 'Loading...';
   String? currentCity;
   List<dynamic>? systemCitiesDropdown;
 
-  Future<void> getCountryAndCity() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    setState(() {
-      // currentCity = pref.getString('city');
-      currentCountry = pref.getString('country');
-      // address = pref.getString('address');
-    });
-  }
+  DealProvider? _dealProvider;
 
   Future<void> fetchCitiesAndCountries() async {
-    final result = await UserDealServices()
-        .getSystemCities(widget.token, currentCountry ?? '');
-    debugPrint('country : $currentCountry');
-    setState(() {
-      systemCitiesDropdown = result['data'];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    _dealProvider!
+        .getAllCities(prefs.getInt('userId').toString())
+        .whenComplete(() {
+      setState(() {
+        currentCountry = prefs.getString('country');
+        countryFetched = true;
+      });
     });
   }
 
   RangeValues valuess = const RangeValues(0, 100);
   bool countryFetched = false;
+  @override
+  void initState() {
+    _dealProvider = Provider.of<DealProvider>(context, listen: false);
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
-    getCountryAndCity()
-        .whenComplete(() => fetchCitiesAndCountries().whenComplete(() {
-              setState(() {
-                countryFetched = true;
-              });
-            }));
-
-    selectedCountry = const Country(
-      name: "Azerbaijan",
-      flag: "🇦🇿",
-      code: "AZ",
-      dialCode: "994",
-      minLength: 9,
-      maxLength: 9,
-    );
+    fetchCitiesAndCountries().whenComplete(() {
+      setState(() {
+        currentCity = _dealProvider!.citiesList.isEmpty
+            ? 'No cities found'
+            : _dealProvider!.citiesList[0];
+      });
+      log('city: ${currentCountry!}');
+    });
     super.didChangeDependencies();
   }
 
@@ -185,37 +178,7 @@ class _filter_listState extends State<filter_list> {
                 Expanded(
                   flex: 2,
                   child: ElevatedButton(
-                    onPressed: () => showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) => SizedBox(
-                        height: MediaQuery.of(context).size.height / 1.3,
-                        child: CountryPickerDialog(
-                            searchText: 'Search Country',
-                            countryList: countries,
-                            onCountryChanged: (value) {
-                              setState(() {
-                                selectedCountry = value;
-                                currentCountry = value.name;
-                              });
-                              fetchCitiesAndCountries().whenComplete(() {
-                                if (systemCitiesDropdown == null ||
-                                    systemCitiesDropdown!.isEmpty) {
-                                  setState(() {
-                                    countryFetched = false;
-                                  });
-                                } else {
-                                  setState(() {
-                                    countryFetched = true;
-                                  });
-                                }
-                              });
-                              debugPrint('selected: $currentCountry');
-                            },
-                            selectedCountry: selectedCountry!,
-                            filteredCountries: countries),
-                      ),
-                    ),
+                    onPressed: null,
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
@@ -223,14 +186,15 @@ class _filter_listState extends State<filter_list> {
                     ),
                     child: Padding(
                         padding: const EdgeInsets.only(top: 15, bottom: 15),
-                        child: Text(currentCountry ?? 'Loading...')),
+                        child: Text(currentCountry ?? '')),
                   ),
                 ),
                 const SizedBox(width: 5),
                 currentCountry != null && countryFetched == true
                     ? Expanded(
                         flex: 2,
-                        child: systemCitiesDropdown == null
+                        child: _dealProvider!.allCities.data == null ||
+                                _dealProvider!.allCities.data!.isEmpty
                             ? const Text('no city found')
                             : DropdownButton2(
                                 isExpanded: true,
@@ -241,7 +205,7 @@ class _filter_listState extends State<filter_list> {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        systemCitiesDropdown![0],
+                                        _dealProvider!.allCities.data![0].name!,
                                         style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
@@ -251,7 +215,7 @@ class _filter_listState extends State<filter_list> {
                                     ),
                                   ],
                                 ),
-                                items: systemCitiesDropdown!
+                                items: _dealProvider!.citiesList
                                     .map((item) => DropdownMenuItem<String>(
                                           value: item,
                                           child: Text(
@@ -320,8 +284,8 @@ class _filter_listState extends State<filter_list> {
               height: 30,
             ),
             RangeSlider(
-              activeColor: Color(0xffff6600),
-              inactiveColor: Color(0xFFff6600),
+              activeColor: const Color(0xffff6600),
+              inactiveColor: const Color(0xFFff6600),
               values: valuess,
               onChanged: (newRange) {
                 setState(() => valuess = newRange);

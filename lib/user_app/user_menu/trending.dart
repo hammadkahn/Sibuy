@@ -1,6 +1,7 @@
+import 'package:SiBuy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/apis/api_urls.dart';
-import 'package:SiBuy/models/deal_model.dart';
+
 import 'package:SiBuy/models/reviews_model.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 class trending_user extends StatefulWidget {
   const trending_user({Key? key, required this.data, required this.token})
       : super(key: key);
-  final DealData data;
+  final UserDealListData data;
   final String token;
 
   @override
@@ -48,7 +49,7 @@ class _trending_userState extends State<trending_user> {
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ClipRRect(
@@ -78,23 +79,20 @@ class _trending_userState extends State<trending_user> {
           const SizedBox(
             height: 4,
           ),
-          Row(
-            children: [
-              Text(
-                widget.data.type!.toString(),
-                softWrap: true,
-                style: const TextStyle(
-                    fontFamily: 'Mulish',
-                    fontSize: 7,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFFFF6767)),
-              ),
-            ],
+          Text(
+            widget.data.type!.toString(),
+            softWrap: true,
+            style: const TextStyle(
+                fontFamily: 'Mulish',
+                fontSize: 7,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFFFF6767)),
           ),
           const SizedBox(
-            height: 4,
+            height: 2,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Image.asset('assets/images/rating.png', width: 6, height: 6),
               Text(
@@ -116,9 +114,10 @@ class _trending_userState extends State<trending_user> {
             ],
           ),
           const SizedBox(
-            height: 4,
+            height: 2,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
                 '\$',
@@ -133,9 +132,12 @@ class _trending_userState extends State<trending_user> {
                 style: const TextStyle(
                     decoration: TextDecoration.lineThrough,
                     fontFamily: 'Mulish',
-                    fontSize: 16,
+                    fontSize: 12,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFFFF6767)),
+              ),
+              SizedBox(
+                width: 4,
               ),
               const Text(
                 '\$',
@@ -147,13 +149,16 @@ class _trending_userState extends State<trending_user> {
               ),
               Text(
                 Provider.of<DealProvider>(context).calculateDiscount(
-                    '${widget.data.discountOnPrice ?? '0'}',
+                    '${widget.data.discount ?? '0'}',
                     '${widget.data.price ?? '0'}'),
                 style: const TextStyle(
                     fontFamily: 'Mulish',
-                    fontSize: 16,
+                    fontSize: 12,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFFff6600)),
+              ),
+              const SizedBox(
+                width: 4,
               ),
               Container(
                 width: 28,
@@ -163,7 +168,7 @@ class _trending_userState extends State<trending_user> {
                     borderRadius: BorderRadius.all(Radius.circular(3))),
                 child: Center(
                   child: Text(
-                    '${widget.data.discountOnPrice ?? 0}% OFF',
+                    '${widget.data.discount ?? 0}% OFF',
                     style: const TextStyle(
                         fontSize: 5,
                         fontFamily: 'Mulish',
@@ -173,9 +178,6 @@ class _trending_userState extends State<trending_user> {
                 ),
               ),
             ],
-          ),
-          const SizedBox(
-            height: 4,
           ),
           Text(
             'Coupons Left:  ${widget.data.limit}',

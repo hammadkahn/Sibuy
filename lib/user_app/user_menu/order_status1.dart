@@ -1,12 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
-import 'package:SiBuy/providers/order.dart';
-import 'package:SiBuy/user_app/user_menu/status3.dart';
 
 import 'package:provider/provider.dart';
 
 import '../../shared/custom_button.dart';
 import 'order_detials.dart';
+import 'web_veiw.dart';
 
 class status_1 extends StatefulWidget {
   const status_1(
@@ -97,47 +98,52 @@ class _status_1State extends State<status_1> {
                   text: "Get this Offer ➔",
                   isLoading: isLoading,
                   onPressed: () {
-                    setState(() {
-                      isLoading = true;
-                    });
-                    final cart =
-                        Provider.of<Cart>(key.currentContext!, listen: false);
-                    String title = cart.cartMap.values.toList()[0].title!;
-                    String price =
-                        (int.parse(cart.cartMap.values.toList()[0].price!) *
-                                int.parse(cart.cartMap.values.toList()[0].qty!))
-                            .toString();
-                    String totalPrice = cart
-                        .calculateRealPrice(
-                            int.parse(cart.cartMap.values.toList()[0].qty!),
-                            cart.cartMap.values.toList()[0].discountOnPrice!,
-                            cart.cartMap.values.toList()[0].price!)
-                        .toString();
-                    String discount =
-                        cart.cartMap.values.toList()[0].discountOnPrice!;
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const WebViewExample()));
+                    // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    //     content: Text(
+                    //         'This is service is not available right now')));
+                    // setState(() {
+                    //   isLoading = true;
+                    // });
+                    // final cart =
+                    //     Provider.of<Cart>(key.currentContext!, listen: false);
+                    // String title = cart.cartMap.values.toList()[0].title!;
+                    // String price =
+                    //     (int.parse(cart.cartMap.values.toList()[0].price!) *
+                    //             int.parse(cart.cartMap.values.toList()[0].qty!))
+                    //         .toString();
+                    // String totalPrice = cart
+                    //     .calculateRealPrice(
+                    //         int.parse(cart.cartMap.values.toList()[0].qty!),
+                    //         cart.cartMap.values.toList()[0].discountOnPrice!,
+                    //         cart.cartMap.values.toList()[0].price!)
+                    //     .toString();
+                    // String discount =
+                    //     cart.cartMap.values.toList()[0].discountOnPrice!;
 
-                    addToCart(
-                      cart.cartMap.values.toList()[0].id!,
-                      cart.cartMap.values.toList()[0].qty!,
-                      price,
-                      totalPrice,
-                      discount,
-                      context,
-                    ).whenComplete(() {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => stats3(
-                            token: widget.token,
-                            productName: title,
-                          ),
-                        ),
-                      );
-                      cart.clearCart();
-                    }).then((value) {
-                      setState(() {
-                        isLoading = false;
-                      });
-                    });
+                    // addToCart(
+                    //   cart.cartMap.values.toList()[0].id!,
+                    //   cart.cartMap.values.toList()[0].qty!,
+                    //   price,
+                    //   totalPrice,
+                    //   discount,
+                    //   context,
+                    // ).whenComplete(() {
+                    //   Navigator.of(context).push(
+                    //     MaterialPageRoute(
+                    //       builder: (context) => stats3(
+                    //         token: widget.token,
+                    //         productName: title,
+                    //       ),
+                    //     ),
+                    //   );
+                    //   cart.clearCart();
+                    // }).then((value) {
+                    //   setState(() {
+                    //     isLoading = false;
+                    //   });
+                    // });
                   }),
               const SizedBox(height: 20),
             ],
@@ -157,7 +163,8 @@ class _status_1State extends State<status_1> {
       "deals[0][total_price]": totalPrice ?? '0',
       "deals[0][discount]": discount,
     };
-    print(data);
+
+    log('$data');
     await dealProvider.addToCart(widget.token, data);
     if (dealProvider.msg == 'success') {
       debugPrint('added successfully');

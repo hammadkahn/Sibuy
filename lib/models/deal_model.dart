@@ -3,23 +3,23 @@ import 'package:SiBuy/models/category_model.dart';
 
 import 'image_model.dart';
 
-class MerchantListOfDeals {
+class MerchantDealListModel {
   bool? status;
   int? responseCode;
   String? message;
-  List<Data>? data;
+  List<MerchantListDealData>? data;
 
-  MerchantListOfDeals(
+  MerchantDealListModel(
       {this.status, this.responseCode, this.message, this.data});
 
-  MerchantListOfDeals.fromJson(Map<String, dynamic> json) {
+  MerchantDealListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     responseCode = json['responseCode'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <MerchantListDealData>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(MerchantListDealData.fromJson(v));
       });
     }
   }
@@ -36,12 +36,12 @@ class MerchantListOfDeals {
   }
 }
 
-class Data {
+class MerchantListDealData {
   int? id;
   String? name;
   int? discount;
   String? type;
-  dynamic price;
+  int? price;
   int? additionalDiscount;
   dynamic additionalDiscountDate;
   int? discountOnPrice;
@@ -51,7 +51,7 @@ class Data {
   int? limit;
   String? description;
   int? status;
-  String? rejectReason;
+  dynamic rejectReason;
   int? active;
   int? activiationRequest;
   int? merchantId;
@@ -59,9 +59,15 @@ class Data {
   String? createdAt;
   String? updatedAt;
   String? expiry;
+  String? redeemExpiry;
+  String? isRedeemExpiryNotificationDispatch;
+  int? isSponsored;
+  String? uniqueCode;
+  String? languageId;
   String? categoryName;
+  String? languageName;
   ImageModel? image;
-  int? totalReviews;
+  dynamic reviewAndCount;
   int? totalPurchase;
   int? totalRadeem;
   int? remaining;
@@ -69,7 +75,7 @@ class Data {
   String? typeName;
   String? activationRequestFor;
 
-  Data(
+  MerchantListDealData(
       {this.id,
       this.name,
       this.discount,
@@ -92,9 +98,15 @@ class Data {
       this.createdAt,
       this.updatedAt,
       this.expiry,
+      this.redeemExpiry,
+      this.isRedeemExpiryNotificationDispatch,
+      this.isSponsored,
+      this.uniqueCode,
+      this.languageId,
       this.categoryName,
+      this.languageName,
       this.image,
-      this.totalReviews,
+      this.reviewAndCount,
       this.totalPurchase,
       this.totalRadeem,
       this.remaining,
@@ -102,7 +114,7 @@ class Data {
       this.typeName,
       this.activationRequestFor});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  MerchantListDealData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     discount = json['discount'];
@@ -125,9 +137,16 @@ class Data {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     expiry = json['expiry'];
+    redeemExpiry = json['redeem_expiry'];
+    isRedeemExpiryNotificationDispatch =
+        json['is_redeem_expiry_notification_dispatch'];
+    isSponsored = json['is_sponsored'];
+    uniqueCode = json['unique_code'];
+    languageId = json['language_id'];
     categoryName = json['category_name'];
+    languageName = json['language_name'];
     image = json['image'] != null ? ImageModel.fromJson(json['image']) : null;
-    totalReviews = json['totalReviews'];
+    reviewAndCount = json['reviewAndCount'];
     totalPurchase = json['totalPurchase'];
     totalRadeem = json['totalRadeem'];
     remaining = json['remaining'];
@@ -160,11 +179,18 @@ class Data {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['expiry'] = expiry;
+    data['redeem_expiry'] = redeemExpiry;
+    data['is_redeem_expiry_notification_dispatch'] =
+        isRedeemExpiryNotificationDispatch;
+    data['is_sponsored'] = isSponsored;
+    data['unique_code'] = uniqueCode;
+    data['language_id'] = languageId;
     data['category_name'] = categoryName;
+    data['language_name'] = languageName;
     if (image != null) {
       data['image'] = image!.toJson();
     }
-    data['totalReviews'] = totalReviews;
+    data['reviewAndCount'] = reviewAndCount;
     data['totalPurchase'] = totalPurchase;
     data['totalRadeem'] = totalRadeem;
     data['remaining'] = remaining;

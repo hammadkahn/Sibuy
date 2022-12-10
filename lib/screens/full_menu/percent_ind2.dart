@@ -42,7 +42,7 @@ class Stacked_container extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Total Deal Radeem',
+                    'Total Deal Radeemed',
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,

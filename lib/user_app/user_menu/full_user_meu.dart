@@ -1,19 +1,17 @@
+import 'dart:developer';
+
+import 'package:SiBuy/models/user_model.dart';
 import 'package:SiBuy/user_app/user_menu/categ.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
-import 'package:SiBuy/services/deals/user_deals_services.dart';
 import 'package:SiBuy/user_app/user_menu/details_with_all.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constant/size_constants.dart';
 import '../../shared/search_field.dart';
 import '../notification_screen.dart';
 import 'ham_user.dart';
-import 'l.dart';
-import 'merchant_card_widgets/merchant_details.dart';
 
 class Full_menu_user extends StatefulWidget {
   const Full_menu_user({Key? key, required this.token}) : super(key: key);
@@ -26,7 +24,7 @@ class Full_menu_user extends StatefulWidget {
 class _Full_menu_userState extends State<Full_menu_user> {
   DealProvider? dealProvider;
   String? selectedValue;
-  String? country;
+  String? cityCode;
   ValueNotifier<List<dynamic>>? items = ValueNotifier([]);
 
   String? city = '';
@@ -36,17 +34,16 @@ class _Full_menu_userState extends State<Full_menu_user> {
     Image.asset('assets/images/bev.png'),
   ];
 
-  Future<void> getCountry() async {
-    debugPrint('widget : ${widget.token}');
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    country = prefs.getString('country');
-  }
+  // Future<void> getCountry() async {
+  //   debugPrint('widget : ${widget.token}');
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   country = prefs.getString('country');
+  // }
 
   Future<void> fetchCitiesAndCountries() async {
-    final result =
-        await UserDealServices().getSystemCities(widget.token, country ?? '');
+    await dealProvider!.getSystemCities(widget.token);
 
-    items!.value = result['data'];
+    items!.value = dealProvider!.userCities;
   }
 
   ValueNotifier<bool> productLoaded = ValueNotifier(false);
@@ -56,12 +53,14 @@ class _Full_menu_userState extends State<Full_menu_user> {
     dealProvider = Provider.of<DealProvider>(context, listen: false);
 
     super.didChangeDependencies();
-    getCountry().whenComplete(() {
-      fetchCitiesAndCountries().whenComplete(
-          () => dealProvider!.getAllUserDeals(widget.token).whenComplete(() {
-                productLoaded.value = true;
-              }));
-    });
+
+    fetchCitiesAndCountries().whenComplete(
+      () => dealProvider!.getCarousalsDeals(widget.token).whenComplete(
+        () {
+          productLoaded.value = true;
+        },
+      ),
+    );
   }
 
   @override
@@ -97,15 +96,17 @@ class _Full_menu_userState extends State<Full_menu_user> {
                   valueListenable: productLoaded,
                   builder: (BuildContext context, bool value, Widget? child) {
                     return SizedBox(
-                      child: productLoaded.value == false
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : C_slider(
-                              token: widget.token,
-                              merchantList: dealProvider!.userListOfDeals.data!,
-                            ),
-                    );
+                        child: productLoaded.value == false
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : const SizedBox()
+                        // : C_slider(
+                        //     token: widget.token,
+                        //     merchantList:
+                        //         dealProvider!.userListOfDeals['data']!,
+                        //   ),
+                        );
                   },
                 ),
                 //two rows with 8 icons of categories
@@ -124,19 +125,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                 const SizedBox(
                   height: 20,
                 ),
-                // Container(
-                //   margin: const EdgeInsets.symmetric(vertical: 10),
-                //   child: const Text('Trending Deals for You',
-                //       style: TextStyle(
-                //           fontFamily: 'Mulish',
-                //           fontSize: 16,
-                //           fontWeight: FontWeight.w700,
-                //           color: Color(0xFF505050))),
-                // ),
-                // SizedBox(
-                //   height: 210,
-                //   child: userTrendingDeals(),
-                // ),
+
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Row(
@@ -150,7 +139,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                             color: Color(0xFF505050)),
                       ),
                       Text(
-                        country ?? 'fetching...',
+                        city ?? 'fetching...',
                         style: const TextStyle(
                             fontFamily: 'Mulish',
                             fontSize: 16,
@@ -162,11 +151,35 @@ class _Full_menu_userState extends State<Full_menu_user> {
                 ),
                 SizedBox(
                   height: 190,
-                  child: MerchantDetails(
-                    token: widget.token,
-                    country: country ?? 'fetching...',
-                    city: city,
+                  child: userTrendingDeals(isForSponsored: true),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 15),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Deals in ",
+                        style: TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF505050)),
+                      ),
+                      Text(
+                        city ?? 'fetching...',
+                        style: const TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFFff6600)),
+                      ),
+                    ],
                   ),
+                ),
+                SizedBox(
+                  height: 190,
+                  child: userTrendingDeals(),
                 )
               ],
             ),
@@ -176,10 +189,9 @@ class _Full_menu_userState extends State<Full_menu_user> {
     );
   }
 
-  userTrendingDeals() {
-    return FutureBuilder<TrendingDealsModel>(
-      future: UserDealServices()
-          .trendingDeals(widget.token, selectedValue ?? '', country ?? ''),
+  userTrendingDeals({bool? isForSponsored = false}) {
+    return FutureBuilder<UserDealListModel>(
+      future: dealProvider!.cityWiseDealsList(cityCode: cityCode ?? '64968'),
       builder: ((context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
@@ -191,8 +203,10 @@ class _Full_menu_userState extends State<Full_menu_user> {
               );
             } else {
               if (snapshot.data!.data == null || snapshot.data!.data!.isEmpty) {
-                return const Center(
-                  child: Text('No deals in trending'),
+                return Center(
+                  child: Text(isForSponsored == true
+                      ? 'No deals sponsered'
+                      : 'No deals in trending'),
                 );
               } else {
                 return ListView.builder(
@@ -203,10 +217,17 @@ class _Full_menu_userState extends State<Full_menu_user> {
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   itemBuilder: ((context, index) {
-                    return all_details(
-                      dealId: snapshot.data!.data![index],
-                      token: widget.token,
-                    );
+                    return isForSponsored == false
+                        ? all_details(
+                            dealId: snapshot.data!.data![index],
+                            token: widget.token,
+                          )
+                        : snapshot.data!.data![index].isSponsored == 1
+                            ? all_details(
+                                dealId: snapshot.data!.data![index],
+                                token: widget.token,
+                              )
+                            : const SizedBox();
                   }),
                 );
               }
@@ -216,6 +237,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
     );
   }
 
+  //location dropdown
   Widget locationDropdown() {
     return Row(
       children: [
@@ -231,9 +253,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                       icon: const SizedBox(),
                       isExpanded: true,
                       hint: Text(
-                        country == null || country!.isEmpty
-                            ? 'Country'
-                            : country!,
+                        city == null || city!.isEmpty ? 'City' : city!,
                         style: const TextStyle(
                             fontFamily: 'Mulish',
                             fontSize: 16,
@@ -261,6 +281,14 @@ class _Full_menu_userState extends State<Full_menu_user> {
                           selectedValue = value as String;
                           city = value;
                         });
+                        for (var i in dealProvider!.userCitiesData.data!) {
+                          if (i.cityName == city) {
+                            cityCode = i.cityId.toString();
+                            log('matched');
+                          } else {
+                            log('no match found');
+                          }
+                        }
                       },
                       underline: const SizedBox(),
                       buttonHeight: 30,
@@ -290,10 +318,14 @@ class _Full_menu_userState extends State<Full_menu_user> {
         const Spacer(),
         GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => ham_user(
-                        token: widget.token,
-                      )));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                      builder: (_) => ham_user(
+                            token: widget.token,
+                          )))
+                  .then((value) {
+                setState(() {});
+              });
             },
             child: Image.asset('assets/images/drawer.png')),
         const SizedBox(width: 13),

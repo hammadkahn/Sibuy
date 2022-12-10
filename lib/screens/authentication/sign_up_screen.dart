@@ -1,15 +1,12 @@
+import 'dart:developer';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:SiBuy/models/category_model.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
-import 'package:intl/intl.dart';
-import 'package:intl_phone_field/countries.dart';
-import 'package:intl_phone_field/country_picker_dialog.dart';
-import '../../services/categories/category_services.dart';
+import 'package:provider/provider.dart';
+import '../../providers/deal_provider.dart';
 import '../../user_app/verify _code/user_verification.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -22,62 +19,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  File? image;
-  int radioValue = 0;
-
-  Future pickimage() async {
-    try {
-      final Image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (Image == null) return;
-      final imageTemporary = File(Image.path);
-      setState(() {
-        this.image = imageTemporary;
-      });
-      this.image = imageTemporary;
-    } on PlatformException catch (e) {
-      print("failed to load $e");
-    }
-  }
-
-  File? imagee;
-  Future pickimagee() async {
-    try {
-      final Image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (Image == null) return;
-      final imageTemporary = File(Image.path);
-      setState(() {
-        this.imagee = imageTemporary;
-      });
-      this.imagee = imageTemporary;
-    } on PlatformException catch (e) {
-      print("failed to load $e");
-    }
-  }
-
-  FilePickerResult? result;
-  PlatformFile? file;
-  void pickfile() async {
-    result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['pdf', 'doc'],
-        allowMultiple: true);
-    if (result == null) return;
-    file = result!.files.first;
-    setState(() {});
-  }
-
-  FilePickerResult? resultt;
-  PlatformFile? filee;
-  void pickfilee() async {
-    resultt = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['pdf', 'doc'],
-        allowMultiple: true);
-    if (result == null) return;
-    filee = resultt!.files.first;
-    setState(() {});
-  }
-
+  DealProvider? _provider;
   final _key = GlobalKey<FormState>();
   final nameCtr = TextEditingController();
   final countryCtr = TextEditingController();
@@ -91,57 +33,105 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final branchCtr = TextEditingController();
   final catCtr = TextEditingController();
   final catCtr2 = TextEditingController();
+  final patentCtr = TextEditingController();
+  final registerationCtr = TextEditingController();
+  final openingTimeCtr = TextEditingController();
+  final closingTimeCtr = TextEditingController();
 
   double? longitude;
   double? latitued;
-  Country? selectedCountry;
-  @override
+  String? selectedCountry;
+  String? cityCode;
+  String? categoyId_1;
+  String? categoyId_2;
+  String? languageId;
+  List<String> days = [];
 
-  //Signup
-  var isLoading = false;
-  bool catLoaded = false;
-  List<CategoryData>? catData;
+  File? logoImage;
+  int radioValue = 0;
 
-  Future<void> loadAllCategories() async {
-    final result = await CategoryServices().getAllCategories();
-
-    setState(() {
-      catData = result.data;
-    });
+  //logo picker
+  Future _logoPicker() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      setState(() {
+        logoImage = imageTemporary;
+      });
+      logoImage = imageTemporary;
+    } on PlatformException catch (e) {
+      print("failed to load $e");
+    }
   }
 
-  String dropdownvaluee = 'Item 1';
+  File? profile_image;
+  //profile image picker
+  Future profilePicker() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      setState(() {
+        profile_image = imageTemporary;
+      });
+      profile_image = imageTemporary;
+    } on PlatformException catch (e) {
+      log("failed to load $e");
+    }
+  }
 
-  // List of items in our dropdown menu
-  var itemss = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
+  FilePickerResult? result;
+  PlatformFile? file;
+
+  //document 1 picker
+  void pickDocument_1() async {
+    result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'docx'],
+        allowMultiple: true);
+    if (result == null) return;
+    file = result!.files.first;
+    setState(() {});
+  }
+
+  FilePickerResult? resultt;
+  PlatformFile? filee;
+
+  //docunmet 2 picker
+  void pickDocument_2() async {
+    resultt = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'docx'],
+        allowMultiple: true);
+    if (result == null) return;
+    filee = resultt!.files.first;
+    setState(() {});
+  }
+
+  //Signup
+  bool isLoading = false;
+  bool catLoaded = false;
+
+  ValueNotifier<bool> isLoaded = ValueNotifier(false);
+
+  // Future<void> loadAllCategories() async {
+  //   final result = await CategoryServices().getAllCategories();
+
+  //   setState(() {
+  //     catData = result.data;
+  //   });
+  // }
+
+  String category_2 = 'For Men';
+
   // Initial Selected Value
-  String dropdownvalue = 'Item 1';
+  String category_1 = 'For Men';
+
+  String langDropdownvaluee = 'English';
 
   // List of items in our dropdown menu
-  var items = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-  String lang_dropdownvaluee = 'Item 1';
-
-  // List of items in our dropdown menu
-  var lang = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-  // String op_dropdownvalue = 'Item 1';
+  String op_dropdownvalue = 'Item 1';
 
   // // List of items in our dropdown menu
   // var op = [
@@ -154,25 +144,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void initState() {
-    selectedCountry = const Country(
-      name: "Azerbaijan",
-      flag: "🇦🇿",
-      code: "AZ",
-      dialCode: "994",
-      minLength: 9,
-      maxLength: 9,
-    );
+    _provider = Provider.of<DealProvider>(context, listen: false);
+    // selectedCountry = const Country(
+    //   name: "Azerbaijan",
+    //   flag: "🇦🇿",
+    //   code: "AZ",
+    //   dialCode: "994",
+    //   minLength: 9,
+    //   maxLength: 9,
+    // );
     debugPrint(countryCtr.text);
-    loadAllCategories().whenComplete(() {
-      setState(() {
-        catLoaded = true;
-      });
-    });
+
+    // loadAllCategories().whenComplete(() {
+    //   setState(() {
+    //     catLoaded = true;
+    //   });
+    // });
 
     super.initState();
   }
 
-  TimeOfDay? _timeOfDay = TimeOfDay(hour: 9, minute: 00);
+  TimeOfDay? _timeOfDay = const TimeOfDay(hour: 9, minute: 00);
   void _showtimepicker() {
     showTimePicker(context: context, initialTime: TimeOfDay.now())
         .then((value) => setState(() {
@@ -180,7 +172,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             }));
   }
 
-  TimeOfDay? _closetimeOfDay = TimeOfDay(hour: 6, minute: 00);
+  TimeOfDay? _closetimeOfDay = const TimeOfDay(hour: 6, minute: 00);
   void _closetimepicker() {
     showTimePicker(context: context, initialTime: TimeOfDay.now())
         .then((value) => setState(() {
@@ -197,6 +189,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
     CheckBoxState(title: 'Saturday'),
     CheckBoxState(title: 'Sunday'),
   ];
+
+  @override
+  void didChangeDependencies() {
+    _provider!.getAllLanguages().then((value) => _provider!
+            .getAllCat()
+            .then((value) => _provider!.getAllCountries())
+            .whenComplete(() {
+          isLoaded.value = true;
+          // setState(() {
+          //   // items = Provider.of<DealProvider>(context, listen: false).languages;
+          // });
+        }));
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -265,54 +271,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                 ),
-                // TextFormField(
-                //   controller: genderCtr,
-                //   decoration: InputDecoration(
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                //       borderRadius: BorderRadius.circular(16),
-                //     ),
-                //     hintText: 'gender',
-                //   ),
-                //   validator: (value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please speicify your gender';
-                //     }
-                //     return null;
-                //   },
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 16, bottom: 16),
-                //   child: TextField(
-                //     controller: dobCtr,
-                //     decoration: InputDecoration(
-                //         icon: const Icon(Icons.calendar_today_rounded),
-                //         labelText: 'Date of Birth',
-                //         enabledBorder: OutlineInputBorder(
-                //           borderSide:
-                //               const BorderSide(color: Color(0xFFEAEAEF)),
-                //           borderRadius: BorderRadius.circular(16),
-                //         ),
-                //         focusedBorder: OutlineInputBorder(
-                //           borderSide:
-                //               const BorderSide(color: Color(0xFFEAEAEF)),
-                //           borderRadius: BorderRadius.circular(16),
-                //         )),
-                //     onTap: () async {
-                //       DateTime? pickdate = await showDatePicker(
-                //           context: context,
-                //           initialDate: DateTime.now(),
-                //           firstDate: DateTime(1970),
-                //           lastDate: DateTime(2030));
-                //       if (pickdate != null) {
-                //         setState(() {
-                //           dobCtr.text =
-                //               DateFormat('dd-MM-yyyy').format(pickdate);
-                //         });
-                //       }
-                //     },
-                //   ),
-                // ),
+
                 TextFormField(
                   controller: emailCtr,
                   keyboardType: TextInputType.emailAddress,
@@ -321,93 +280,182 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    hintText: 'Email (Optional)',
+                    hintText: 'Email',
                   ),
                   validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        !value.contains('@')) {
-                      return 'email is required';
+                    if (value == null || !value.contains('@')) {
+                      return 'Please enter a valid email';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 8),
-                Column(
-                  children: [
-                    TextButton.icon(
-                      icon: const Icon(
-                        Icons.location_pin,
-                        color: Colors.orange,
-                      ),
-                      onPressed: () {
-                        _determinePosition()
-                            .whenComplete(() => debugPrint('fetched'))
-                            .then(
-                              (value) =>
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(value),
+                // Column(
+                //   children: [
+                //     TextButton.icon(
+                //       icon: const Icon(
+                //         Icons.location_pin,
+                //         color: Colors.orange,
+                //       ),
+                //       onPressed: () {
+                //         _determinePosition()
+                //             .whenComplete(() => debugPrint('fetched'))
+                //             .then(
+                //               (value) =>
+                //                   ScaffoldMessenger.of(context).showSnackBar(
+                //                 SnackBar(
+                //                   content: Text(value),
+                //                 ),
+                //               ),
+                //             );
+                //       },
+                //       label: const Text(
+                //         'Fetch your current location',
+                //         style: TextStyle(color: Colors.orange),
+                //       ),
+                //     ),
+                //     Text(
+                //       'To get your pricise location, Please Fetch your location',
+                //       style: TextStyle(fontSize: 10, color: Colors.grey[350]),
+                //     )
+                //   ],
+                // ),
+
+                ValueListenableBuilder(
+                  valueListenable: isLoaded,
+                  builder:
+                      (BuildContext context, dynamic value, Widget? child) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 16, bottom: 16),
+                      child: TextFormField(
+                        onTap: () => value == false
+                            ? ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Loading...'),
+                                ),
+                              )
+                            : showModalBottomSheet(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(
+                                    color: Colors.white,
+                                    width: 2.0,
+                                  ),
+                                ),
+                                elevation: 3,
+                                backgroundColor: Color(0xFFff6600),
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) => SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height / 1.3,
+                                  child: ListView.builder(
+                                    itemCount:
+                                        _provider!.allCountries.data!.length,
+                                    itemBuilder: ((context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          selectedCountry = _provider!
+                                              .allCountries.data![index].id
+                                              .toString();
+                                          countryCtr.text = _provider!
+                                              .allCountries.data![index].name!;
+                                          if (selectedCountry != null) {
+                                            _provider!.getAllCities(_provider!
+                                                .allCountries.data![index].id
+                                                .toString());
+                                          }
+
+                                          log(selectedCountry!);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              15, 12, 15, 8),
+                                          child: Text(
+                                            _provider!.allCountries.data![index]
+                                                .name!,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ),
                                 ),
                               ),
-                            );
-                      },
-                      label: const Text(
-                        'Fetch your current location',
-                        style: TextStyle(color: Colors.orange),
-                      ),
-                    ),
-                    Text(
-                      'For get your pricise location, Please Fetch your location',
-                      style: TextStyle(fontSize: 10, color: Colors.grey[350]),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 16),
-                  child: TextFormField(
-                    textInputAction: TextInputAction.next,
-                    controller: countryCtr,
-                    decoration: InputDecoration(
-                      prefixIcon: IconButton(
-                        icon: const Icon(Icons.arrow_drop_down),
-                        onPressed: () => showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (context) => SizedBox(
-                            height: MediaQuery.of(context).size.height / 1.3,
-                            child: CountryPickerDialog(
-                                searchText: 'Search Country',
-                                countryList: countries,
-                                onCountryChanged: (value) {
-                                  setState(() {
-                                    selectedCountry = value;
-                                    countryCtr.text = value.name;
-                                  });
-                                },
-                                selectedCountry: selectedCountry!,
-                                filteredCountries: countries),
+                        textInputAction: TextInputAction.next,
+                        controller: countryCtr,
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          labelText: 'Country',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Color(0xFFEAEAEF)),
+                            borderRadius: BorderRadius.circular(16),
                           ),
+                          hintText: countryCtr.text,
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'country field is required';
+                          }
+                          return null;
+                        },
                       ),
-                      labelText: 'Country',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      hintText: countryCtr.text,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'country field is required';
-                      }
-                      return null;
-                    },
-                  ),
+                    );
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 26),
                   child: TextFormField(
+                    onTap: () => selectedCountry == null ||
+                            selectedCountry!.isEmpty
+                        ? ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please select your country first'),
+                            ),
+                          )
+                        : showModalBottomSheet(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                              ),
+                            ),
+                            elevation: 3,
+                            backgroundColor: Color(0xFFff6600),
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) => SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height / 1.3,
+                                  child: ListView.builder(
+                                    itemCount:
+                                        _provider!.allCities.data!.length,
+                                    itemBuilder: ((context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          cityCode = _provider!
+                                              .allCities.data![index].id
+                                              .toString();
+                                          cityCtr.text = _provider!
+                                              .allCities.data![index].name!;
+
+                                          log(selectedCountry!);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              15, 12, 15, 8),
+                                          child: Text(_provider!
+                                              .allCities.data![index].name!),
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                )),
                     readOnly: true,
                     controller: cityCtr,
                     decoration: InputDecoration(
@@ -468,40 +516,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 16),
-                  child: TextField(
-                    controller: dobCtr,
-                    textInputAction: TextInputAction.next,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                        icon: const Icon(Icons.calendar_today_rounded),
-                        labelText: 'Date of Birth',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFFEAEAEF)),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFFEAEAEF)),
-                          borderRadius: BorderRadius.circular(16),
-                        )),
-                    onTap: () async {
-                      DateTime? pickdate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1970),
-                          lastDate: DateTime(2030));
-                      if (pickdate != null) {
-                        setState(() {
-                          dobCtr.text =
-                              DateFormat('dd-MM-yyyy').format(pickdate);
-                        });
-                      }
-                    },
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 16, bottom: 16),
+                //   child: TextField(
+                //     controller: dobCtr,
+                //     textInputAction: TextInputAction.next,
+                //     readOnly: true,
+                //     decoration: InputDecoration(
+                //         icon: const Icon(Icons.calendar_today_rounded),
+                //         labelText: 'Date of Birth',
+                //         enabledBorder: OutlineInputBorder(
+                //           borderSide:
+                //               const BorderSide(color: Color(0xFFEAEAEF)),
+                //           borderRadius: BorderRadius.circular(16),
+                //         ),
+                //         focusedBorder: OutlineInputBorder(
+                //           borderSide:
+                //               const BorderSide(color: Color(0xFFEAEAEF)),
+                //           borderRadius: BorderRadius.circular(16),
+                //         )),
+                //     onTap: () async {
+                //       DateTime? pickdate = await showDatePicker(
+                //           context: context,
+                //           initialDate: DateTime.now(),
+                //           firstDate: DateTime(1970),
+                //           lastDate: DateTime(2030));
+                //       if (pickdate != null) {
+                //         setState(() {
+                //           dobCtr.text =
+                //               DateFormat('dd-MM-yyyy').format(pickdate);
+                //         });
+                //       }
+                //     },
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 26),
                   child: TextFormField(
@@ -516,133 +564,273 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your branch name';
+                        return 'Please enter your address';
                       }
                       return null;
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 26),
-                  child: TextFormField(
-                    controller: desCtr,
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      hintText: 'Description',
-                      // suffix: Icon(Icons.visibility)
-                    ),
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 26),
+                //   child: TextFormField(
+                //     controller: desCtr,
+                //     maxLines: 3,
+                //     decoration: InputDecoration(
+                //       enabledBorder: OutlineInputBorder(
+                //         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
+                //         borderRadius: BorderRadius.circular(16),
+                //       ),
+                //       hintText: 'Description',
+                //       // suffix: Icon(Icons.visibility)
+                //     ),
+                //   ),
+                // ),
+                //border line
+                const Padding(
+                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                  child: Divider(
+                    color: Color(0xFFEAEAEF),
+                    thickness: 1,
                   ),
                 ),
-                Text(
+                const Text(
                   'Category 1',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    // Initial Value
-                    value: dropdownvalue,
 
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
+                // category 1 dropdown
+                SizedBox(
+                  width: double.maxFinite,
+                  child: ValueListenableBuilder(
+                    valueListenable: isLoaded,
+                    builder: (BuildContext context, bool value, Widget? child) {
+                      return isLoaded.value == false
+                          ? const CircularProgressIndicator()
+                          : Container(
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(
+                                    color: Color(0xFFEAEAEF),
+                                    width: 2.0,
+                                  ),
+                                ),
+                              ),
+                              child: DropdownButton<String>(
+                                dropdownColor: Color(0xFFff6600),
 
-                    // Array list of items
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownvalue = newValue!;
-                      });
+                                elevation: 3,
+
+                                isExpanded: true,
+                                // Initial Value
+                                value: category_1,
+
+                                // Down Arrow Icon
+                                icon: const Icon(Icons.keyboard_arrow_down),
+
+                                // Array list of items
+                                items: _provider!.allCategories
+                                    .map<DropdownMenuItem<String>>(
+                                        (String items) {
+                                  return DropdownMenuItem<String>(
+                                    value: items,
+                                    child: Text(
+                                      items,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    onTap: () {
+                                      for (int i = 0;
+                                          i < _provider!.allCategories.length;
+                                          i++) {
+                                        if (items ==
+                                            _provider!.allCategories[i]) {
+                                          categoyId_1 = _provider!
+                                              .catData.data![i].id
+                                              .toString();
+                                          break;
+                                        }
+                                      }
+                                      print(categoyId_1);
+                                    },
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    category_1 = newValue!;
+                                  });
+                                },
+                              ),
+                            );
                     },
                   ),
                 ),
-                SizedBox(
-                  width: 10,
+
+                const Padding(
+                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                  child: Divider(
+                    color: Color(0xFFEAEAEF),
+                    thickness: 1,
+                  ),
                 ),
-                Text(
+                const Text(
                   'Category 2',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    // Initial Value
-                    value: dropdownvaluee,
 
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
+                //category 2 dropdown
+                SizedBox(
+                  width: double.maxFinite,
+                  child: ValueListenableBuilder(
+                    valueListenable: isLoaded,
+                    builder: (BuildContext context, bool value, Widget? child) {
+                      return isLoaded.value == false
+                          ? const CircularProgressIndicator()
+                          : Container(
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(
+                                    color: Color(0xFFEAEAEF),
+                                    width: 2.0,
+                                  ),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: DropdownButton<String>(
+                                  dropdownColor: Color(0xFFff6600),
 
-                    // Array list of items
-                    items: itemss.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValuee) {
-                      setState(() {
-                        dropdownvaluee = newValuee!;
-                      });
+                                  elevation: 3,
+                                  isExpanded: true,
+                                  // Initial Value
+                                  value: category_2,
+
+                                  // Down Arrow Icon
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+
+                                  // Array list of items
+                                  items: _provider!.allCategories
+                                      .map<DropdownMenuItem<String>>(
+                                          (String items) {
+                                    return DropdownMenuItem<String>(
+                                      value: items,
+                                      child: Text(items,
+                                          style:
+                                              TextStyle(color: Colors.black)),
+                                      onTap: () {
+                                        for (int i = 0;
+                                            i < _provider!.allCategories.length;
+                                            i++) {
+                                          if (items ==
+                                              _provider!.allCategories[i]) {
+                                            categoyId_2 = _provider!
+                                                .catData.data![i].id
+                                                .toString();
+                                            break;
+                                          }
+                                        }
+                                        print(categoyId_2);
+                                      },
+                                    );
+                                  }).toList(),
+                                  // After selecting the desired option,it will
+                                  // change button value to selected value
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      category_2 = newValue!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            );
                     },
                   ),
                 ),
-                SizedBox(
-                  width: 10,
+                const Padding(
+                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                  child: Divider(
+                    color: Color(0xFFEAEAEF),
+                    thickness: 1,
+                  ),
                 ),
-                Text(
+                const Text(
                   'Language',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    // Initial Value
-                    value: lang_dropdownvaluee,
 
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
+                //language dropdwon
+                SizedBox(
+                  width: double.maxFinite,
+                  child: ValueListenableBuilder(
+                    valueListenable: isLoaded,
+                    builder: (BuildContext context, bool value, Widget? child) {
+                      return isLoaded.value == false
+                          ? const CircularProgressIndicator()
+                          : DropdownButton<String>(
+                              isExpanded: true,
+                              // Initial Value
+                              value: langDropdownvaluee,
 
-                    // Array list of items
-                    items: lang.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValueee) {
-                      setState(() {
-                        lang_dropdownvaluee = newValueee!;
-                      });
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: _provider!.languages
+                                  .map<DropdownMenuItem<String>>(
+                                      (String items) {
+                                return DropdownMenuItem<String>(
+                                  value: items,
+                                  child: Text(items),
+                                  onTap: () {
+                                    for (int i = 0;
+                                        i <
+                                            _provider!
+                                                .languageData['data'].length;
+                                        i++) {
+                                      if (items ==
+                                          _provider!.languageData['data'][i]
+                                              ['name']) {
+                                        languageId = _provider!
+                                            .languageData['data'][i]['id']
+                                            .toString();
+                                        break;
+                                      }
+                                    }
+                                    print(languageId);
+                                  },
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  langDropdownvaluee = newValue!;
+                                });
+                              },
+                            );
                     },
                   ),
                 ),
-                SizedBox(
-                  width: 10,
+                const Padding(
+                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                  child: Divider(
+                    color: Color(0xFFEAEAEF),
+                    thickness: 1,
+                  ),
                 ),
-                Text(
+                //operation days
+                const Text(
                   'Operation Days',
                   style: TextStyle(
                     fontSize: 15,
@@ -651,19 +839,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 ...notifications.map(buildSingleCheckbox).toList(),
 
-                Text(
+                const Text(
                   'Opening Time',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'From : ',
                       style: TextStyle(
                         fontSize: 15,
@@ -672,35 +860,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     Text(
                       _timeOfDay!.format(context).toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     MaterialButton(
                       onPressed: _showtimepicker,
-                      child: Text('Opening Time'),
                       color: Colors.orange,
+                      child: const Text('Opening Time'),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
-                Text(
+                const Text(
                   'Closing Time',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'To : ',
                       style: TextStyle(
                         fontSize: 15,
@@ -709,48 +897,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     Text(
                       _closetimeOfDay!.format(context).toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     MaterialButton(
                       onPressed: _closetimepicker,
-                      child: Text('Closing Time'),
                       color: Colors.orange,
+                      child: const Text('Closing Time'),
                     ),
                   ],
                 ),
-                // Container(
-                //   width: double.infinity,
-                //   height: 150,
-                //   margin:
-                //       const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                //   child: catLoaded == false
-                //       ? const Center(child: CircularProgressIndicator())
-                //       : GridView.builder(
-                //           itemCount: catData!.length,
-                //           physics: const BouncingScrollPhysics(),
-                //           gridDelegate:
-                //               SliverGridDelegateWithFixedCrossAxisCount(
-                //             crossAxisCount: 2,
-                //             crossAxisSpacing: 8,
-                //             childAspectRatio:
-                //                 MediaQuery.of(context).size.width /
-                //                     (MediaQuery.of(context).size.height / 10),
-                //             mainAxisSpacing: 8,
-                //           ),
-                //           itemBuilder: (context, index) {
-                //             return Text(
-                //                 '${catData![index].id}: ${catData![index].name}');
-                //           }),
-                // ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                  child: Divider(
+                    color: Color(0xFFEAEAEF),
+                    thickness: 1,
+                  ),
+                ),
+
+                // profile pic
                 InkWell(
                   onTap: () {
-                    pickimage();
+                    profilePicker();
                   },
-                  child: Container(
+                  child: SizedBox(
                     width: 300,
                     child: Row(children: [
                       Container(
@@ -761,9 +934,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.grey[200],
                         ),
-                        child: image != null
+                        child: profile_image != null
                             ? Image.file(
-                                image!,
+                                profile_image!,
                                 fit: BoxFit.cover,
                               )
                             : const Icon(
@@ -771,7 +944,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: Colors.grey,
                               ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       const Text(
@@ -791,14 +964,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ]),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                  child: Divider(
+                    color: Color(0xFFEAEAEF),
+                    thickness: 1,
+                  ),
+                ),
+                //logo pic
                 InkWell(
                   onTap: () {
-                    pickimagee();
+                    _logoPicker();
                   },
-                  child: Container(
+                  child: SizedBox(
                     width: 300,
                     child: Row(children: [
                       Container(
@@ -809,9 +990,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.grey[200],
                         ),
-                        child: imagee != null
+                        child: logoImage != null
                             ? Image.file(
-                                imagee!,
+                                logoImage!,
                                 fit: BoxFit.cover,
                               )
                             : const Icon(
@@ -819,7 +1000,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: Colors.grey,
                               ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       const Text(
@@ -839,17 +1020,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ]),
                   ),
                 ),
-                SizedBox(
-                  height: 15,
+                const Padding(
+                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                  child: Divider(
+                    color: Color(0xFFEAEAEF),
+                    thickness: 1,
+                  ),
                 ),
-                Text(
-                  'Registration Type',
+                const Text(
+                  'Is registered with ministry of Commerce?',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Row(
@@ -878,6 +1063,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             setState(() {
                               radioValue = value as int;
                             });
+                            log(radioValue.toString());
                           },
                         ),
                         const Text('No'),
@@ -885,146 +1071,116 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 26),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
+                if (radioValue == 1)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 26),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        hintText: 'Regeistration number',
+                        // suffix: Icon(Icons.visibility)
                       ),
-                      hintText: 'Regeistration number',
-                      // suffix: Icon(Icons.visibility)
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 26),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
+                if (radioValue == 1)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 26),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        hintText: 'Patent Number',
+                        // suffix: Icon(Icons.visibility)
                       ),
-                      hintText: 'Patent Number',
-                      // suffix: Icon(Icons.visibility)
                     ),
                   ),
-                ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
-                ),
-                InkWell(
-                  onTap: () {
-                    pickfile();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Document Upload 0',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      const Icon(
-                        Icons.upload_file,
-                        size: 30,
-                      ),
-                    ],
-                  ),
-                ),
-                Text(
-                  'Document Name: $file',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                InkWell(
-                  onTap: () {
-                    pickfilee();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Document Upload 1',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      const Icon(
-                        Icons.upload_file,
-                        size: 30,
-                      ),
-                    ],
-                  ),
-                ),
-                Text(
-                  'Document Name: $filee',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
 
-                // Padding(
-                //   padding: const EdgeInsets.only(bottom: 26),
-                //   child: TextFormField(
-                //     controller: catCtr,
-                //     keyboardType: TextInputType.number,
-                //     decoration: InputDecoration(
-                //       enabledBorder: OutlineInputBorder(
-                //         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                //         borderRadius: BorderRadius.circular(16),
-                //       ),
-                //       hintText: 'Enter only one Category id from above list',
-                //       // suffix: Icon(Icons.visibility)
-                //     ),
-                //     validator: (value) {
-                //       if (value == null || value.isEmpty) {
-                //         return 'Please enter category';
-                //       }
-                //       return null;
-                //     },
-                //   ),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(bottom: 26),
-                //   child: TextFormField(
-                //     controller: catCtr2,
-                //     keyboardType: TextInputType.number,
-                //     decoration: InputDecoration(
-                //       enabledBorder: OutlineInputBorder(
-                //         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                //         borderRadius: BorderRadius.circular(16),
-                //       ),
-                //       hintText: 'Enter Second Category id',
-                //       // suffix: Icon(Icons.visibility)
-                //     ),
-                //     validator: (value) {
-                //       if (value == null || value.isEmpty) {
-                //         return 'Please enter category';
-                //       }
-                //       return null;
-                //     },
-                //   ),
-                // ),
+                //document 1 picker
+                if (radioValue == 1)
+                  InkWell(
+                    onTap: () {
+                      pickDocument_1();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Document Upload 0',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Icon(
+                          Icons.upload_file,
+                          size: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                if (radioValue == 1)
+                  Text(
+                    'Document Name: $file',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                const SizedBox(
+                  height: 15,
+                ),
+
+                //document 2 picker
+                if (radioValue == 1)
+                  InkWell(
+                    onTap: () {
+                      pickDocument_2();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Document Upload 1',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Icon(
+                          Icons.upload_file,
+                          size: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                if (radioValue == 1)
+                  Text(
+                    'Document Name: $filee',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
                 CustomButton(
                   isLoading: isLoading,
                   text: 'Next',
@@ -1038,58 +1194,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Future<String> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
-      return 'Location services are disabled.';
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        return 'Location permissions are denied';
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      return 'Location permissions are permanently denied, we cannot request permissions.';
-    }
-// When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    Position currentLocation = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    final address = await placemarkFromCoordinates(
-        currentLocation.latitude, currentLocation.longitude);
-    debugPrint(address[0].country);
-    debugPrint(address[0].subLocality);
-    latitued = currentLocation.latitude;
-    longitude = currentLocation.longitude;
-    countryCtr.text = address[0].country!;
-    cityCtr.text = address[0].locality!;
-
-    return 'Location fetched successfully';
-  }
-
   Future<void> _handleRegister() async {
     if (_key.currentState!.validate()) {
-      setState(() {
-        isLoading = true;
-      });
       //show snackbar to indicate loading
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text('Processing Data'),
@@ -1101,31 +1207,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'name': nameCtr.text,
         'email': emailCtr.text,
         'phone_no': phoneNumberCtr.text,
-
         'password': passCtr.text,
         'password_confirmation': passCtr.text,
-        'branch_name': branchCtr.text,
-        'address': '$latitued, $longitude, ${cityCtr.text}, ${countryCtr.text}',
-        'description': desCtr.text,
-        // 'profile_picture': '',
-        // 'logo': '',
-        'country': countryCtr.text,
-        'city': cityCtr.text,
-        'lat': '${latitued ?? ''}',
-        'long': '${longitude ?? ''}',
-        'categories[0]': catCtr.text,
-        'categories[1]': catCtr.text,
+        'address': branchCtr.text,
+        // 'description': desCtr.text,
+        'profile_picture': profile_image == null || profile_image!.path.isEmpty
+            ? ''
+            : profile_image!.path,
+        'logo':
+            logoImage == null || logoImage!.path.isEmpty ? '' : logoImage!.path,
+        'country': selectedCountry,
+        'city': cityCode,
+        'categories[0]': categoyId_1,
+        'categories[1]': categoyId_2,
+        'documents[0]': file == null ? '' : file!.path ?? '',
+        'documents[1]': filee == null ? '' : filee!.path ?? '',
+        'registration_number': registerationCtr.text,
+        'patent_number': patentCtr.text,
+        'is_registered_with_ministry_of_commerce': '$radioValue',
+        'opnening_time': '${_timeOfDay!.hour}:${_timeOfDay!.minute}',
+        'closing_time': '${_closetimeOfDay!.hour}:${_closetimeOfDay!.minute}',
+        'operation_days': days.toString(),
+        'language': languageId,
       };
 
       //get response from ApiClient
-      dynamic res = await MerchantAuthServices()
-          .merchantRegisteration(data: userData)
-          .onError((error, stackTrace) {
-        setState(() {
-          isLoading = false;
-        });
-        return error as Map<String, dynamic>;
-      });
+      dynamic res = await MerchantAuthServices().merchantRegisteration(
+        data: userData,
+        isRegistered: radioValue == 2 ? false : true,
+        image: profile_image == null ? false : true,
+        logo: logoImage == null ? false : true,
+      );
       showSignUpResult(res);
     }
   }
@@ -1153,16 +1265,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
         content: Text('Message: ${res['error']}'),
         backgroundColor: Colors.red.shade300,
         action: SnackBarAction(
-          label: res['error'] == 'The email has already been taken'
+          label: res['error'] == 'The email has already been taken.'
               ? 'Next'
               : 'Close',
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        User_Verification(email: emailCtr.text)));
-          },
+          onPressed: res['error'] == 'The email has already been taken.'
+              ? () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                }
+              : () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              User_Verification(email: emailCtr.text)));
+                },
         ),
       ));
     }
@@ -1171,7 +1287,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget buildSingleCheckbox(CheckBoxState checkbox) => CheckboxListTile(
         title: Text(checkbox.title),
         value: checkbox.value,
-        onChanged: (value) => setState(() => checkbox.value = value!),
+        onChanged: (value) {
+          setState(() => checkbox.value = value!);
+          if (value == false) {
+            days.remove(checkbox.title);
+          } else {
+            days.add(checkbox.title);
+          }
+          log(value.toString());
+          log(checkbox.title);
+          print(days);
+        },
         controlAffinity:
             ListTileControlAffinity.leading, //  <-- leading Checkbox
       );

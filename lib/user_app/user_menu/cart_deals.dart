@@ -3,7 +3,6 @@ import 'package:SiBuy/apis/api_urls.dart';
 import 'package:SiBuy/providers/order.dart';
 
 import '../../constant/size_constants.dart';
-import '../../services/user_merchant_services.dart';
 
 class cart_deals extends StatefulWidget {
   const cart_deals({
@@ -23,20 +22,19 @@ class cart_deals extends StatefulWidget {
 class _cart_dealsState extends State<cart_deals> {
   String? address = 'Loading...';
 
-  Future<void> getMerchantAddress() async {
-    final result = await UserMerchantServices().singleMerchantProfile(
-      id: widget.cart.merchantId.toString(),
-      token: widget.token,
-    );
-
-    setState(() {
-      address = result.data!.branches![0].address;
-    });
-  }
+  // Future<void> getMerchantAddress() async {
+  //   final result = await UserMerchantServices().singleMerchantProfile(
+  //     id: widget.cart.merchantId.toString(),
+  //     token: widget.token,
+  //   );
+  //   setState(() {
+  //     address = result.data!.branches![0].address;
+  //   });
+  // }
 
   @override
   void initState() {
-    getMerchantAddress().whenComplete(() => debugPrint(address));
+    // getMerchantAddress().whenComplete(() => debugPrint(address));
     super.initState();
   }
 
@@ -97,7 +95,7 @@ class _cart_dealsState extends State<cart_deals> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width - 270,
                             child: Text(
-                              address!,
+                              address ?? 'address',
                               softWrap: true,
                               style: const TextStyle(
                                   fontFamily: 'Mulish',

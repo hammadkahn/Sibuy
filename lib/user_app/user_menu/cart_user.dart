@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:SiBuy/user_app/user_menu/order_status1.dart';
-import 'package:SiBuy/user_app/user_menu/user_menu.dart';
+
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../providers/order.dart';
 import 'cart_deals.dart';
@@ -22,18 +21,17 @@ class _Cart_userState extends State<Cart_user> {
 
   String userLocation = 'Loading...';
 
-  Future<void> getUserAddress() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    setState(() {
-      userLocation =
-          '${preferences.getString('city')}, ${preferences.getString('country')}';
-    });
-  }
+  // Future<void> getUserAddress() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     userLocation =
+  //         '${preferences.getString('city')}, ${preferences.getString('country')}';
+  //   });
+  // }
 
   @override
   void didChangeDependencies() {
-    getUserAddress();
+    // getUserAddress();
     super.didChangeDependencies();
   }
 
@@ -43,8 +41,7 @@ class _Cart_userState extends State<Cart_user> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Cart'),
-          backgroundColor: Color(0xFFff6600),
-
+          backgroundColor: const Color(0xFFff6600),
         ),
         body: Padding(
           padding: const EdgeInsets.only(left: 24, right: 32, top: 17),

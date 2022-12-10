@@ -19,7 +19,7 @@ class ActiveMerchantDeals extends StatelessWidget {
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        child: FutureBuilder<MerchantListOfDeals>(
+        child: FutureBuilder<MerchantDealListModel>(
           future: DealServices().getAllDeals(token: token),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
@@ -34,7 +34,7 @@ class ActiveMerchantDeals extends StatelessWidget {
                   );
                 } else if (snapshot.data!.data!.isEmpty) {
                   return Column(
-                    children: [
+                    children: const [
                       Demo_Deals(),
                       Demo_Deals(),
                       Demo_Deals(),

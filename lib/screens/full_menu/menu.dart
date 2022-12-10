@@ -1,13 +1,12 @@
+import 'package:SiBuy/models/dashbaord_stats_model.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/screens/full_menu/location_bar.dart';
-import 'package:SiBuy/screens/full_menu/sheet_deals.dart';
 import 'package:SiBuy/services/dashboard_stats/dash_board.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 
 import '../../constant/size_constants.dart';
 import '../../user_app/user_menu/demi_deals.dart';
-import 'deals.dart';
 import 'percent_ind2.dart';
 import 'percent_ind3.dart';
 import 'percent_indicator.dart';
@@ -33,7 +32,7 @@ class Menu extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 550 / 812,
-                  child: FutureBuilder<Map<String, dynamic>>(
+                  child: FutureBuilder<DashboardStatsModel>(
                     future: DashBoardStats().getDashBoardStats(token),
                     builder: (context, snapshot) {
                       List<Widget> children;
@@ -41,40 +40,39 @@ class Menu extends StatelessWidget {
                         children = [
                           Dashboard(
                             totalSale:
-                                snapshot.data!['data']['totalSale'].toString(),
+                                snapshot.data!.data!.totalSales.toString(),
                           ),
                           const SizedBox(height: 8),
                           Stacked_container(
-                            discountAvailed: snapshot.data!['data']
-                                    ['totalDealRadeem']
+                            discountAvailed: snapshot
+                                .data!.data!.totalCouponRadeemed
                                 .toString(),
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
                             title: 'Total Active Deals',
-                            totalActiveDeals: snapshot.data!['data']
-                                    ['totalActiveDeals']
+                            totalActiveDeals: snapshot
+                                .data!.data!.totalActiveOffers
                                 .toString(),
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
                             title: 'Total Deal Sale',
-                            totalActiveDeals: snapshot.data!['data']
-                                    ['totalDealSale']
+                            totalActiveDeals:
+                                snapshot.data!.data!.totalDealSale.toString(),
+                          ),
+                          const SizedBox(height: 8),
+                          Stacked_container2(
+                            title: 'Total Unredeemed Withholding',
+                            totalActiveDeals: snapshot
+                                .data!.data!.totalUnredeemedWithHolding
                                 .toString(),
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
-                            title: 'Total unredeemed withholding',
-                            totalActiveDeals: snapshot.data!['data']
-                                    ['totalDealSale']
-                                .toString(),
-                          ),
-                          const SizedBox(height: 8),
-                          Stacked_container2(
-                            title: 'Total transaction fee',
-                            totalActiveDeals: snapshot.data!['data']
-                                    ['totalDealSale']
+                            title: 'Total Transaction Fee',
+                            totalActiveDeals: snapshot
+                                .data!.data!.totalTransactionFee
                                 .toString(),
                           ),
                         ];
@@ -109,7 +107,7 @@ class Menu extends StatelessWidget {
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 1,
-                  child: FutureBuilder<MerchantListOfDeals>(
+                  child: FutureBuilder<MerchantDealListModel>(
                     future: DealServices().getAllDeals(token: token),
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
@@ -124,56 +122,47 @@ class Menu extends StatelessWidget {
                             );
                           } else if (snapshot.data!.data!.isEmpty) {
                             return Column(
-                              children: [
+                              children: const [
                                 SizedBox(
                                   height: 50,
-                                ),
-                                Demo_Deals(),
-                                Demo_Deals(),
-                                Demo_Deals(),
-                                SizedBox(
-                                  height: 10,
                                 ),
                               ],
                             );
                             // const Center(
                             //     child: Text('No deals available'));
                           } else {
-                            return Column(
-                              children: [
-                                Demo_Deals(),
-                                Demo_Deals(),
-                                Demo_Deals(),
-                              ],
+                            return ListView.builder(
+                              itemCount: snapshot.data!.data!.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                var data = snapshot.data!.data![index];
+                                return InkWell(
+                                  onTap: () {
+                                    print(data.id);
+                                    // showModalBottomSheet(
+                                    //     isScrollControlled: true,
+                                    //     context: context,
+                                    //     builder: (context) => sheet_deals(
+                                    //           dealId: data.id.toString(),
+                                    //           token: token,
+                                    //         ));
+                                  },
+                                  child: Demo_Deals(
+                                    token: token,
+                                    data: data,
+                                  ),
+                                );
+                              },
                             );
-                            // ListView.builder(
-                            //   itemCount: snapshot.data!.data!.length,
-                            //   shrinkWrap: true,
-                            //   itemBuilder: (context, index) {
-                            //     var data = snapshot.data!.data![index];
-                            //     return InkWell(
-                            //       onTap: () {
-                            //         print(data.id);
-                            //         showModalBottomSheet(
-                            //             isScrollControlled: true,
-                            //             context: context,
-                            //             builder: (context) => sheet_deals(
-                            //                   dealId: data.id.toString(),
-                            //                   token: token,
-                            //                 ));
-                            //       },
-                            //       child: Deals(
-                            //         token: token,
-                            //         merchantListOfDeals: data,
-                            //       ),
-                            //     );
-                            //   },
-                            // );
                           }
                       }
                     },
                   ),
                 ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 20/812,
+                )
               ],
             ),
           ),

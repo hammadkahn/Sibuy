@@ -1,5 +1,5 @@
+import 'package:SiBuy/models/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:SiBuy/models/deal_model.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'deals_details.dart';
@@ -8,10 +8,8 @@ import 'trending.dart';
 class all_details extends StatefulWidget {
   const all_details({Key? key, required this.dealId, required this.token})
       : super(key: key);
-  final DealData dealId;
+  final UserDealListData dealId;
   final String token;
-
-  get dealData => null;
 
   @override
   State<all_details> createState() => _all_detailsState();

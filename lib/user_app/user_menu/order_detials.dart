@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,9 +18,7 @@ class _order_detailsState extends State<order_details> {
   int _radioValue = 0;
   @override
   Widget build(BuildContext context) {
-    print('order details...');
     final cart = Provider.of<Cart>(context, listen: false);
-    print(cart.cartMap.length);
     return ListView.builder(
         shrinkWrap: true,
         itemCount: cart.cartMap.length,
@@ -26,7 +26,7 @@ class _order_detailsState extends State<order_details> {
           double discount = double.parse(
                   '0.${cart.cartMap.values.toList()[index].discountOnPrice}') *
               int.parse(cart.cartMap.values.toList()[index].price!);
-
+          log(cart.cartMap.values.toList()[index].qty.toString());
           return Card(
             margin: const EdgeInsets.only(bottom: 12),
             child: Padding(
