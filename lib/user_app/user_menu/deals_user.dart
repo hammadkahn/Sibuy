@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../apis/api_urls.dart';
 import '../../constant/size_constants.dart';
 import '../../models/reviews_model.dart';
+import '../../shared/loader.dart';
 import 'deals_details.dart';
 
 class dealsUser extends StatefulWidget {
@@ -49,7 +50,7 @@ class _dealsUserState extends State<dealsUser> {
       valueListenable: isLoaded,
       builder: (BuildContext context, bool value, Widget? child) {
         return isLoaded.value == false
-            ? const Center(child: CircularProgressIndicator())
+            ? Loader()
             : Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Container(

@@ -3,7 +3,7 @@ import 'package:SiBuy/apis/api_urls.dart';
 import 'package:SiBuy/models/merchant_single_deal.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 import 'package:provider/provider.dart';
-
+import '../../shared/loader.dart';
 import '../../models/reviews_model.dart';
 import '../../providers/deal_provider.dart';
 
@@ -253,14 +253,8 @@ class _sheet_dealsState extends State<sheet_deals> {
                     )
                   ];
                 } else {
-                  children = const <Widget>[
-                    Center(
-                      child: SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
+                  children = <Widget>[
+                    Loader(),
                     Padding(
                       padding: EdgeInsets.only(top: 16),
                       child: Center(child: Text('Awaiting result...')),

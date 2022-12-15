@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../apis/api_urls.dart';
 import '../models/current_user_chat_model.dart';
+import '../shared/loader.dart';
 import 'message_box.dart';
 import 'message_write.dart';
 
@@ -45,7 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: const Color(0xFFff6600),
       ),
       body: userId == null
-          ? const Center(child: CircularProgressIndicator())
+          ? Loader()
           : Container(
               margin: const EdgeInsets.symmetric(vertical: 12),
               child: Column(
@@ -92,9 +93,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 child: Text(snapshot.error.toString()),
                               );
                             } else {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
+                              return Loader();
                             }
                           },
                         )),

@@ -5,6 +5,7 @@ import 'package:SiBuy/shared/loaction_user.dart';
 import 'package:SiBuy/user_app/categories/single_category.dart';
 import 'package:SiBuy/user_app/categories/widget/categories_list.dart';
 
+import '../../shared/loader.dart';
 import 'widget/trending_deals.dart';
 
 class Categories_user extends StatelessWidget {
@@ -20,7 +21,7 @@ class Categories_user extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(right: 24),
+              padding: const EdgeInsets.only(top: 2),
               child: Location_bar_user(
                 token: token,
               ),
@@ -44,8 +45,7 @@ class Categories_user extends StatelessWidget {
                     builder: ((context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return const Center(
-                              child: CircularProgressIndicator());
+                          return Loader();
                         default:
                           if (snapshot.hasError) {
                             return Center(
@@ -140,7 +140,7 @@ class Categories_user extends StatelessWidget {
                   builder: ((context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
-                        return const Center(child: CircularProgressIndicator());
+                        return Loader();
                       default:
                         if (snapshot.hasError) {
                           return Center(
@@ -159,6 +159,7 @@ class Categories_user extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 20,)
           ],
         ),
       )

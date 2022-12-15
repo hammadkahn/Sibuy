@@ -14,6 +14,7 @@ class CategoryServices {
         ApiUrls.getAllCat,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
       );
+      print(token);
       final result = GetAllCategoriesModel.fromJson(jsonDecode(response.body));
       if (response.statusCode == 429) {
         throw Exception(

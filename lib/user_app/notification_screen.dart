@@ -3,6 +3,7 @@ import 'package:SiBuy/models/notification.dart';
 import 'package:SiBuy/services/notification_services.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import '../../shared/loader.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key, required this.token}) : super(key: key);
@@ -26,9 +27,7 @@ class NotificationScreen extends StatelessWidget {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                );
+                return Loader();
               default:
                 if (snapshot.hasError) {
                   return Center(

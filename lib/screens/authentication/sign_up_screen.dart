@@ -7,6 +7,7 @@ import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:provider/provider.dart';
 import '../../providers/deal_provider.dart';
+import '../../shared/loader.dart';
 import '../../user_app/verify _code/user_verification.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -578,7 +579,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     valueListenable: isLoaded,
                     builder: (BuildContext context, bool value, Widget? child) {
                       return isLoaded.value == false
-                          ? const CircularProgressIndicator()
+                          ? Loader()
                           : DropdownButton<String>(
                               isExpanded: true,
                               // Initial Value
@@ -640,7 +641,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     valueListenable: isLoaded,
                     builder: (BuildContext context, bool value, Widget? child) {
                       return isLoaded.value == false
-                          ? const CircularProgressIndicator()
+                          ? Loader()
                           : DropdownButton<String>(
                               isExpanded: true,
                               // Initial Value
@@ -701,7 +702,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     valueListenable: isLoaded,
                     builder: (BuildContext context, bool value, Widget? child) {
                       return isLoaded.value == false
-                          ? const CircularProgressIndicator()
+                          ? Loader()
                           : DropdownButton<String>(
                               isExpanded: true,
                               // Initial Value

@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../shared/loader.dart';
+
 class scan_qr extends StatefulWidget {
   const scan_qr({Key? key, required this.qrCode, required this.token})
       : super(key: key);
@@ -87,9 +89,7 @@ class _scan_qrState extends State<scan_qr> {
               ),
               const SizedBox(height: 25),
               branchData == null
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
+                  ? Loader()
                   : isLoaded == false
                       ? showAlertDialog()
                       : QrImage(

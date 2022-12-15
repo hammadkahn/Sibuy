@@ -8,6 +8,7 @@ import 'package:SiBuy/shared/custom_button.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
+import '../../shared/loader.dart';
 import '../verify _code/user_verification.dart';
 
 class User_create_acc extends StatefulWidget {
@@ -418,7 +419,7 @@ class _User_create_accState extends State<User_create_acc> {
                     valueListenable: isLoaded,
                     builder: (BuildContext context, bool value, Widget? child) {
                       return isLoaded.value == false
-                          ? const CircularProgressIndicator()
+                          ? Loader()
                           : DropdownButton<String>(
                               isExpanded: true,
                               // Initial Value

@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../services/get_profile/get_user_info.dart';
+import '../../shared/loader.dart';
 
 class My_Profile extends StatefulWidget {
   const My_Profile({Key? key, required this.token, required this.userData})
@@ -311,7 +312,7 @@ class _My_ProfileState extends State<My_Profile> {
                   valueListenable: isLoaded,
                   builder: (BuildContext context, bool value, Widget? child) {
                     return isLoaded.value == false
-                        ? const CircularProgressIndicator()
+                        ? Loader()
                         : DropdownButton<String>(
                             isExpanded: true,
                             // Initial Value

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../shared/toast.dart';
+
 class CartItems {
   String? id;
   String? price;
@@ -114,17 +116,19 @@ class Cart with ChangeNotifier {
 
   void checkIsAddedToCart(BuildContext context) {
     if (cartMap.isNotEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('deal added to the cart'),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('deal added to the cart'),
+      //   ),
+      // );
+      ToastUtil.showToast(context, 'deal added to the cart');
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('error while adding to cart'),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('error while adding to cart'),
+      //   ),
+      // );
+      ToastUtil.showToast(context, 'error while adding to cart');
     }
   }
 

@@ -7,8 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/user_app/user_menu/details_with_all.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constant/helper.dart';
 import '../../constant/size_constants.dart';
+import '../../shared/loader.dart';
 import '../../shared/search_field.dart';
 import '../notification_screen.dart';
 import 'ham_user.dart';
@@ -24,10 +27,10 @@ class Full_menu_user extends StatefulWidget {
 class _Full_menu_userState extends State<Full_menu_user> {
   DealProvider? dealProvider;
   String? selectedValue;
-  String? cityCode;
+  String? cityCode, city;
+  final prefs = SharedPreferences.getInstance();
   ValueNotifier<List<dynamic>>? items = ValueNotifier([]);
 
-  String? city = '';
   List a = [
     Image.asset('assets/images/bev.png'),
     Image.asset('assets/images/bev.png'),
@@ -39,6 +42,20 @@ class _Full_menu_userState extends State<Full_menu_user> {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   country = prefs.getString('country');
   // }
+
+  @override
+  initState(){
+    getCityCode();
+    super.initState();
+  }
+
+  getCityCode() async {
+    cityCode = await AppHelper.getPref('cityId');
+    city = await AppHelper.getPref('city');
+    print(cityCode);
+    print(city);
+    setState(() { });
+  }
 
   Future<void> fetchCitiesAndCountries() async {
     await dealProvider!.getSystemCities(widget.token);
@@ -96,9 +113,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                   builder: (BuildContext context, bool value, Widget? child) {
                     return SizedBox(
                         child: productLoaded.value == false
-                            ? const Center(
-                                child: CircularProgressIndicator(),
-                              )
+                            ? Loader()
                             : const SizedBox()
                         // : C_slider(
                         //     token: widget.token,
@@ -194,7 +209,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
       builder: ((context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return const Center(child: CircularProgressIndicator());
+            return Loader();
           default:
             if (snapshot.hasError) {
               return Center(
@@ -274,20 +289,22 @@ class _Full_menu_userState extends State<Full_menu_user> {
                                 ),
                               ))
                           .toList(),
-                      value: selectedValue,
+                      value: city,
                       onChanged: (value) {
                         setState(() {
-                          selectedValue = value as String;
-                          city = value;
+                          city = value as String?;
                         });
-                        for (var i in dealProvider!.userCitiesData.data!) {
-                          if (i.cityName == city) {
-                            cityCode = i.cityId.toString();
-                            log('matched');
-                          } else {
-                            log('no match found');
-                          }
-                        }
+                        cityCode = dealProvider!.userCitiesData.data!.firstWhere((element) => element.cityName == city).cityId.toString();
+                        AppHelper.setPref('cityId', cityCode);
+                        AppHelper.setPref('city', city);
+                        // for (var i in dealProvider!.userCitiesData.data!) {
+                        //   if (i.cityName == city) {
+                        //     cityCode = i.cityId.toString();
+                        //     log('matched');
+                        //   } else {
+                        //     log('no match found');
+                        //   }
+                        // }
                       },
                       underline: const SizedBox(),
                       buttonHeight: 30,

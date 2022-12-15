@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import '../../shared/loader.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 import 'package:SiBuy/shared/custom_button.dart';
@@ -546,7 +546,7 @@ class _Add_dealState extends State<Add_deal> {
                       builder:
                           (BuildContext context, bool value, Widget? child) {
                         return isLoaded.value == false
-                            ? const CircularProgressIndicator()
+                            ? Loader()
                             : DropdownButton<String>(
                                 isExpanded: true,
                                 // Initial Value
@@ -749,7 +749,7 @@ class _Add_dealState extends State<Add_deal> {
                       builder:
                           (BuildContext context, bool value, Widget? child) {
                         return isLoaded.value == false
-                            ? const CircularProgressIndicator()
+                            ? Loader()
                             : DropdownButton<String>(
                                 isExpanded: true,
                                 // Initial Value

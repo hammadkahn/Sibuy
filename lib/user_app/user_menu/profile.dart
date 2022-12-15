@@ -5,6 +5,7 @@ import 'package:SiBuy/services/user_merchant_services.dart';
 import 'package:provider/provider.dart';
 
 import '../../apis/api_urls.dart';
+import '../../shared/loader.dart';
 
 class StoreProfile extends StatelessWidget {
   const StoreProfile({Key? key, required this.profileId, required this.token})
@@ -261,15 +262,9 @@ class StoreProfile extends StatelessWidget {
                       )
                     ];
                   } else {
-                    children = const <Widget>[
-                      Center(
-                        child: SizedBox(
-                          width: 60,
-                          height: 60,
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                      Center(
+                    children = <Widget>[
+                      Loader(),
+                      const Center(
                         child: Padding(
                           padding: EdgeInsets.only(top: 16),
                           child: Text('Awaiting result...'),

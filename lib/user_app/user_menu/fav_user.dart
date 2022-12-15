@@ -5,6 +5,7 @@ import 'package:SiBuy/user_app/user_menu/wishlist.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/wish_list_model.dart';
+import '../../shared/loader.dart';
 
 class Fav_user extends StatefulWidget {
   const Fav_user({Key? key, required this.token}) : super(key: key);
@@ -79,8 +80,7 @@ class _Fav_userState extends State<Fav_user> {
                           builder: ((context, snapshot) {
                             switch (snapshot.connectionState) {
                               case ConnectionState.waiting:
-                                return const Center(
-                                    child: CircularProgressIndicator());
+                                return Loader();
                               default:
                                 if (snapshot.hasError) {
                                   return Column(

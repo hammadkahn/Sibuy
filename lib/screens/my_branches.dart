@@ -3,6 +3,7 @@ import 'package:SiBuy/screens/branch_details.dart';
 
 import '../models/branch_model.dart';
 import '../services/branch/branch_services.dart';
+import '../shared/loader.dart';
 
 class MyBranches extends StatelessWidget {
   const MyBranches({Key? key, required this.token}) : super(key: key);
@@ -26,9 +27,7 @@ class MyBranches extends StatelessWidget {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                );
+                return Loader();
               default:
                 if (snapshot.hasError) {
                   return Center(

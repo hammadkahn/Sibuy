@@ -4,6 +4,8 @@ import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/user_app/user_menu/my_qrs_cont.dart';
 import 'package:provider/provider.dart';
 
+import '../../shared/loader.dart';
+
 class My_Qrs extends StatefulWidget {
   const My_Qrs({Key? key, required this.token}) : super(key: key);
   final String token;
@@ -109,9 +111,7 @@ class _My_QrsState extends State<My_Qrs> {
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return Loader();
                     default:
                       if (snapshot.hasError) {
                         return Center(

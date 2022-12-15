@@ -7,6 +7,8 @@ import 'package:SiBuy/services/reviews_services.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:provider/provider.dart';
 
+import '../../shared/loader.dart';
+
 class review extends StatefulWidget {
   const review({Key? key, required this.token, required this.dealId})
       : super(key: key);
@@ -45,9 +47,7 @@ class _reviewState extends State<review> {
           child: Padding(
               padding: const EdgeInsets.only(right: 24, left: 24),
               child: singlePurchaseModel == null
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
+                  ? Loader()
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,

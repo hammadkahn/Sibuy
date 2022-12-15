@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:SiBuy/shared/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/cart_model.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
@@ -226,12 +227,13 @@ class _Details_dealsState extends State<Details_deals> {
                                               : dealProvider!.dealModel.data!.images![0].path!);
                                       value.checkIsAddedToCart(context);
                                     } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text('Deal is expired'),
-                                        ),
-                                      );
+                                      // ScaffoldMessenger.of(context)
+                                      //     .showSnackBar(
+                                      //   const SnackBar(
+                                      //     content: Text('Deal is expired'),
+                                      //   ),
+                                      // );
+                                      ToastUtil.showToast(context, 'Deal is expired');
                                     }
                                   },
                                   child: const Text(
@@ -375,11 +377,12 @@ class _Details_dealsState extends State<Details_deals> {
                                             );
                                             value.checkIsAddedToCart(context);
                                           } else {
-                                            ScaffoldMessenger.of(widget.context).showSnackBar(
-                                              const SnackBar(
-                                                content: Text('Deal is expired'),
-                                              ),
-                                            );
+                                            // ScaffoldMessenger.of(widget.context).showSnackBar(
+                                            //   const SnackBar(
+                                            //     content: Text('Deal is expired'),
+                                            //   ),
+                                            // );
+                                            ToastUtil.showToast(context, 'Deal is expired');
                                           }
                                         },
                                         child: const Text(
@@ -401,7 +404,7 @@ class _Details_dealsState extends State<Details_deals> {
                         child: Text(snapshot.error.toString()),
                       );
                     } else {
-                      return const Center(child: CircularProgressIndicator());
+                      return Loader();
                     }
                   },
                 );

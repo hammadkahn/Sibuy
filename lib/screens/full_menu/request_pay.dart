@@ -1,6 +1,8 @@
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 import 'package:flutter/material.dart';
 
+import '../../shared/loader.dart';
+
 class Request_pay extends StatefulWidget {
   const Request_pay({super.key, required this.token});
   final String token;
@@ -61,9 +63,7 @@ class _Request_payState extends State<Request_pay> {
                           child: Text(snapshot.error.toString()),
                         );
                       } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
+                        return Loader();
                       }
                     },
                   )),

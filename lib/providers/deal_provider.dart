@@ -12,6 +12,7 @@ import 'package:SiBuy/models/wish_list_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../apis/api_urls.dart';
+import '../constant/helper.dart';
 import '../models/category_model.dart';
 import '../models/deal_model.dart';
 import '../models/user_model.dart';
@@ -536,13 +537,35 @@ class DealProvider with ChangeNotifier {
   //list of deals category wise
   Future<UserDealListModel> cityWiseDealsList(
       {String? languageId, String? cityCode}) async {
-    log('$cityCode');
     try {
       final response = await http.get(
         Uri.parse(
-            '${ApiUrls.baseUrl}user/getDeals?returnType=customPagination&timeSort=asc&language_id=${languageId ?? 1}&city[0]=${cityCode ?? 64967}'),
+            '${ApiUrls.baseUrl}user/getDeals?returnType=customPagination&timeSort=asc&language_id=${languageId ?? 1}&city[0]=$cityCode'),
         // headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}
       );
+      final result = UserDealListModel.fromJson(jsonDecode(response.body));
+      if (response.statusCode == 200) {
+        debugPrint(result.message);
+        return result;
+      } else {
+        debugPrint(response.reasonPhrase);
+        throw Exception(response.statusCode);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<UserDealListModel> categoryWiseDealsList(int? categoryId, {String? languageId}) async {
+    var cityCode = await AppHelper.getPref('cityId');
+    print('$cityCode');
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '${ApiUrls.baseUrl}user/getDeals?returnType=customPagination&timeSort=asc&language_id=${languageId ?? 1}&city[0]=$cityCode&category[0]=$categoryId'),
+        // headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}
+      );
+      print(response.body);
       final result = UserDealListModel.fromJson(jsonDecode(response.body));
       if (response.statusCode == 200) {
         debugPrint(result.message);

@@ -6,7 +6,7 @@ import 'package:SiBuy/models/merchant_profile_model.dart';
 import 'package:SiBuy/screens/active_deals.dart';
 import 'package:SiBuy/services/branch/branch_services.dart';
 import 'package:SiBuy/services/get_profile/get_user_info.dart';
-
+import '../../shared/loader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../apis/api_urls.dart';
@@ -185,12 +185,8 @@ class _ProfileState extends State<Profile> {
                           )
                         ];
                       } else {
-                        children = const <Widget>[
-                          SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: CircularProgressIndicator(),
-                          ),
+                        children = <Widget>[
+                          Loader(),
                           Padding(
                             padding: EdgeInsets.only(top: 16),
                             child: Text('Awaiting result...'),

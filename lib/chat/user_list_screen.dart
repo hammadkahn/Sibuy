@@ -3,6 +3,8 @@ import 'package:SiBuy/chat/chat_screen.dart';
 import 'package:SiBuy/providers/chat_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../shared/loader.dart';
+
 class UserListScreen extends StatefulWidget {
   const UserListScreen({Key? key, required this.token}) : super(key: key);
   final String token;
@@ -24,9 +26,7 @@ class _UserListScreenState extends State<UserListScreen> {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return Loader();
 
               default:
                 if (snapshot.data == null || snapshot.data!.data!.isEmpty) {

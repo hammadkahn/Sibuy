@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../apis/api_urls.dart';
 import '../../chat/user_list_screen.dart';
+import '../../shared/loader.dart';
 import 'change_pass.dart';
 import 'payment_method.dart';
 
@@ -508,10 +509,8 @@ class _ham_userState extends State<ham_user> {
                             )
                           ];
                         } else {
-                          children = const <Widget>[
-                            Center(
-                              child: CircularProgressIndicator(),
-                            ),
+                          children = <Widget>[
+                            Loader(),
                             Padding(
                               padding: EdgeInsets.only(top: 16),
                               child: Text('Awaiting result...'),

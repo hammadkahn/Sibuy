@@ -4,7 +4,7 @@ import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/screens/full_menu/location_bar.dart';
 import 'package:SiBuy/services/dashboard_stats/dash_board.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
-
+import '../../shared/loader.dart';
 import '../../constant/size_constants.dart';
 import '../../user_app/user_menu/demi_deals.dart';
 import 'percent_ind2.dart';
@@ -89,12 +89,8 @@ class Menu extends StatelessWidget {
                           )
                         ];
                       } else {
-                        children = const <Widget>[
-                          SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: CircularProgressIndicator(),
-                          ),
+                        children = <Widget>[
+                          Loader(),
                           Padding(
                             padding: EdgeInsets.only(top: 16),
                             child: Text('Awaiting result...'),
@@ -112,9 +108,7 @@ class Menu extends StatelessWidget {
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return const Center(
-                            child: CircularProgressIndicator.adaptive(),
-                          );
+                          return Loader();
                         default:
                           if (snapshot.hasError) {
                             return Center(
