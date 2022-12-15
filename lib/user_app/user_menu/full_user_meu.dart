@@ -42,7 +42,6 @@ class _Full_menu_userState extends State<Full_menu_user> {
 
   Future<void> fetchCitiesAndCountries() async {
     await dealProvider!.getSystemCities(widget.token);
-
     items!.value = dealProvider!.userCities;
   }
 

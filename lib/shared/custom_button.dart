@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'loader.dart';
+
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -36,7 +38,7 @@ class CustomButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             isLoading == true
-                ? const CircularProgressIndicator()
+                ? Loader(color: Colors.white,)
                 : Text(
                     text,
                     style: const TextStyle(

@@ -48,9 +48,10 @@ class SearchResult extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 21),
                           child: InkWell(
                             onTap: () => showModalBottomSheet(
-                                isScrollControlled: true,
+                                // isScrollControlled: true,
                                 context: context,
                                 builder: (context) => Details_deals(
+                                  context: context,
                                       dealId: data.id.toString(),
                                       token: token,
                                     )),

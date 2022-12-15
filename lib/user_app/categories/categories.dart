@@ -13,11 +13,10 @@ class Categories_user extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(
-          left: 24,
-        ),
+    return SafeArea(
+      child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.only(right: 24, left: 24, top: 20),
         child: Column(
           children: <Widget>[
             Padding(
@@ -69,7 +68,7 @@ class Categories_user extends StatelessWidget {
                                       MaterialPageRoute(
                                         builder: (context) => SingleCategory(
                                             categoryData:
-                                                snapshot.data!.data![index],
+                                            snapshot.data!.data![index],
                                             token: token),
                                       ),
                                     );
@@ -162,6 +161,7 @@ class Categories_user extends StatelessWidget {
             ),
           ],
         ),
+      )
       ),
     );
   }

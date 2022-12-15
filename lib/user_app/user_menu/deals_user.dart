@@ -72,6 +72,7 @@ class _dealsUserState extends State<dealsUser> {
                           body: SingleChildScrollView(
                             controller: ModalScrollController.of(ct),
                             child: Details_deals(
+                              context: context,
                               dealId: dealProvider!.dealData.id.toString(),
                               token: widget.token,
                             ),

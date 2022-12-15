@@ -27,6 +27,7 @@ class _Email_verState extends State<Email_ver> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Form(
         key: _formKey,
         child: Padding(

@@ -2,6 +2,7 @@ import 'package:SiBuy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../../shared/loader.dart';
 import 'deals_details.dart';
 import 'trending.dart';
 
@@ -37,18 +38,29 @@ class _all_detailsState extends State<all_details> {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(26))),
             isScrollControlled: true,
             context: context,
-            builder: (ct) => Scaffold(
-              key: _key,
-              extendBody: false,
-              body: SingleChildScrollView(
-                controller: ModalScrollController.of(ct),
-                child: widget.dealId.id == null
-                    ? const Center(child: CircularProgressIndicator())
+            builder: (ct) => Wrap(
+              children: [
+                // Scaffold(
+                //   key: _key,
+                //   extendBody: false,
+                //   body: SingleChildScrollView(
+                //     controller: ModalScrollController.of(ct),
+                //     child: widget.dealId.id == null
+                //         ? Loader()
+                //         : Details_deals(
+                //             dealId: widget.dealId.id.toString(),
+                //             token: widget.token,
+                //           ),
+                //   ),
+                // ),
+                widget.dealId.id == null
+                    ? Loader()
                     : Details_deals(
-                        dealId: widget.dealId.id.toString(),
-                        token: widget.token,
-                      ),
-              ),
+                  context: context,
+                  dealId: widget.dealId.id.toString(),
+                  token: widget.token,
+                ),
+              ],
             ),
           );
         });
