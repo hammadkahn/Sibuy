@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/helper.dart';
 import '../user_app/user_menu/ham_user.dart';
+import '../../constant/color_constant.dart';
 
 class Location_bar_user extends StatefulWidget {
   const Location_bar_user(
@@ -57,7 +58,7 @@ class _Location_bar_userState extends State<Location_bar_user> {
                       fontFamily: 'Mulish',
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFFff6600)),
+                      color: AppColors.APP_PRIMARY_COLOR),
                   overflow: TextOverflow.ellipsis,
                 ),
                 items: items!
@@ -69,7 +70,7 @@ class _Location_bar_userState extends State<Location_bar_user> {
                         fontFamily: 'Mulish',
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFFff6600)),
+                        color: AppColors.APP_PRIMARY_COLOR),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ))

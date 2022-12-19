@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/scanned/thank_you_screen.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-
+import '../../constant/color_constant.dart';
 import '../shared/custom_button.dart';
 
 // ignore: camel_case_types
@@ -59,7 +59,7 @@ class _Scanned_detailsState extends State<Scanned_details> {
                           fontFamily: 'DMSans',
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xffff6600),
+                          color: AppColors.APP_PRIMARY_COLOR,
                         )),
                     Text(
                       'Discount Type: ${details![5]}\nQuantity: ${details![2]}',
@@ -109,7 +109,7 @@ class _Scanned_detailsState extends State<Scanned_details> {
                               ? 'Enter the price to calculate discount'
                               : 'You have to charge this user of an amount of ${priceAfterDiscount!.toStringAsFixed(2)}',
                           style: const TextStyle(
-                              color: Color(0xffff6600), fontSize: 18),
+                              color: AppColors.APP_PRIMARY_COLOR, fontSize: 18),
                         )),
                     const Spacer(),
                     Padding(

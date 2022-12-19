@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/shared/mail_button.dart';
 import 'package:SiBuy/user_app/email_verification/email_ver.dart';
-
+import '../../constant/color_constant.dart';
 import '../../constant/size_constants.dart';
 import '../../screens/authentication/auth.dart';
 import '../../screens/authentication/sign_up_screen.dart';
@@ -141,7 +141,7 @@ class _user_authState extends State<user_auth> {
                       height: 56,
                       width: 56,
                       color:
-                          _value == 0 ? Color(0xFFff6600) : Colors.transparent,
+                          _value == 0 ? AppColors.APP_PRIMARY_COLOR : Colors.transparent,
                       child: Image.asset(
                         'assets/images/com.png',
                         height: 24,
@@ -156,7 +156,7 @@ class _user_authState extends State<user_auth> {
                       height: 56,
                       width: 56,
                       color:
-                          _value == 1 ? Color(0xFFff6600) : Colors.transparent,
+                          _value == 1 ? AppColors.APP_PRIMARY_COLOR : Colors.transparent,
                       child: Image.asset(
                         'assets/images/uk.png',
                         height: 24,
@@ -171,7 +171,7 @@ class _user_authState extends State<user_auth> {
                       height: 56,
                       width: 56,
                       color:
-                          _value == 2 ? Color(0xFFff6600) : Colors.transparent,
+                          _value == 2 ? AppColors.APP_PRIMARY_COLOR : Colors.transparent,
                       child: Image.asset(
                         'assets/images/china.png',
                         height: 24,

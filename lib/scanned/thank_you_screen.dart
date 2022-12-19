@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-
+import '../../constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/screens/full_menu/bar.dart';
 import 'package:SiBuy/shared/custom_button.dart';
@@ -17,7 +17,7 @@ Color themeColor = const Color(0xFF43D19E);
 class _ThankYouPageState extends State<ThankYouPage> {
   double screenWidth = 600;
   double screenHeight = 400;
-  Color textColor = const Color(0xFFff6600);
+  Color textColor = AppColors.APP_PRIMARY_COLOR;
 
   @override
   Widget build(BuildContext context) {

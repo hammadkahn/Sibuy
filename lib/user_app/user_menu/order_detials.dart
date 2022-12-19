@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../apis/api_urls.dart';
+import '../../constant/color_constant.dart';
 import '../../providers/order.dart';
 
 class order_details extends StatefulWidget {
@@ -84,7 +85,7 @@ class _order_detailsState extends State<order_details> {
                             fontFamily: "Mulish",
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFFff6600)),
+                            color: AppColors.APP_PRIMARY_COLOR),
                       ),
                     ],
                   ),
@@ -128,7 +129,7 @@ class _order_detailsState extends State<order_details> {
                               fontFamily: "Mulish",
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFFff6600)),
+                              color: AppColors.APP_PRIMARY_COLOR),
                         ),
                       ],
                     ),
@@ -200,7 +201,7 @@ class _order_detailsState extends State<order_details> {
                                 fontFamily: "Mulish",
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFFff6600))),
+                                color: AppColors.APP_PRIMARY_COLOR)),
                       ],
                     ),
                     const Padding(

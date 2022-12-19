@@ -2,7 +2,7 @@ import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/screens/offer_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../../constant/color_constant.dart';
 import '../../apis/api_urls.dart';
 import '../../constant/size_constants.dart';
 import '../../providers/deal_provider.dart';
@@ -33,7 +33,7 @@ class Demo_Deals extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: 145,
           decoration: const BoxDecoration(
-              color: Color(0xFFff6600),
+              color: AppColors.APP_PRIMARY_COLOR,
               borderRadius: BorderRadius.all(Radius.circular(16))),
           child: Padding(
             padding: const EdgeInsets.only(left: 21),

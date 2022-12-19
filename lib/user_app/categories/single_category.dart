@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/models/category_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../constant/color_constant.dart';
 import '../../models/user_model.dart';
 import '../../shared/loader.dart';
 import '../user_menu/deals_details.dart';
@@ -21,7 +22,7 @@ class SingleCategory extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(categoryData.name!),
-        backgroundColor: const Color(0xFFff6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
       ),
       body: Container(
         width: double.infinity,

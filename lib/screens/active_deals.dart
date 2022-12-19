@@ -3,6 +3,7 @@ import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/screens/full_menu/sheet_deals.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 
+import '../constant/color_constant.dart';
 import '../user_app/user_menu/demi_deals.dart';
 import 'full_menu/deals.dart';
 
@@ -15,7 +16,7 @@ class ActiveMerchantDeals extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Active Deals'),
-        backgroundColor: const Color(0xFFff6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),

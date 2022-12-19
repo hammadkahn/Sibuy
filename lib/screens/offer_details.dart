@@ -3,6 +3,7 @@ import 'package:SiBuy/models/deal_model.dart';
 import 'package:provider/provider.dart';
 
 import '../apis/api_urls.dart';
+import '../constant/color_constant.dart';
 import '../providers/deal_provider.dart';
 
 class OfferDetails extends StatefulWidget {
@@ -33,7 +34,7 @@ class _OfferDetailsState extends State<OfferDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.data.name ?? 'Details'),
-        backgroundColor: const Color(0xFFff6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 10),

@@ -4,6 +4,7 @@ import 'package:SiBuy/screens/QR/qr.dart';
 import 'package:SiBuy/screens/full_menu/menu.dart';
 import 'package:SiBuy/screens/full_menu/profile.dart';
 
+import '../../constant/color_constant.dart';
 import 'add_deal.dart';
 
 class Bar extends StatefulWidget {
@@ -83,7 +84,7 @@ class _BarState extends State<Bar> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          color: const Color(0xFFff6600),
+          color: AppColors.APP_PRIMARY_COLOR,
           shape: const CircularNotchedRectangle(),
           notchMargin: 0,
           child: SizedBox(

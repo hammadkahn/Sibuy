@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/screens/authentication/sign_up_screen.dart';
-
+import '../../constant/color_constant.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -114,7 +114,7 @@ class _auth_pageState extends State<auth_page> {
                     onTap: showsimple,
                     child: const Text(
                       'Forgot Your Password?',
-                      style: TextStyle(color: Color(0xffff6600)),
+                      style: TextStyle(color: AppColors.APP_PRIMARY_COLOR),
                     ),
                   ),
                   const SizedBox(height: 12),

@@ -5,6 +5,7 @@ import 'package:SiBuy/user_app/user_menu/order_status1.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../constant/color_constant.dart';
 import '../../providers/order.dart';
 import 'cart_deals.dart';
 
@@ -41,7 +42,7 @@ class _Cart_userState extends State<Cart_user> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Cart'),
-          backgroundColor: const Color(0xFFff6600),
+          backgroundColor: AppColors.APP_PRIMARY_COLOR,
         ),
         body: Padding(
           padding: const EdgeInsets.only(left: 24, right: 32, top: 17),

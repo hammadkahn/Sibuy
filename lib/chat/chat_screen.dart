@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/providers/chat_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../constant/color_constant.dart';
 import '../apis/api_urls.dart';
 import '../models/current_user_chat_model.dart';
 import '../shared/loader.dart';
@@ -43,7 +43,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chat'),
-        backgroundColor: const Color(0xFFff6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
       ),
       body: userId == null
           ? Loader()

@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/screens/full_menu/profile.dart';
 import 'package:SiBuy/services/branch/branch_services.dart';
+import '../../constant/color_constant.dart';
 
 class location_bar extends StatefulWidget {
   const location_bar({Key? key, required this.token}) : super(key: key);
@@ -54,7 +55,7 @@ class _location_barState extends State<location_bar> {
                         fontFamily: 'Mulish',
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFFff6600)),
+                        color: AppColors.APP_PRIMARY_COLOR),
                     overflow: TextOverflow.ellipsis,
                   ),
                   items: data!
@@ -66,7 +67,7 @@ class _location_barState extends State<location_bar> {
                                   fontFamily: 'Mulish',
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
-                                  color: Color(0xFFff6600)),
+                                  color: AppColors.APP_PRIMARY_COLOR),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ))

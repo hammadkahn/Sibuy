@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../constant/color_constant.dart';
 
 class carousel extends StatefulWidget {
   const carousel({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _carouselState extends State<carousel> {
         activeIndex: activeIndex,
         count: 3,
         effect: const WormEffect(
-          activeDotColor: Color(0xFFff6600),
+          activeDotColor: AppColors.APP_PRIMARY_COLOR,
           dotColor: Colors.white,
           dotHeight: 6,
           dotWidth: 30,

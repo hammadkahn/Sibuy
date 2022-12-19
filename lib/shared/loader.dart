@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constant/color_constant.dart';
 
 class Loader extends StatelessWidget {
   Color? color;
@@ -9,7 +10,7 @@ class Loader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Center(
-        child: CircularProgressIndicator(color: color??Color(0xFFff6600)),
+        child: CircularProgressIndicator(color: color??AppColors.APP_PRIMARY_COLOR),
       ),
     );
   }

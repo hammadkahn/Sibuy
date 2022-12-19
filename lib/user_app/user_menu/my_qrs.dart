@@ -4,6 +4,7 @@ import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/user_app/user_menu/my_qrs_cont.dart';
 import 'package:provider/provider.dart';
 
+import '../../constant/color_constant.dart';
 import '../../shared/loader.dart';
 
 class My_Qrs extends StatefulWidget {
@@ -27,7 +28,7 @@ class _My_QrsState extends State<My_Qrs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFF6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
         title: const Text('My Purchased Deals'),
       ),
       body: Padding(
@@ -45,7 +46,7 @@ class _My_QrsState extends State<My_Qrs> {
                   height: MediaQuery.of(context).size.height * 40 / 812,
                   width: MediaQuery.of(context).size.width * 60 / 375,
                   decoration: BoxDecoration(
-                    color: Color(0xFFff6600),
+                    color: AppColors.APP_PRIMARY_COLOR,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Center(
@@ -66,7 +67,7 @@ class _My_QrsState extends State<My_Qrs> {
                   height: MediaQuery.of(context).size.height * 40 / 812,
                   width: MediaQuery.of(context).size.width * 60 / 375,
                   decoration: BoxDecoration(
-                    color: Color(0xFFff6600),
+                    color: AppColors.APP_PRIMARY_COLOR,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Center(
@@ -87,7 +88,7 @@ class _My_QrsState extends State<My_Qrs> {
                   height: MediaQuery.of(context).size.height * 40 / 812,
                   width: MediaQuery.of(context).size.width * 60 / 375,
                   decoration: BoxDecoration(
-                    color: Color(0xFFff6600),
+                    color: AppColors.APP_PRIMARY_COLOR,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Center(

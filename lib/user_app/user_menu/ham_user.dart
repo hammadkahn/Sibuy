@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../apis/api_urls.dart';
 import '../../chat/user_list_screen.dart';
+import '../../constant/color_constant.dart';
 import '../../shared/loader.dart';
 import 'change_pass.dart';
 import 'payment_method.dart';
@@ -106,7 +107,7 @@ class _ham_userState extends State<ham_user> {
                                     375,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: const Color(0xFFff6600),
+                                  color: AppColors.APP_PRIMARY_COLOR,
                                 ),
                                 child: Row(
                                   children: [
@@ -608,7 +609,7 @@ class _ham_userState extends State<ham_user> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFFff6600),
+                    color: AppColors.APP_PRIMARY_COLOR,
                   ),
                   child: ListTile(
                       leading: const Icon(
@@ -627,7 +628,7 @@ class _ham_userState extends State<ham_user> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFFff6600),
+                    color: AppColors.APP_PRIMARY_COLOR,
                   ),
                   child: ListTile(
                       leading: const Icon(
@@ -646,7 +647,7 @@ class _ham_userState extends State<ham_user> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFFff6600),
+                    color: AppColors.APP_PRIMARY_COLOR,
                   ),
                   child: ListTile(
                       leading: const Icon(
@@ -665,7 +666,7 @@ class _ham_userState extends State<ham_user> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFFff6600),
+                    color: AppColors.APP_PRIMARY_COLOR,
                   ),
                   child: ListTile(
                       leading: const Icon(
@@ -684,7 +685,7 @@ class _ham_userState extends State<ham_user> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFFff6600),
+                    color: AppColors.APP_PRIMARY_COLOR,
                   ),
                   child: ListTile(
                       leading: const Icon(

@@ -7,6 +7,7 @@ import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../apis/api_urls.dart';
+import '../../constant/color_constant.dart';
 import '../../models/user_model.dart';
 import '../../providers/order.dart';
 import '../../shared/loader.dart';
@@ -194,7 +195,7 @@ class _Details_dealsState extends State<Details_deals> {
                               width: 200,
                               height: 54,
                               decoration: BoxDecoration(
-                                  color: const Color(0xFFff6600),
+                                  color: AppColors.APP_PRIMARY_COLOR,
                                   borderRadius: BorderRadius.circular(20)),
                               child: Center(
                                 child: InkWell(
@@ -326,7 +327,7 @@ class _Details_dealsState extends State<Details_deals> {
                                     width: 200,
                                     height: 54,
                                     decoration: BoxDecoration(
-                                        color: const Color(0xFFff6600),
+                                        color: AppColors.APP_PRIMARY_COLOR,
                                         borderRadius:
                                             BorderRadius.circular(20)),
                                     child: Center(

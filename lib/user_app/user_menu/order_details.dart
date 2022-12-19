@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../../constant/color_constant.dart';
+
 class order_details extends StatelessWidget {
   const order_details({Key? key}) : super(key: key);
 
@@ -55,7 +57,7 @@ class order_details extends StatelessWidget {
                       fontFamily: "Mulish",
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFFff6600)),
+                      color: AppColors.APP_PRIMARY_COLOR),
                 ),
               ],
             ),
@@ -93,7 +95,7 @@ class order_details extends StatelessWidget {
                         fontFamily: "Mulish",
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFFff6600)),
+                        color: AppColors.APP_PRIMARY_COLOR),
                   ),
                 ],
               ),
@@ -162,7 +164,7 @@ class order_details extends StatelessWidget {
                           fontFamily: "Mulish",
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFFff6600))),
+                          color: AppColors.APP_PRIMARY_COLOR)),
                 ],
               ),
               SizedBox(

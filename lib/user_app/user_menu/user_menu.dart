@@ -4,6 +4,7 @@ import 'package:SiBuy/user_app/user_menu/cart_user.dart';
 import 'package:SiBuy/user_app/user_menu/my_qrs.dart';
 import 'package:SiBuy/user_app/user_menu/fav_user.dart';
 import 'package:SiBuy/user_app/user_menu/full_user_meu.dart';
+import '../../constant/color_constant.dart';
 
 class User_bar extends StatefulWidget {
   const User_bar({Key? key, required this.token}) : super(key: key);
@@ -83,7 +84,7 @@ class _User_barState extends State<User_bar> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: BottomAppBar(
-              color: const Color(0xFFff6600),
+              color: AppColors.APP_PRIMARY_COLOR,
               shape: const CircularNotchedRectangle(),
               notchMargin: 0,
               child: SizedBox(

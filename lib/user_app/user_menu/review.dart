@@ -6,7 +6,7 @@ import 'package:SiBuy/services/deals/user_deals_services.dart';
 import 'package:SiBuy/services/reviews_services.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:provider/provider.dart';
-
+import '../../constant/color_constant.dart';
 import '../../shared/loader.dart';
 
 class review extends StatefulWidget {
@@ -132,7 +132,7 @@ class _reviewState extends State<review> {
                                       fontFamily: 'Mulish',
                                       fontSize: 9,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFFff6600)),
+                                      color: AppColors.APP_PRIMARY_COLOR),
                                 ),
                                 Text(
                                   Provider.of<DealProvider>(context)
@@ -146,7 +146,7 @@ class _reviewState extends State<review> {
                                       fontFamily: 'Mulish',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xFFff6600)),
+                                      color: AppColors.APP_PRIMARY_COLOR),
                                 ),
                               ],
                             )),

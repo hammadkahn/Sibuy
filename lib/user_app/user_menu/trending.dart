@@ -1,7 +1,7 @@
 import 'package:SiBuy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/apis/api_urls.dart';
-
+import '../../constant/color_constant.dart';
 import 'package:SiBuy/models/reviews_model.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
@@ -140,7 +140,7 @@ class _trending_userState extends State<trending_user> {
                     fontFamily: 'Mulish',
                     fontSize: 9,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFFff6600)),
+                    color: AppColors.APP_PRIMARY_COLOR),
               ),
               Text(
                 Provider.of<DealProvider>(context).calculateDiscount(
@@ -150,7 +150,7 @@ class _trending_userState extends State<trending_user> {
                     fontFamily: 'Mulish',
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFFff6600)),
+                    color: AppColors.APP_PRIMARY_COLOR),
               ),
               Container(
                 width: 28,

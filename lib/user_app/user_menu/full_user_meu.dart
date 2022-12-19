@@ -8,7 +8,7 @@ import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/user_app/user_menu/details_with_all.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../constant/color_constant.dart';
 import '../../constant/helper.dart';
 import '../../constant/size_constants.dart';
 import '../../shared/loader.dart';
@@ -158,7 +158,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                             fontFamily: 'Mulish',
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFFff6600)),
+                            color: AppColors.APP_PRIMARY_COLOR),
                       ),
                     ],
                   ),
@@ -186,7 +186,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                             fontFamily: 'Mulish',
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFFff6600)),
+                            color: AppColors.APP_PRIMARY_COLOR),
                       ),
                     ],
                   ),
@@ -272,7 +272,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                             fontFamily: 'Mulish',
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFFff6600)),
+                            color: AppColors.APP_PRIMARY_COLOR),
                         overflow: TextOverflow.ellipsis,
                       ),
                       items: items!.value
@@ -284,7 +284,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                                       fontFamily: 'Mulish',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFFff6600)),
+                                      color: AppColors.APP_PRIMARY_COLOR),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ))

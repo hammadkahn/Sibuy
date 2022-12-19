@@ -3,7 +3,7 @@ import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-
+import '../../constant/color_constant.dart';
 import '../../apis/api_urls.dart';
 import '../../constant/size_constants.dart';
 import '../../models/reviews_model.dart';
@@ -57,7 +57,7 @@ class _dealsUserState extends State<dealsUser> {
                   width: SizeConfig.screenWidth,
                   height: 145,
                   decoration: const BoxDecoration(
-                      color: Color(0xFFff6600),
+                      color: AppColors.APP_PRIMARY_COLOR,
                       borderRadius: BorderRadius.all(Radius.circular(16))),
                   child: InkWell(
                     onTap: () {
@@ -178,7 +178,7 @@ class _dealsUserState extends State<dealsUser> {
                                             fontFamily: 'Mulish',
                                             fontSize: 9,
                                             fontWeight: FontWeight.w700,
-                                            color: Color(0xFFff6600)),
+                                            color: AppColors.APP_PRIMARY_COLOR),
                                       ),
                                       Text(
                                         '${dealProvider!.dealData.price ?? '0'}',
@@ -188,7 +188,7 @@ class _dealsUserState extends State<dealsUser> {
                                             fontFamily: 'Mulish',
                                             fontSize: 16,
                                             fontWeight: FontWeight.w400,
-                                            color: Color(0xFFff6600)),
+                                            color: AppColors.APP_PRIMARY_COLOR),
                                       ),
                                       const Text(
                                         '\$',
@@ -222,7 +222,7 @@ class _dealsUserState extends State<dealsUser> {
                                                 fontSize: 10,
                                                 fontFamily: 'Mulish',
                                                 fontWeight: FontWeight.w900,
-                                                color: Color(0xFFff6600)),
+                                                color: AppColors.APP_PRIMARY_COLOR),
                                           ),
                                         ),
                                       )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/apis/api_urls.dart';
 import 'package:SiBuy/providers/order.dart';
-
+import '../../constant/color_constant.dart';
 import '../../constant/size_constants.dart';
 
 class cart_deals extends StatefulWidget {
@@ -157,7 +157,7 @@ class _cart_dealsState extends State<cart_deals> {
                                 fontFamily: 'Mulish',
                                 fontSize: 9,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFFff6600)),
+                                color: AppColors.APP_PRIMARY_COLOR),
                           ),
                           Text(
                             double.parse(widget.cart.priceAfterDiscount!)
@@ -166,7 +166,7 @@ class _cart_dealsState extends State<cart_deals> {
                                 fontFamily: 'Mulish',
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
-                                color: Color(0xFFff6600)),
+                                color: AppColors.APP_PRIMARY_COLOR),
                           ),
                           Container(
                             width: 28,
@@ -182,7 +182,7 @@ class _cart_dealsState extends State<cart_deals> {
                                     fontSize: 5,
                                     fontFamily: 'Mulish',
                                     fontWeight: FontWeight.w900,
-                                    color: Color(0xFFff6600)),
+                                    color: AppColors.APP_PRIMARY_COLOR),
                               ),
                             ),
                           ),

@@ -5,7 +5,7 @@ import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
+import '../../constant/color_constant.dart';
 import '../../shared/loader.dart';
 
 class scan_qr extends StatefulWidget {
@@ -118,7 +118,7 @@ class _scan_qrState extends State<scan_qr> {
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       fontFamily: 'Mulish',
-                      color: Color(0xFFff6600))),
+                      color: AppColors.APP_PRIMARY_COLOR)),
               Text('${widget.qrCode.discountOnPrice}% Discount',
                   style: const TextStyle(
                       fontSize: 18,

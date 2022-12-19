@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import '../../constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
@@ -155,7 +155,7 @@ class _User_VerificationState extends State<User_Verification> {
                           fontFamily: 'Mulish-Bold',
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xffff6600),
+                          color: AppColors.APP_PRIMARY_COLOR,
                         ),
                       ),
                     ),

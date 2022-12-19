@@ -5,6 +5,7 @@ import 'package:SiBuy/services/user_merchant_services.dart';
 import 'package:provider/provider.dart';
 
 import '../../apis/api_urls.dart';
+import '../../constant/color_constant.dart';
 import '../../shared/loader.dart';
 
 class StoreProfile extends StatelessWidget {
@@ -70,7 +71,7 @@ class StoreProfile extends StatelessWidget {
                               fontFamily: 'DMSans',
                               fontSize: 10,
                               fontWeight: FontWeight.w500,
-                              color: Color(0xffff6600)),
+                              color: AppColors.APP_PRIMARY_COLOR),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(
@@ -95,7 +96,7 @@ class StoreProfile extends StatelessWidget {
                         //       Text(
                         //         '${data.averageRating.toStringAsFixed(2) ?? 0}',
                         //         style: const TextStyle(
-                        //             fontSize: 30, color: Color(0xffff6600)),
+                        //             fontSize: 30, color: AppColors.APP_PRIMARY_COLOR),
                         //         textAlign: TextAlign.center,
                         //       ),
                         //       const SizedBox(width: 5),
@@ -134,7 +135,7 @@ class StoreProfile extends StatelessWidget {
                         //   width: 70,
                         //   decoration: BoxDecoration(
                         //       borderRadius: BorderRadius.circular(10),
-                        //       color: const Color(0xffff6600)),
+                        //       color: AppColors.APP_PRIMARY_COLOR),
                         //   child: const Center(
                         //     child: Text('View',
                         //         style: TextStyle(
@@ -153,21 +154,21 @@ class StoreProfile extends StatelessWidget {
                                       fontFamily: 'DMSans',
                                       fontSize: 30,
                                       fontWeight: FontWeight.w500,
-                                      color: Color(0xffff6600))),
+                                      color: AppColors.APP_PRIMARY_COLOR)),
                               Text('|'),
                               Text('400+',
                                   style: TextStyle(
                                       fontFamily: 'DMSans',
                                       fontSize: 30,
                                       fontWeight: FontWeight.w500,
-                                      color: Color(0xffff6600))),
+                                      color: AppColors.APP_PRIMARY_COLOR)),
                               Text('|'),
                               Text('2',
                                   style: TextStyle(
                                       fontFamily: 'DMSans',
                                       fontSize: 30,
                                       fontWeight: FontWeight.w500,
-                                      color: Color(0xffff6600))),
+                                      color: AppColors.APP_PRIMARY_COLOR)),
                             ]),
                         const SizedBox(height: 20),
                         // const Text('Reviews',

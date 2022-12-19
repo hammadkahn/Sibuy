@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constant/color_constant.dart';
+
 class Referal extends StatelessWidget {
   const Referal({Key? key}) : super(key: key);
 
@@ -7,7 +9,7 @@ class Referal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFF6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
         title: const Text('Referal'),
       ),
       body: Column(
@@ -38,7 +40,7 @@ class Referal extends StatelessWidget {
                   margin: const EdgeInsets.all(10),
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Color(0xFFFF6600),
+                    color: AppColors.APP_PRIMARY_COLOR,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Text(
@@ -53,7 +55,7 @@ class Referal extends StatelessWidget {
                   margin: const EdgeInsets.all(10),
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Color(0xFFFF6600),
+                    color: AppColors.APP_PRIMARY_COLOR,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Text(

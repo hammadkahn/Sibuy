@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constant/color_constant.dart';
+
 class Points extends StatelessWidget {
   const Points({Key? key}) : super(key: key);
 
@@ -7,7 +9,7 @@ class Points extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFF6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
         title: const Text('Points'),
       ),
       body: Center(

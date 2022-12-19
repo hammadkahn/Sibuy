@@ -4,6 +4,7 @@ import 'package:SiBuy/user_app/user_menu/review.dart';
 import 'package:SiBuy/user_app/user_menu/scan_qr.dart';
 import 'package:intl/intl.dart';
 
+import '../../constant/color_constant.dart';
 import '../../services/user_merchant_services.dart';
 
 class qr_cont extends StatefulWidget {
@@ -86,7 +87,7 @@ class _qr_contState extends State<qr_cont> {
                               fontFamily: 'Mulish',
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFFff6600))),
+                              color: AppColors.APP_PRIMARY_COLOR)),
                     ],
                   ),
                 ),
@@ -153,7 +154,7 @@ class _qr_contState extends State<qr_cont> {
                           fontFamily: 'Mulish',
                           fontSize: 9,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFFff6600))),
+                          color: AppColors.APP_PRIMARY_COLOR)),
                   const SizedBox(width: 10),
                   const Spacer(),
                   Container(
@@ -161,7 +162,7 @@ class _qr_contState extends State<qr_cont> {
                     height: 20,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
-                      color: const Color(0xFFff6600),
+                      color: AppColors.APP_PRIMARY_COLOR,
                     ),
                     child: Center(
                       child: GestureDetector(
@@ -199,7 +200,7 @@ class _qr_contState extends State<qr_cont> {
                             fontFamily: 'Mulish',
                             fontSize: 9,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFFff6600))),
+                            color: AppColors.APP_PRIMARY_COLOR)),
                   ],
                 ),
               ],

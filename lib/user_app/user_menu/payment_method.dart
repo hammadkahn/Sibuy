@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constant/color_constant.dart';
+
 class Payments extends StatelessWidget {
   const Payments({Key? key}) : super(key: key);
 
@@ -8,7 +10,7 @@ class Payments extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFFff6600),
+          backgroundColor: AppColors.APP_PRIMARY_COLOR,
           title: const Text('Payment Method'),
         ),
         //LIST WITH TWO PAYMENT METHODS

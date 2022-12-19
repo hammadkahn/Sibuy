@@ -3,6 +3,7 @@ import 'package:SiBuy/models/category_model.dart';
 import 'package:provider/provider.dart';
 
 import '../apis/api_urls.dart';
+import '../constant/color_constant.dart';
 import '../constant/size_constants.dart';
 import '../providers/deal_provider.dart';
 import '../user_app/user_menu/deals_details.dart';
@@ -16,7 +17,7 @@ class SearchResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFFff6600),
+          backgroundColor: AppColors.APP_PRIMARY_COLOR,
           title: const Text('Search Result'),
         ),
         body: SizedBox(
@@ -41,7 +42,7 @@ class SearchResult extends StatelessWidget {
                         width: SizeConfig.screenWidth,
                         height: 145,
                         decoration: const BoxDecoration(
-                            color: Color(0xFFff6600),
+                            color: AppColors.APP_PRIMARY_COLOR,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(16))),
                         child: Padding(
@@ -123,7 +124,7 @@ class SearchResult extends StatelessWidget {
                                                   fontFamily: 'Poppins',
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w700,
-                                                  color: Color(0xFFff6600)),
+                                                  color: AppColors.APP_PRIMARY_COLOR),
                                             ),
                                           ],
                                         )),
@@ -137,7 +138,7 @@ class SearchResult extends StatelessWidget {
                                                 fontFamily: 'Mulish',
                                                 fontSize: 9,
                                                 fontWeight: FontWeight.w700,
-                                                color: Color(0xFFff6600)),
+                                                color: AppColors.APP_PRIMARY_COLOR),
                                           ),
                                           Text(
                                             data.price!.toString(),
@@ -147,7 +148,7 @@ class SearchResult extends StatelessWidget {
                                                 fontFamily: 'Mulish',
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w400,
-                                                color: Color(0xFFff6600)),
+                                                color: AppColors.APP_PRIMARY_COLOR),
                                           ),
                                           const Text(
                                             '\$',
@@ -184,7 +185,7 @@ class SearchResult extends StatelessWidget {
                                                     fontSize: 5,
                                                     fontFamily: 'Mulish',
                                                     fontWeight: FontWeight.w900,
-                                                    color: Color(0xFFff6600)),
+                                                    color: AppColors.APP_PRIMARY_COLOR),
                                               ),
                                             ),
                                           ),
@@ -206,7 +207,7 @@ class SearchResult extends StatelessWidget {
                                                   fontFamily: 'Mulish',
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w400,
-                                                  color: Color(0xFFff6600)),
+                                                  color: AppColors.APP_PRIMARY_COLOR),
                                             )
                                           ]),
                                     ),

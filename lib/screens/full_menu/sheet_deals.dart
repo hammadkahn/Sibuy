@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../shared/loader.dart';
 import '../../models/reviews_model.dart';
 import '../../providers/deal_provider.dart';
+import '../../constant/color_constant.dart';
 
 class sheet_deals extends StatefulWidget {
   const sheet_deals({Key? key, required this.dealId, required this.token})
@@ -169,7 +170,7 @@ class _sheet_dealsState extends State<sheet_deals> {
                                   fontFamily: 'Mulish',
                                   fontSize: 9,
                                   fontWeight: FontWeight.w700,
-                                  color: Color(0xFFff6600)),
+                                  color: AppColors.APP_PRIMARY_COLOR),
                             ),
                             Text(
                               Provider.of<DealProvider>(context, listen: false)
@@ -180,7 +181,7 @@ class _sheet_dealsState extends State<sheet_deals> {
                                   fontFamily: 'Mulish',
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
-                                  color: Color(0xFFff6600)),
+                                  color: AppColors.APP_PRIMARY_COLOR),
                             ),
                             Container(
                               width: 50,
@@ -197,7 +198,7 @@ class _sheet_dealsState extends State<sheet_deals> {
                                       fontSize: 8,
                                       fontFamily: 'Mulish',
                                       fontWeight: FontWeight.w900,
-                                      color: Color(0xFFff6600)),
+                                      color: AppColors.APP_PRIMARY_COLOR),
                                 ),
                               ),
                             )
@@ -212,7 +213,7 @@ class _sheet_dealsState extends State<sheet_deals> {
                             fontFamily: 'Mulish',
                             fontSize: 8,
                             fontWeight: FontWeight.w400,
-                            color: Color(0xFFff6600)),
+                            color: AppColors.APP_PRIMARY_COLOR),
                       ),
                     ),
                     const Padding(

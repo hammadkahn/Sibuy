@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constant/color_constant.dart';
 import 'loader.dart';
 
 class CustomButton extends StatelessWidget {
@@ -25,7 +26,7 @@ class CustomButton extends StatelessWidget {
     return RawMaterialButton(
       onPressed: onPressed,
       elevation: elevation,
-      fillColor: const Color(0xFFff6600),
+      fillColor: AppColors.APP_PRIMARY_COLOR,
       constraints: BoxConstraints(
           minHeight: padding == true ? 25 : 54,
           minWidth: padding == true ? 150 : 327),

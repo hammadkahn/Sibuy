@@ -3,7 +3,7 @@ import 'package:SiBuy/constant/size_constants.dart';
 import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
-
+import '../../constant/color_constant.dart';
 import '../../apis/api_urls.dart';
 import '../../models/reviews_model.dart';
 
@@ -35,7 +35,7 @@ class _DealsState extends State<Deals> {
         width: SizeConfig.screenWidth,
         height: 145,
         decoration: const BoxDecoration(
-            color: Color(0xFFff6600),
+            color: AppColors.APP_PRIMARY_COLOR,
             borderRadius: BorderRadius.all(Radius.circular(16))),
         child: Padding(
           padding: const EdgeInsets.only(left: 21),
@@ -125,7 +125,7 @@ class _DealsState extends State<Deals> {
                                 fontFamily: 'Mulish',
                                 fontSize: 9,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFFff6600)),
+                                color: AppColors.APP_PRIMARY_COLOR),
                           ),
                           Text(
                             widget.merchantListOfDeals.price!.toString(),
@@ -134,7 +134,7 @@ class _DealsState extends State<Deals> {
                                 fontFamily: 'Mulish',
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
-                                color: Color(0xFFff6600)),
+                                color: AppColors.APP_PRIMARY_COLOR),
                           ),
                           const Text(
                             '\$',
@@ -171,7 +171,7 @@ class _DealsState extends State<Deals> {
                                     fontSize: 10,
                                     fontFamily: 'Mulish',
                                     fontWeight: FontWeight.w900,
-                                    color: Color(0xFFff6600)),
+                                    color: AppColors.APP_PRIMARY_COLOR),
                               ),
                             ),
                           )
