@@ -22,7 +22,7 @@ class _Email_verState extends State<Email_ver> {
 
   var isLoading = false;
   var isLoggedIn = false;
-
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
@@ -72,9 +72,18 @@ class _Email_verState extends State<Email_ver> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     hintText: 'Password',
-                    // suffix: Icon(Icons.visibility)
+                    suffix: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                      child: Icon(_obscureText
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                    ),
                   ),
-                  obscureText: true,
+                  obscureText: _obscureText,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';

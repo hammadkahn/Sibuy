@@ -531,7 +531,8 @@ class _ham_userState extends State<ham_user> {
                 Expanded(
                     flex: 2,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 35, top: 20, bottom: 20),
+                      padding:
+                          const EdgeInsets.only(left: 35, top: 20, bottom: 20),
                       child: GestureDetector(
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -556,7 +557,8 @@ class _ham_userState extends State<ham_user> {
                               color: Color(0xff32324D),
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * 10 / 375,
+                              width:
+                                  MediaQuery.of(context).size.width * 10 / 375,
                             ),
                             const Text('Log out',
                                 style: TextStyle(
@@ -722,8 +724,9 @@ class _ham_userState extends State<ham_user> {
                     itemCount: userProfileData.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        tileColor:
-                            index % 2 == 0 ? Colors.blue[200] : Colors.blue[100],
+                        tileColor: index % 2 == 0
+                            ? AppColors.APP_PRIMARY_COLOR
+                            : Colors.orange,
                         title: Text(userProfileData[index].categoryName!),
                       );
                     },
@@ -735,8 +738,8 @@ class _ham_userState extends State<ham_user> {
                       text: "Add New Preferences ➔",
                       isLoading: isLoading,
                       onPressed: () {
-                        UserInformation().updatePreferences(widget.token,
-                            {'preferences[0]': ''});
+                        UserInformation().updatePreferences(
+                            widget.token, {'preferences[0]': ''});
                         // Navigator.of(context).push(MaterialPageRoute(
                         //     builder: (context) => const WebViewExample()));
                       }),

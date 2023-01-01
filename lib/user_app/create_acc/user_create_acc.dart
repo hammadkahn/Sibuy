@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:SiBuy/constant/color_constant.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +43,7 @@ class _User_create_accState extends State<User_create_acc> {
     'Female',
     'Other',
   ];
+  bool _obscureText = true;
   String? selectedCountry;
   String? languageId;
   @override
@@ -145,7 +147,7 @@ class _User_create_accState extends State<User_create_acc> {
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      hintText: 'Phone Number',
+                      hintText: 'Phone Number (With country code)',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -160,29 +162,33 @@ class _User_create_accState extends State<User_create_acc> {
                     border: Border.all(color: Colors.grey, width: 0.5),
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: DropdownButton(
-                    underline: Container(),
-                    isExpanded: true,
-                    // Initial Value
-                    value: genderDropdown,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButton(
+                      dropdownColor: AppColors.APP_PRIMARY_COLOR,
+                      underline: Container(),
+                      isExpanded: true,
+                      // Initial Value
+                      value: genderDropdown,
 
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
+                      // Down Arrow Icon
+                      icon: const Icon(Icons.keyboard_arrow_down),
 
-                    // Array list of items
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        genderDropdown = newValue!;
-                      });
-                    },
+                      // Array list of items
+                      items: items.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                      // After selecting the desired option,it will
+                      // change button value to selected value
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          genderDropdown = newValue!;
+                        });
+                      },
+                    ),
                   ),
                 ),
                 Padding(
@@ -210,6 +216,7 @@ class _User_create_accState extends State<User_create_acc> {
                           initialDate: DateTime.now(),
                           firstDate: DateTime(1970),
                           lastDate: DateTime(2030));
+
                       if (pickdate != null) {
                         setState(() {
                           dobCtr.text =
@@ -225,14 +232,23 @@ class _User_create_accState extends State<User_create_acc> {
                     textInputAction: TextInputAction.next,
                     controller: passCtr,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      hintText: 'Password',
-                      // suffix: Icon(Icons.visibility)
-                    ),
-                    obscureText: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        hintText: 'Password',
+                        suffix: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                          child: Icon(_obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        )),
+                    obscureText: _obscureText,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please a strong password';
@@ -241,20 +257,30 @@ class _User_create_accState extends State<User_create_acc> {
                     },
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.only(bottom: 26),
                   child: TextFormField(
                     textInputAction: TextInputAction.next,
                     controller: passCtr,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      hintText: ' Confirm Password',
-                      // suffix: Icon(Icons.visibility)
-                    ),
-                    obscureText: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        hintText: ' Confirm Password',
+                        suffix: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                          child: Icon(_obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        )),
+                    obscureText: _obscureText,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please a strong password';
@@ -281,6 +307,7 @@ class _User_create_accState extends State<User_create_acc> {
                                 ),
                               )
                             : showModalBottomSheet(
+                                backgroundColor: AppColors.APP_PRIMARY_COLOR,
                                 isScrollControlled: true,
                                 context: context,
                                 builder: (context) => SizedBox(
@@ -309,8 +336,23 @@ class _User_create_accState extends State<User_create_acc> {
                                         child: Container(
                                           margin: const EdgeInsets.fromLTRB(
                                               15, 12, 15, 8),
-                                          child: Text(_provider!
-                                              .allCountries.data![index].name!),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                _provider!.allCountries
+                                                    .data![index].name!,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const Divider(
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       );
                                     }),
@@ -352,6 +394,7 @@ class _User_create_accState extends State<User_create_acc> {
                             ),
                           )
                         : showModalBottomSheet(
+                            backgroundColor: AppColors.APP_PRIMARY_COLOR,
                             isScrollControlled: true,
                             context: context,
                             builder: (context) => SizedBox(
@@ -375,8 +418,22 @@ class _User_create_accState extends State<User_create_acc> {
                                         child: Container(
                                           margin: const EdgeInsets.fromLTRB(
                                               15, 12, 15, 8),
-                                          child: Text(_provider!
-                                              .allCities.data![index].name!),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                _provider!.allCities
+                                                    .data![index].name!,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const Divider(
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       );
                                     }),
@@ -421,6 +478,7 @@ class _User_create_accState extends State<User_create_acc> {
                       return isLoaded.value == false
                           ? Loader()
                           : DropdownButton<String>(
+                              dropdownColor: AppColors.APP_PRIMARY_COLOR,
                               isExpanded: true,
                               // Initial Value
                               value: langDropdownvaluee,
@@ -465,11 +523,13 @@ class _User_create_accState extends State<User_create_acc> {
                     },
                   ),
                 ),
+                const SizedBox(height: 10),
                 CustomButton(
                   isLoading: isLoading,
                   text: 'Next',
                   onPressed: _handleRegister,
                 ),
+                const SizedBox(height: 10),
               ],
             ),
           ),

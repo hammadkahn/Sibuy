@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:provider/provider.dart';
+import '../../constant/color_constant.dart';
 import '../../providers/deal_provider.dart';
 import '../../shared/loader.dart';
 import '../../user_app/verify _code/user_verification.dart';
@@ -262,7 +263,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      hintText: 'Phone Number',
+                      hintText: 'Phone Number (With country code)',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -336,6 +337,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               )
                             : showModalBottomSheet(
+                                backgroundColor: AppColors.APP_PRIMARY_COLOR,
                                 isScrollControlled: true,
                                 context: context,
                                 builder: (context) => SizedBox(
@@ -364,8 +366,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         child: Container(
                                           margin: const EdgeInsets.fromLTRB(
                                               15, 12, 15, 8),
-                                          child: Text(_provider!
-                                              .allCountries.data![index].name!),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                _provider!.allCountries
+                                                    .data![index].name!,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const Divider(
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       );
                                     }),
@@ -405,6 +421,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           )
                         : showModalBottomSheet(
+                            backgroundColor: AppColors.APP_PRIMARY_COLOR,
                             isScrollControlled: true,
                             context: context,
                             builder: (context) => SizedBox(
@@ -428,8 +445,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         child: Container(
                                           margin: const EdgeInsets.fromLTRB(
                                               15, 12, 15, 8),
-                                          child: Text(_provider!
-                                              .allCities.data![index].name!),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                _provider!.allCities
+                                                    .data![index].name!,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const Divider(
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       );
                                     }),
@@ -581,6 +612,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return isLoaded.value == false
                           ? Loader()
                           : DropdownButton<String>(
+                              dropdownColor: AppColors.APP_PRIMARY_COLOR,
                               isExpanded: true,
                               // Initial Value
                               value: category_1,
@@ -594,7 +626,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       (String items) {
                                 return DropdownMenuItem<String>(
                                   value: items,
-                                  child: Text(items),
+                                  child: Column(
+                                    children: [
+                                      Text(items),
+                                      const Divider(
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
                                   onTap: () {
                                     for (int i = 0;
                                         i < _provider!.allCategories.length;
@@ -624,7 +663,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
 
                 const SizedBox(
-                  width: 10,
+                  width: 20,
                 ),
                 const Text(
                   'Category 2',
@@ -643,6 +682,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return isLoaded.value == false
                           ? Loader()
                           : DropdownButton<String>(
+                              dropdownColor: AppColors.APP_PRIMARY_COLOR,
                               isExpanded: true,
                               // Initial Value
                               value: category_2,
@@ -656,7 +696,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       (String items) {
                                 return DropdownMenuItem<String>(
                                   value: items,
-                                  child: Text(items),
+                                  child: Column(
+                                    children: [
+                                      Text(items),
+                                      const Divider(
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
                                   onTap: () {
                                     for (int i = 0;
                                         i < _provider!.allCategories.length;
@@ -704,6 +751,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return isLoaded.value == false
                           ? Loader()
                           : DropdownButton<String>(
+                              dropdownColor: AppColors.APP_PRIMARY_COLOR,
                               isExpanded: true,
                               // Initial Value
                               value: langDropdownvaluee,
@@ -717,7 +765,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       (String items) {
                                 return DropdownMenuItem<String>(
                                   value: items,
-                                  child: Text(items),
+                                  child: Column(
+                                    children: [
+                                      Text(items),
+                                      const Divider(
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
                                   onTap: () {
                                     for (int i = 0;
                                         i <
@@ -1085,6 +1140,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                const SizedBox(
+                  height: 15,
+                ),
 
                 CustomButton(
                   isLoading: isLoading,

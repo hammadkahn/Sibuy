@@ -44,7 +44,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
   // }
 
   @override
-  initState(){
+  initState() {
     getCityCode();
     super.initState();
   }
@@ -54,7 +54,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
     city = await AppHelper.getPref('city');
     print(cityCode);
     print(city);
-    setState(() { });
+    setState(() {});
   }
 
   Future<void> fetchCitiesAndCountries() async {
@@ -194,7 +194,8 @@ class _Full_menu_userState extends State<Full_menu_user> {
                 SizedBox(
                   height: 190,
                   child: userTrendingDeals(),
-                )
+                ),
+                SizedBox(height: 30),
               ],
             ),
           ),
@@ -294,7 +295,10 @@ class _Full_menu_userState extends State<Full_menu_user> {
                         setState(() {
                           city = value as String?;
                         });
-                        cityCode = dealProvider!.userCitiesData.data!.firstWhere((element) => element.cityName == city).cityId.toString();
+                        cityCode = dealProvider!.userCitiesData.data!
+                            .firstWhere((element) => element.cityName == city)
+                            .cityId
+                            .toString();
                         AppHelper.setPref('cityId', cityCode);
                         AppHelper.setPref('city', city);
                         // for (var i in dealProvider!.userCitiesData.data!) {

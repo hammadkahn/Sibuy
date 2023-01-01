@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:SiBuy/constant/color_constant.dart';
+
 import '../../shared/loader.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
@@ -106,6 +108,10 @@ class _Add_dealState extends State<Add_deal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
+        title: const Text('Add Deal'),
+      ),
       //text forms for adding deals
       body: SafeArea(
         child: Form(
@@ -115,7 +121,7 @@ class _Add_dealState extends State<Add_deal> {
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(
                     height: 20,
@@ -147,7 +153,11 @@ class _Add_dealState extends State<Add_deal> {
                     child: TextFormField(
                       controller: offerNameCtr,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                        ),
                         hintText: 'Enter Offer Name',
                       ),
                       validator: (value) {
@@ -178,7 +188,11 @@ class _Add_dealState extends State<Add_deal> {
                     child: TextFormField(
                       controller: discountCtr,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                        ),
                         hintText: 'Discount',
                       ),
                       validator: (value) {
@@ -209,7 +223,11 @@ class _Add_dealState extends State<Add_deal> {
                     child: TextFormField(
                       controller: productNameCtr,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                        ),
                         hintText: 'Product Name',
                       ),
                       validator: (value) {
@@ -240,7 +258,11 @@ class _Add_dealState extends State<Add_deal> {
                     child: TextFormField(
                       controller: productPriceCtr,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                        ),
                         hintText: 'Enter product Price',
                       ),
                       validator: (value) {
@@ -278,7 +300,7 @@ class _Add_dealState extends State<Add_deal> {
                           enabledBorder: OutlineInputBorder(
                             borderSide:
                                 const BorderSide(color: Color(0xFFEAEAEF)),
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide:
@@ -335,7 +357,7 @@ class _Add_dealState extends State<Add_deal> {
                             enabledBorder: OutlineInputBorder(
                               borderSide:
                                   const BorderSide(color: Color(0xFFEAEAEF)),
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide:
@@ -419,7 +441,11 @@ class _Add_dealState extends State<Add_deal> {
                                       ),
                                     ),
                               decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
+                                ),
                                 hintText: 'Enter Tags',
                               ),
                               validator: (value) {
@@ -471,7 +497,11 @@ class _Add_dealState extends State<Add_deal> {
                                     ),
                               controller: tag1Ctr,
                               decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
+                                ),
                                 hintText: 'Enter Tags',
                               ),
                             ),
@@ -517,7 +547,11 @@ class _Add_dealState extends State<Add_deal> {
                                     ),
                               controller: tag2Ctr,
                               decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
+                                ),
                                 hintText: 'Enter Tags',
                               ),
                             ),
@@ -691,7 +725,11 @@ class _Add_dealState extends State<Add_deal> {
                     child: TextFormField(
                       controller: descriptionCtr,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                        ),
                         hintText: 'Enter Deal Description',
                       ),
                     ),
@@ -716,7 +754,11 @@ class _Add_dealState extends State<Add_deal> {
                     child: TextFormField(
                       controller: limitCtr,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
+                        ),
                         hintText: 'Offer Limit',
                       ),
                       validator: (value) {
@@ -801,6 +843,7 @@ class _Add_dealState extends State<Add_deal> {
 
                   //is sponsered switch
                   SwitchListTile(
+                    activeColor: AppColors.APP_PRIMARY_COLOR,
                     value: switchListTileValue ??= true,
                     onChanged: (newValue) =>
                         setState(() => switchListTileValue = newValue),
@@ -814,6 +857,9 @@ class _Add_dealState extends State<Add_deal> {
                     dense: true,
                     controlAffinity: ListTileControlAffinity.trailing,
                     contentPadding: EdgeInsets.zero,
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
 
                   //submit button

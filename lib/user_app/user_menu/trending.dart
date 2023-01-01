@@ -49,7 +49,7 @@ class _trending_userState extends State<trending_user> {
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ClipRRect(
@@ -92,6 +92,7 @@ class _trending_userState extends State<trending_user> {
             height: 2,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Image.asset('assets/images/rating.png', width: 6, height: 6),
               Text(
@@ -102,11 +103,14 @@ class _trending_userState extends State<trending_user> {
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF5F5F5F)),
               ),
+              const SizedBox(
+                width: 5,
+              ),
               Text(
                 'Merchant: ${widget.data.merchantName}',
                 style: const TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 4,
+                    fontSize: 6,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF5F5F5F)),
               ),
@@ -116,12 +120,13 @@ class _trending_userState extends State<trending_user> {
             height: 2,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
                 '\$',
                 style: TextStyle(
                     fontFamily: 'Mulish',
-                    fontSize: 9,
+                    fontSize: 7,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFFFF6767)),
               ),
@@ -130,15 +135,18 @@ class _trending_userState extends State<trending_user> {
                 style: const TextStyle(
                     decoration: TextDecoration.lineThrough,
                     fontFamily: 'Mulish',
-                    fontSize: 16,
+                    fontSize: 10,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFFFF6767)),
+              ),
+              const SizedBox(
+                width: 5,
               ),
               const Text(
                 '\$',
                 style: TextStyle(
                     fontFamily: 'Mulish',
-                    fontSize: 9,
+                    fontSize: 7,
                     fontWeight: FontWeight.w700,
                     color: AppColors.APP_PRIMARY_COLOR),
               ),
@@ -148,9 +156,12 @@ class _trending_userState extends State<trending_user> {
                     '${widget.data.price ?? '0'}'),
                 style: const TextStyle(
                     fontFamily: 'Mulish',
-                    fontSize: 16,
+                    fontSize: 10,
                     fontWeight: FontWeight.w400,
                     color: AppColors.APP_PRIMARY_COLOR),
+              ),
+              SizedBox(
+                width: 5,
               ),
               Container(
                 width: 28,

@@ -54,12 +54,14 @@ class Menu extends StatelessWidget {
                             totalActiveDeals: snapshot
                                 .data!.data!.totalActiveOffers
                                 .toString(),
+                            iicons: 'vouch',
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
                             title: 'Total Deal Sale',
                             totalActiveDeals:
                                 snapshot.data!.data!.totalDealSale.toString(),
+                            iicons: 'vouch1',
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
@@ -67,6 +69,7 @@ class Menu extends StatelessWidget {
                             totalActiveDeals: snapshot
                                 .data!.data!.totalUnredeemedWithHolding
                                 .toString(),
+                            iicons: 'vouch2',
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
@@ -74,6 +77,7 @@ class Menu extends StatelessWidget {
                             totalActiveDeals: snapshot
                                 .data!.data!.totalTransactionFee
                                 .toString(),
+                            iicons: 'vouch3',
                           ),
                         ];
                       } else if (snapshot.hasError) {
@@ -102,7 +106,7 @@ class Menu extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 1,
+                  // height: MediaQuery.of(context).size.height / 1,
                   child: FutureBuilder<MerchantDealListModel>(
                     future: DealServices().getAllDeals(token: token),
                     builder: (context, snapshot) {
@@ -155,7 +159,7 @@ class Menu extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 20/812,
+                  height: MediaQuery.of(context).size.height * 20 / 812,
                 )
               ],
             ),

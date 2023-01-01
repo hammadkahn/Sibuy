@@ -14,7 +14,8 @@ import '../../shared/loader.dart';
 import 'details_bottom.dart';
 
 class Details_deals extends StatefulWidget {
-  Details_deals({Key? key, this.dealId, required this.token, required this.context})
+  Details_deals(
+      {Key? key, this.dealId, required this.token, required this.context})
       : super(key: key);
   final String? dealId;
   final String token;
@@ -84,7 +85,7 @@ class _Details_dealsState extends State<Details_deals> {
                                 )
                               : Image.network(
                                   '${ApiUrls.imgBaseUrl}${data.images![0].path!}/${data.images![0].image}',
-                                   height: 248,
+                                  height: 248,
                                   width: MediaQuery.of(context).size.width,
                                 ),
                           Align(
@@ -104,18 +105,19 @@ class _Details_dealsState extends State<Details_deals> {
                                   size: 20,
                                 ),
                                 onPressed: () {
-                                  if(isFavourite){
+                                  if (isFavourite) {
                                     Provider.of<DealProvider>(context,
-                                        listen: false)
-                                        .removeFromWishList(widget.dealId!, widget.token).whenComplete(() {
+                                            listen: false)
+                                        .removeFromWishList(
+                                            widget.dealId!, widget.token)
+                                        .whenComplete(() {
                                       setState(() {
                                         isFavourite = false;
                                       });
                                     });
-                                  }
-                                  else{
+                                  } else {
                                     Provider.of<DealProvider>(context,
-                                        listen: false)
+                                            listen: false)
                                         .wishList(widget.token, {
                                       "deals[0]": widget.dealId,
                                     }).whenComplete(() {
@@ -241,7 +243,8 @@ class _Details_dealsState extends State<Details_deals> {
                                       //     content: Text('Deal is expired'),
                                       //   ),
                                       // );
-                                      ToastUtil.showToast(context, 'Deal is expired');
+                                      ToastUtil.showToast(
+                                          context, 'Deal is expired');
                                     }
                                   },
                                   child: const Text(
@@ -349,7 +352,9 @@ class _Details_dealsState extends State<Details_deals> {
                                             //       }
                                             // :
                                             () {
-                                          if (dealProvider!.dealData.dealIsExpired == 0) {
+                                          if (dealProvider!
+                                                  .dealData.dealIsExpired ==
+                                              0) {
                                             value.addTCart(
                                               id: dealProvider!.dealData.id
                                                   .toString(),
@@ -390,7 +395,8 @@ class _Details_dealsState extends State<Details_deals> {
                                             //     content: Text('Deal is expired'),
                                             //   ),
                                             // );
-                                            ToastUtil.showToast(context, 'Deal is expired');
+                                            ToastUtil.showToast(
+                                                context, 'Deal is expired');
                                           }
                                         },
                                         child: const Text(

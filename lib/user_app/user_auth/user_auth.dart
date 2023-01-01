@@ -98,12 +98,12 @@ class _user_authState extends State<user_auth> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 20 / 812,
               ),
-              GestureDetector(
+              const InkWell(
                 // onTap: () {
                 //   Navigator.of(context).push(
                 //       MaterialPageRoute(builder: (_) => const SignUpScreen()));
                 // },
-                child: const Text(
+                child: Text(
                   'Explore As Guest',
                   style: TextStyle(
                       fontFamily: 'Mulish',
@@ -115,7 +115,7 @@ class _user_authState extends State<user_auth> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 20 / 812,
               ),
-              GestureDetector(
+              InkWell(
                 onTap: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const SignUpScreen()));
