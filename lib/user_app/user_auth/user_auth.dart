@@ -37,7 +37,7 @@ class _user_authState extends State<user_auth> {
                 ),
               ),
               const Text(
-                'Let’s get your started!',
+                'Let’s get you started!',
                 style: TextStyle(
                     fontFamily: 'Dmsans',
                     fontSize: 26,
@@ -85,13 +85,18 @@ class _user_authState extends State<user_auth> {
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => const User_create_acc())),
-                  child: const Text(
-                    'Sign up',
-                    style: TextStyle(
-                        fontFamily: 'Mulish',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black),
+                  child: SizedBox(
+                    height: 40,
+                    child: Center(
+                      child: const Text(
+                        'Sign up',
+                        style: TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -103,13 +108,18 @@ class _user_authState extends State<user_auth> {
                 //   Navigator.of(context).push(
                 //       MaterialPageRoute(builder: (_) => const SignUpScreen()));
                 // },
-                child: Text(
-                  'Explore As Guest',
-                  style: TextStyle(
-                      fontFamily: 'Mulish',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
+                child: SizedBox(
+                  height: 40,
+                  child: Center(
+                    child: Text(
+                      'Explore As Guest',
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
@@ -120,13 +130,18 @@ class _user_authState extends State<user_auth> {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const SignUpScreen()));
                 },
-                child: const Text(
-                  'Registered as a Merchant',
-                  style: TextStyle(
-                      fontFamily: 'Mulish',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
+                child: const SizedBox(
+                  height: 40,
+                  child: Center(
+                    child: Text(
+                      'Registered as a Merchant',
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
@@ -140,8 +155,9 @@ class _user_authState extends State<user_auth> {
                     child: Container(
                       height: 56,
                       width: 56,
-                      color:
-                          _value == 0 ? AppColors.APP_PRIMARY_COLOR : Colors.transparent,
+                      color: _value == 0
+                          ? AppColors.APP_PRIMARY_COLOR
+                          : Colors.transparent,
                       child: Image.asset(
                         'assets/images/com.png',
                         height: 24,
@@ -155,8 +171,9 @@ class _user_authState extends State<user_auth> {
                     child: Container(
                       height: 56,
                       width: 56,
-                      color:
-                          _value == 1 ? AppColors.APP_PRIMARY_COLOR : Colors.transparent,
+                      color: _value == 1
+                          ? AppColors.APP_PRIMARY_COLOR
+                          : Colors.transparent,
                       child: Image.asset(
                         'assets/images/uk.png',
                         height: 24,
@@ -170,8 +187,9 @@ class _user_authState extends State<user_auth> {
                     child: Container(
                       height: 56,
                       width: 56,
-                      color:
-                          _value == 2 ? AppColors.APP_PRIMARY_COLOR : Colors.transparent,
+                      color: _value == 2
+                          ? AppColors.APP_PRIMARY_COLOR
+                          : Colors.transparent,
                       child: Image.asset(
                         'assets/images/china.png',
                         height: 24,

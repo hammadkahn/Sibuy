@@ -121,7 +121,7 @@ class Cart with ChangeNotifier {
       //     content: Text('deal added to the cart'),
       //   ),
       // );
-      ToastUtil.showToast(context, 'deal added to the cart');
+      ToastUtil.showToast(context, 'Deal added in Cart!');
     } else {
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(

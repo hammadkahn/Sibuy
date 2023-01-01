@@ -141,6 +141,7 @@ class _Details_dealsState extends State<Details_deals> {
                       price: dealProvider!.calculateDiscount(
                           data.discount.toString(),
                           data.price!.toStringAsFixed(0)),
+                      
                     ),
                     // const Spacer(),
                     const Divider(
