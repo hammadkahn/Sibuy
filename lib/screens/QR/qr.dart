@@ -97,7 +97,7 @@ class _QRState extends State<QR> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 38),
                   child: CustomButton(
-                    text: 'Scan Now',
+                    text: 'Scan QR',
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(

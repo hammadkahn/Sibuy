@@ -7,7 +7,7 @@ class Insights extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Color(0xFFff6600),
         title: const Text('Insights'),
       ),
       body: Center(

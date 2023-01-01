@@ -18,8 +18,8 @@ class categ extends StatelessWidget {
                 height: 52,
                 decoration: const BoxDecoration(
                     color: Color(0xffF4F5F9), shape: BoxShape.circle),
-                child: Image.asset('assets/images/veg.png')),
-            const Text("Vegetables",
+                child: Image.asset('assets/images/car_acc.png')),
+            const Text("Car Accessories",
                 style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w500,
@@ -37,9 +37,9 @@ class categ extends StatelessWidget {
                 height: 52,
                 decoration: const BoxDecoration(
                     color: Color(0xffF4F5F9), shape: BoxShape.circle),
-                child: Image.asset('assets/images/fruit.png'),
+                child: Image.asset('assets/images/autom.png'),
               ),
-              const Text("Fruits",
+              const Text("Automotive",
                   style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
@@ -58,9 +58,9 @@ class categ extends StatelessWidget {
                 height: 52,
                 decoration: BoxDecoration(
                     color: const Color(0xffF4F5F9), shape: BoxShape.circle),
-                child: Image.asset('assets/images/bev.png'),
+                child: Image.asset('assets/images/car_be.png'),
               ),
-              Text("Beverages",
+              Text("Car beauty",
                   style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
@@ -79,9 +79,9 @@ class categ extends StatelessWidget {
                 height: 52,
                 decoration: BoxDecoration(
                     color: const Color(0xffF4F5F9), shape: BoxShape.circle),
-                child: Image.asset('assets/images/grocery.png'),
+                child: Image.asset('assets/images/Cinema.png'),
               ),
-              Text("Grocery",
+              Text("Cinema",
                   style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
@@ -100,9 +100,9 @@ class categ extends StatelessWidget {
                 height: 52,
                 decoration: BoxDecoration(
                     color: const Color(0xffF4F5F9), shape: BoxShape.circle),
-                child: Image.asset('assets/images/oil.png'),
+                child: Image.asset('assets/images/ent.png'),
               ),
-              Text("Edible oil",
+              Text("Entertainment",
                   style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
@@ -121,9 +121,9 @@ class categ extends StatelessWidget {
                 height: 52,
                 decoration: BoxDecoration(
                     color: const Color(0xffF4F5F9), shape: BoxShape.circle),
-                child: Image.asset('assets/images/hold.png'),
+                child: Image.asset('assets/images/TV.png'),
               ),
-              Text("Household",
+              Text("TV",
                   style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
