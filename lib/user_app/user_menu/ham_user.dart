@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../apis/api_urls.dart';
 import '../../chat/user_list_screen.dart';
 import '../../constant/color_constant.dart';
+import '../../shared/custom_button.dart';
 import '../../shared/loader.dart';
 import 'change_pass.dart';
 import 'payment_method.dart';
@@ -28,6 +29,7 @@ class ham_user extends StatefulWidget {
 class _ham_userState extends State<ham_user> {
   String? address = 'Laoding...';
 
+  bool isLoading = false;
   Future<void> getUserAddress() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
@@ -249,7 +251,7 @@ class _ham_userState extends State<ham_user> {
                                                 10 /
                                                 375,
                                       ),
-                                      const Text("My Prefrences",
+                                      const Text("My Preferences",
                                           style: TextStyle(
                                               fontFamily: 'Mulish',
                                               fontSize: 12,
@@ -529,8 +531,7 @@ class _ham_userState extends State<ham_user> {
                 Expanded(
                     flex: 2,
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 35, top: 50, bottom: 56),
+                      padding: const EdgeInsets.only(left: 35, top: 20, bottom: 20),
                       child: GestureDetector(
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -555,8 +556,7 @@ class _ham_userState extends State<ham_user> {
                               color: Color(0xff32324D),
                             ),
                             SizedBox(
-                              width:
-                                  MediaQuery.of(context).size.width * 10 / 375,
+                              width: MediaQuery.of(context).size.width * 10 / 375,
                             ),
                             const Text('Log out',
                                 style: TextStyle(
@@ -715,15 +715,33 @@ class _ham_userState extends State<ham_user> {
             padding: const EdgeInsets.only(top: 20),
             width: double.infinity,
             height: MediaQuery.of(context).size.height / 2,
-            child: ListView.builder(
-              itemCount: userProfileData.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  tileColor:
-                      index % 2 == 0 ? Colors.blue[200] : Colors.blue[100],
-                  title: Text(userProfileData[index].categoryName!),
-                );
-              },
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: userProfileData.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        tileColor:
+                            index % 2 == 0 ? Colors.blue[200] : Colors.blue[100],
+                        title: Text(userProfileData[index].categoryName!),
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  child: CustomButton(
+                      text: "Add New Preferences ➔",
+                      isLoading: isLoading,
+                      onPressed: () {
+                        UserInformation().updatePreferences(widget.token,
+                            {'preferences[0]': ''});
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (context) => const WebViewExample()));
+                      }),
+                ),
+              ],
             ),
           );
         });

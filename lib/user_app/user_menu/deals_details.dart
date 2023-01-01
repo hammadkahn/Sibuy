@@ -30,7 +30,7 @@ class _Details_dealsState extends State<Details_deals> {
   double? priceAfterDiscount;
 
   int? value = 0;
-  var isLoading = false;
+  var isFavourite = false;
   DealProvider? dealProvider;
 
   @override
@@ -95,28 +95,35 @@ class _Details_dealsState extends State<Details_deals> {
                                   color: Colors.white, shape: BoxShape.circle),
                               child: IconButton(
                                 icon: Icon(
-                                  isLoading == false
+                                  isFavourite == false
                                       ? Icons.favorite_border
                                       : Icons.favorite,
-                                  color: isLoading == false
+                                  color: isFavourite == false
                                       ? Colors.black
                                       : Colors.red,
                                   size: 20,
                                 ),
                                 onPressed: () {
-                                  // dealProvider!.wishList(
-                                  //   widget.token,
-                                  //   {'dealId': widget.dealId},
-                                  // );
-                                  Provider.of<DealProvider>(context,
-                                          listen: false)
-                                      .wishList(widget.token, {
-                                    "deals[0]": widget.dealId,
-                                  }).whenComplete(() {
-                                    setState(() {
-                                      isLoading = true;
+                                  if(isFavourite){
+                                    Provider.of<DealProvider>(context,
+                                        listen: false)
+                                        .removeFromWishList(widget.dealId!, widget.token).whenComplete(() {
+                                      setState(() {
+                                        isFavourite = false;
+                                      });
                                     });
-                                  });
+                                  }
+                                  else{
+                                    Provider.of<DealProvider>(context,
+                                        listen: false)
+                                        .wishList(widget.token, {
+                                      "deals[0]": widget.dealId,
+                                    }).whenComplete(() {
+                                      setState(() {
+                                        isFavourite = true;
+                                      });
+                                    });
+                                  }
                                 },
                               ),
                             ),

@@ -20,7 +20,7 @@ class cart_deals extends StatefulWidget {
 }
 
 class _cart_dealsState extends State<cart_deals> {
-  String? address = 'Loading...';
+  String? address = '';
 
   // Future<void> getMerchantAddress() async {
   //   final result = await UserMerchantServices().singleMerchantProfile(
@@ -45,8 +45,8 @@ class _cart_dealsState extends State<cart_deals> {
     SizeConfig.init(context);
     return Container(
       width: SizeConfig.screenWidth,
-      height: 170,
-      margin: const EdgeInsets.only(top: 8, bottom: 8),
+      // height: 170,
+      padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
           color: Color(0xFFFFFFFF),
           borderRadius: BorderRadius.all(Radius.circular(16))),
@@ -83,29 +83,29 @@ class _cart_dealsState extends State<cart_deals> {
                             fontWeight: FontWeight.w700,
                             color: Color(0xFF32324D)),
                       )),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 9),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/menu_location.png',
-                            width: 8,
-                            height: 8,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width - 270,
-                            child: Text(
-                              address ?? 'address',
-                              softWrap: true,
-                              style: const TextStyle(
-                                  fontFamily: 'Mulish',
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFF848484)),
-                            ),
-                          ),
-                        ],
-                      )),
+                  // Padding(
+                  //     padding: const EdgeInsets.only(top: 9),
+                  //     child: Row(
+                  //       children: [
+                  //         Image.asset(
+                  //           'assets/images/menu_location.png',
+                  //           width: 8,
+                  //           height: 8,
+                  //         ),
+                  //         SizedBox(
+                  //           width: MediaQuery.of(context).size.width - 270,
+                  //           child: Text(
+                  //             address ?? 'address',
+                  //             softWrap: true,
+                  //             style: const TextStyle(
+                  //                 fontFamily: 'Mulish',
+                  //                 fontSize: 10,
+                  //                 fontWeight: FontWeight.w600,
+                  //                 color: Color(0xFF848484)),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     )),
                   Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: Row(
