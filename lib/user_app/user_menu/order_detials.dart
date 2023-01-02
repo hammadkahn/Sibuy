@@ -8,10 +8,10 @@ import '../../constant/color_constant.dart';
 import '../../providers/order.dart';
 import 'deals_details.dart';
 
-class order_details extends StatelessWidget {
+class OrderDetails extends StatelessWidget {
   Cart cart;
   String token;
-  order_details({Key? key, required this.cart, required this.token}) : super(key: key);
+  OrderDetails({Key? key, required this.cart, required this.token}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

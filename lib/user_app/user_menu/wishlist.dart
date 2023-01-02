@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
+import '../../constant/app_styles.dart';
 import '../../constant/color_constant.dart';
 import '../../apis/api_urls.dart';
 import '../../constant/size_constants.dart';
@@ -183,7 +184,7 @@ class _WishlistState extends State<Wishlist> {
                         ),
                       ],
                     )),
-                const SizedBox(height: 10),
+                Insets.gapH10,
                 CustomButton(
                     padding: true,
                     text: 'Add to Cart ➔',

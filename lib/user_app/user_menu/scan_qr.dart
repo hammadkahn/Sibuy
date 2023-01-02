@@ -5,6 +5,7 @@ import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import '../../constant/app_styles.dart';
 import '../../constant/color_constant.dart';
 import '../../shared/loader.dart';
 
@@ -145,7 +146,7 @@ class _scan_qrState extends State<scan_qr> {
                           color: Color(0xFF8E8EA9))),
                 ],
               ),
-              const SizedBox(height: 10),
+              Insets.gapH10,
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

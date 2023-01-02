@@ -3,8 +3,8 @@ import 'package:SiBuy/models/merchant_model.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/services/user_merchant_services.dart';
 import 'package:provider/provider.dart';
-
 import '../../apis/api_urls.dart';
+import '../../constant/app_styles.dart';
 import '../../constant/color_constant.dart';
 import '../../shared/loader.dart';
 
@@ -129,7 +129,7 @@ class StoreProfile extends StatelessWidget {
                         //         ],
                         //       )
                         //     ]),
-                        const SizedBox(height: 10),
+                        Insets.gapH10,
                         // Container(
                         //   height: 30,
                         //   width: 70,
@@ -177,7 +177,7 @@ class StoreProfile extends StatelessWidget {
                         //         fontSize: 20,
                         //         fontWeight: FontWeight.w500,
                         //         color: Color(0xff000000))),
-                        // const SizedBox(height: 10),
+                        // Insets.gapH10,
                         // // Row(
                         // //   mainAxisAlignment: MainAxisAlignment.center,
                         // //   children: [

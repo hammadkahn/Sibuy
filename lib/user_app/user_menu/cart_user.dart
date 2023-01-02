@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:SiBuy/shared/custom_button.dart';
-import 'package:SiBuy/user_app/user_menu/order_status1.dart';
+import 'package:SiBuy/user_app/user_menu/order_status.dart';
 
 import 'package:provider/provider.dart';
 

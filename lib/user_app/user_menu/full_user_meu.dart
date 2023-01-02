@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:SiBuy/models/user_model.dart';
 import 'package:SiBuy/user_app/user_menu/categ.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -8,6 +7,7 @@ import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/user_app/user_menu/details_with_all.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../constant/app_styles.dart';
 import '../../constant/color_constant.dart';
 import '../../constant/helper.dart';
 import '../../constant/size_constants.dart';
@@ -139,7 +139,6 @@ class _Full_menu_userState extends State<Full_menu_user> {
                 const SizedBox(
                   height: 20,
                 ),
-
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Row(
@@ -153,7 +152,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                             color: Color(0xFF505050)),
                       ),
                       Text(
-                        city ?? 'fetching...',
+                        city ?? '',
                         style: const TextStyle(
                             fontFamily: 'Mulish',
                             fontSize: 16,
@@ -167,7 +166,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                   height: 190,
                   child: userTrendingDeals(isForSponsored: true),
                 ),
-                const SizedBox(height: 10),
+                Insets.gapH10,
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 15),
                   child: Row(
@@ -181,7 +180,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                             color: Color(0xFF505050)),
                       ),
                       Text(
-                        city ?? 'fetching...',
+                        city ?? '',
                         style: const TextStyle(
                             fontFamily: 'Mulish',
                             fontSize: 16,
@@ -213,36 +212,36 @@ class _Full_menu_userState extends State<Full_menu_user> {
             return Loader();
           default:
             if (snapshot.hasError) {
-              return Center(
-                child: Text(snapshot.error.toString()),
+              return Center(child: Text(snapshot.error.toString()),
               );
             } else {
               if (snapshot.data!.data == null || snapshot.data!.data!.isEmpty) {
                 return Center(
                   child: Text(isForSponsored == true
-                      ? 'No deals sponsered'
+                      ? 'No deals sponsored'
                       : 'No deals in trending'),
                 );
               } else {
                 return ListView.builder(
-                  // itemCount: snapshot.data!.data!.length >= 7
-                  //     ? 7
-                  //     : snapshot.data!.data!.length,
                   itemCount: snapshot.data!.data!.length,
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   itemBuilder: ((context, index) {
-                    return isForSponsored == false
-                        ? all_details(
-                            dealId: snapshot.data!.data![index],
-                            token: widget.token,
-                          )
-                        : snapshot.data!.data![index].isSponsored == 1
-                            ? all_details(
-                                dealId: snapshot.data!.data![index],
-                                token: widget.token,
-                              )
-                            : const SizedBox();
+                    return all_details(
+                      dealId: snapshot.data!.data![index],
+                      token: widget.token,
+                    );
+                    // return isForSponsored == false
+                    //     ? all_details(
+                    //         dealId: snapshot.data!.data![index],
+                    //         token: widget.token,
+                    //       )
+                    //     : snapshot.data!.data![index].isSponsored == 1
+                    //         ? all_details(
+                    //             dealId: snapshot.data!.data![index],
+                    //             token: widget.token,
+                    //           )
+                    //         : const SizedBox();
                   }),
                 );
               }

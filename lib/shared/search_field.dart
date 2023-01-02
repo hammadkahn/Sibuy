@@ -4,6 +4,7 @@ import 'package:SiBuy/services/categories/category_services.dart';
 import 'package:SiBuy/shared/search_result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../constant/app_styles.dart';
 import '../constant/size_constants.dart';
 
 class SearchField extends StatefulWidget {
@@ -53,6 +54,23 @@ class _SearchFieldState extends State<SearchField> {
         onChanged: (value) => debugPrint(value),
         controller: controller,
         textInputAction: TextInputAction.search,
+        onSubmitted: (val){
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Searching...')));
+          searchData().whenComplete(() {
+            UiUtils.disableKeyboard(context);
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => SearchResult(
+                  searchModel: searchModel!,
+                  token: widget.token,
+                ),
+              ),
+            );
+            controller.clear();
+          });
+        },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
               horizontal: getProportionateScreenWidth(15),
@@ -74,6 +92,7 @@ class _SearchFieldState extends State<SearchField> {
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('searching...')));
                 searchData().whenComplete(() {
+                  UiUtils.disableKeyboard(context);
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -98,7 +117,6 @@ class _SearchFieldState extends State<SearchField> {
           //   Icons.filter_list,
           //   color: Color(0xFFC0C0CF),
           // ),
-
           hintText: 'Search Deals',
         ),
       ),

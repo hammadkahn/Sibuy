@@ -8,6 +8,8 @@ import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'constant/app_styles.dart';
+
 class ChatTestingScreen extends StatefulWidget {
   const ChatTestingScreen({Key? key, required this.token}) : super(key: key);
   final String token;
@@ -50,7 +52,7 @@ class _ChatTestingScreenState extends State<ChatTestingScreen> {
       return;
     }
     // Remove keyboard
-    FocusScope.of(context).requestFocus(FocusNode());
+    UiUtils.disableKeyboard(context);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("apiKey", _apiKey.text);
     prefs.setString("cluster", _cluster.text);

@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/user_app/user_menu/deals_user.dart';
 
-class C_slider extends StatefulWidget {
-  const C_slider({Key? key, required this.merchantList, required this.token})
+class CSlider extends StatefulWidget {
+  const CSlider({Key? key, required this.merchantList, required this.token})
       : super(key: key);
   // final String token;
   final List<DealData> merchantList;
   final String token;
 
   @override
-  State<C_slider> createState() => _C_sliderState();
+  State<CSlider> createState() => _CSliderState();
 }
 
-class _C_sliderState extends State<C_slider> {
+class _CSliderState extends State<CSlider> {
   DateTime now = DateTime.now();
   DateTime? now_1w;
   List weekDeals = [

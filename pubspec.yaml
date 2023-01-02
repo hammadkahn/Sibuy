@@ -61,6 +61,10 @@ dependencies:
   url_launcher: ^6.1.5
   webview_flutter: ^3.0.4
   fluttertoast: ^8.1.2
+  card_swiper: ^2.0.4
+  flutter_stripe: ^6.0.0
+  flutter_credit_card: ^3.0.1
+  share_plus:
 
 dev_dependencies:
   flutter_lints: ^2.0.0

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/shared/mail_button.dart';
 import 'package:SiBuy/user_app/email_verification/email_ver.dart';
+import '../../constant/app_styles.dart';
 import '../../constant/color_constant.dart';
 import '../../constant/size_constants.dart';
 import '../../screens/authentication/auth.dart';
@@ -59,7 +60,7 @@ class _user_authState extends State<user_auth> {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => const Email_ver()));
                   }),
-              const SizedBox(height: 10),
+              Insets.gapH10,
               CustomButton(
                   text: "Sign In As Merchant",
                   onPressed: () {
@@ -85,10 +86,10 @@ class _user_authState extends State<user_auth> {
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => const User_create_acc())),
-                  child: SizedBox(
+                  child: const SizedBox(
                     height: 40,
                     child: Center(
-                      child: const Text(
+                      child: Text(
                         'Sign up',
                         style: TextStyle(
                             fontFamily: 'Mulish',
@@ -101,7 +102,7 @@ class _user_authState extends State<user_auth> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 20 / 812,
+                height: MediaQuery.of(context).size.height * 0.005,
               ),
               const InkWell(
                 // onTap: () {
@@ -123,7 +124,7 @@ class _user_authState extends State<user_auth> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 20 / 812,
+                height: MediaQuery.of(context).size.height  * 0.005,
               ),
               InkWell(
                 onTap: () {
@@ -145,7 +146,7 @@ class _user_authState extends State<user_auth> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 20 / 812,
+                height: MediaQuery.of(context).size.height * 0.01,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

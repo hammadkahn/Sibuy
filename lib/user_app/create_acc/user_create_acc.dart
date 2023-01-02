@@ -9,6 +9,7 @@ import 'package:SiBuy/shared/custom_button.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
+import '../../constant/app_styles.dart';
 import '../../shared/loader.dart';
 import '../verify _code/user_verification.dart';
 
@@ -523,13 +524,13 @@ class _User_create_accState extends State<User_create_acc> {
                     },
                   ),
                 ),
-                const SizedBox(height: 10),
+                Insets.gapH10,
                 CustomButton(
                   isLoading: isLoading,
                   text: 'Next',
                   onPressed: _handleRegister,
                 ),
-                const SizedBox(height: 10),
+                Insets.gapH10,
               ],
             ),
           ),

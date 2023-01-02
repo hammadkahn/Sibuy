@@ -4,6 +4,7 @@ import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/screens/full_menu/location_bar.dart';
 import 'package:SiBuy/services/dashboard_stats/dash_board.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
+import '../../constant/app_styles.dart';
 import '../../shared/loader.dart';
 import '../../constant/size_constants.dart';
 import '../../user_app/user_menu/demi_deals.dart';
@@ -28,7 +29,7 @@ class Menu extends StatelessWidget {
                 location_bar(
                   token: token,
                 ),
-                const SizedBox(height: 10),
+                Insets.gapH10,
                 SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 550 / 812,

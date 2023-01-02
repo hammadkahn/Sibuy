@@ -3,6 +3,7 @@ import 'package:SiBuy/constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
+import '../../constant/app_styles.dart';
 import '../../providers/order.dart';
 import '../../shared/custom_button.dart';
 import 'order_detials.dart';
@@ -124,7 +125,7 @@ class _status_1State extends State<status_1> {
               Expanded(
                 child: ListView(
                   children: [
-                    order_details(cart: cart!, token: widget.token),
+                    OrderDetails(cart: cart!, token: widget.token),
                   ],
                 ),
               ),
@@ -199,7 +200,7 @@ class _status_1State extends State<status_1> {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              Insets.gapH10,
               Row(
                 children: [
                   const Text("Total To Pay",
@@ -219,7 +220,7 @@ class _status_1State extends State<status_1> {
                           color: AppColors.APP_PRIMARY_COLOR)),
                 ],
               ),
-              const SizedBox(height: 10),
+              Insets.gapH10,
               Row(
                 children: [
                   const Text("Total Saving",

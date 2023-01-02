@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/category_model.dart';
 import 'package:SiBuy/services/categories/category_services.dart';
-import 'package:SiBuy/shared/loaction_user.dart';
+import 'package:SiBuy/shared/location_user.dart';
 import 'package:SiBuy/user_app/categories/single_category.dart';
 import 'package:SiBuy/user_app/categories/widget/categories_list.dart';
 

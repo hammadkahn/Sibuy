@@ -15,6 +15,7 @@ import '../apis/api_urls.dart';
 import '../constant/helper.dart';
 import '../models/category_model.dart';
 import '../models/deal_model.dart';
+import '../models/referral_model.dart';
 import '../models/user_model.dart';
 import '../services/user_merchant_services.dart';
 
@@ -143,6 +144,7 @@ class DealProvider with ChangeNotifier {
 
   Future<void> wishList(String token, Map<String, dynamic> data) async {
     //ApiUrls.addToWishList
+    print(token);
     await tryCatch(
       token,
       ApiUrls.addToWishList,
@@ -159,6 +161,24 @@ class DealProvider with ChangeNotifier {
       final result = WishListModel.fromJson(jsonDecode(response.body));
       if (response.statusCode == 200) {
         return result;
+      } else {
+        throw Exception(result.message);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> getReferral(String token) async {
+    try {
+      final response = await http.get(
+        ApiUrls.getAllRef,
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+      );
+      final result = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        _referrals = ReferralModel.fromJson(result['data']);
+        notifyListeners();
       } else {
         throw Exception(result.message);
       }
@@ -230,8 +250,7 @@ class DealProvider with ChangeNotifier {
       } else {
         _msg = result['message'];
         debugPrint(response.reasonPhrase);
-
-        throw Exception(response.statusCode);
+        // throw Exception(response.statusCode);
       }
     } catch (e) {
       throw Exception(e);
@@ -457,6 +476,9 @@ class DealProvider with ChangeNotifier {
 
   CountryModel? _allCountries;
   CountryModel get allCountries => _allCountries!;
+
+  ReferralModel? _referrals;
+  ReferralModel? get referrals => _referrals;
 
   Future<void> getAllCountries() async {
     final result = await http.get(Uri.parse('${ApiUrls.baseUrl}getCountries'));

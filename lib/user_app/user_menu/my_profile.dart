@@ -1,27 +1,25 @@
 import 'dart:developer';
-
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../constant/color_constant.dart';
 import '../../services/get_profile/get_user_info.dart';
 import '../../shared/loader.dart';
 
-class My_Profile extends StatefulWidget {
-  const My_Profile({Key? key, required this.token, required this.userData})
+class MyProfile extends StatefulWidget {
+  const MyProfile({Key? key, required this.token, required this.userData})
       : super(key: key);
   final String token;
   final Map<String, dynamic> userData;
 
   @override
-  State<My_Profile> createState() => _My_ProfileState();
+  State<MyProfile> createState() => _MyProfileState();
 }
 
-class _My_ProfileState extends State<My_Profile> {
+class _MyProfileState extends State<MyProfile> {
   DealProvider? _provider;
 
   TextEditingController? nameCtr;
