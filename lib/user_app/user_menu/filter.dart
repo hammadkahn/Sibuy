@@ -7,6 +7,8 @@ import 'package:SiBuy/shared/custom_button.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constant/color_constant.dart';
+
 class filter_list extends StatefulWidget {
   const filter_list({Key? key, required this.token}) : super(key: key);
   final String token;
@@ -151,7 +153,7 @@ class _filter_listState extends State<filter_list> {
               buttonPadding: const EdgeInsets.only(left: 14, right: 14),
               buttonDecoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
-                color: const Color(0xFFff6600),
+                color: AppColors.APP_PRIMARY_COLOR,
               ),
               buttonElevation: 2,
               itemHeight: 40,
@@ -161,7 +163,7 @@ class _filter_listState extends State<filter_list> {
               dropdownPadding: null,
               dropdownDecoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
-                color: const Color(0xFFff6600),
+                color: AppColors.APP_PRIMARY_COLOR,
               ),
               dropdownElevation: 8,
               scrollbarRadius: const Radius.circular(40),
@@ -182,7 +184,7 @@ class _filter_listState extends State<filter_list> {
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
-                      primary: const Color(0xFFff6600),
+                      primary: AppColors.APP_PRIMARY_COLOR,
                     ),
                     child: Padding(
                         padding: const EdgeInsets.only(top: 15, bottom: 15),
@@ -248,7 +250,7 @@ class _filter_listState extends State<filter_list> {
                                     const EdgeInsets.only(left: 14, right: 14),
                                 buttonDecoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(14),
-                                  color: const Color(0xFFff6600),
+                                  color: AppColors.APP_PRIMARY_COLOR,
                                 ),
                                 buttonElevation: 2,
                                 itemHeight: 40,
@@ -259,7 +261,7 @@ class _filter_listState extends State<filter_list> {
                                 dropdownPadding: null,
                                 dropdownDecoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(14),
-                                  color: const Color(0xFFff6600),
+                                  color: AppColors.APP_PRIMARY_COLOR,
                                 ),
                                 dropdownElevation: 8,
                                 scrollbarRadius: const Radius.circular(40),
@@ -284,8 +286,8 @@ class _filter_listState extends State<filter_list> {
               height: 30,
             ),
             RangeSlider(
-              activeColor: const Color(0xffff6600),
-              inactiveColor: const Color(0xFFff6600),
+              activeColor: AppColors.APP_PRIMARY_COLOR,
+              inactiveColor: AppColors.APP_PRIMARY_COLOR,
               values: valuess,
               onChanged: (newRange) {
                 setState(() => valuess = newRange);

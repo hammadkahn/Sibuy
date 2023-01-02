@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/category_model.dart';
 import 'package:SiBuy/services/categories/category_services.dart';
-import 'package:SiBuy/shared/loaction_user.dart';
+import 'package:SiBuy/shared/location_user.dart';
 import 'package:SiBuy/user_app/categories/single_category.dart';
 import 'package:SiBuy/user_app/categories/widget/categories_list.dart';
 
+import '../../shared/loader.dart';
 import 'widget/trending_deals.dart';
 
 class Categories_user extends StatelessWidget {
@@ -13,15 +14,14 @@ class Categories_user extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(
-          left: 24,
-        ),
+    return SafeArea(
+      child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.only(right: 24, left: 24, top: 20),
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(right: 24),
+              padding: const EdgeInsets.only(top: 2),
               child: Location_bar_user(
                 token: token,
               ),
@@ -45,8 +45,7 @@ class Categories_user extends StatelessWidget {
                     builder: ((context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return const Center(
-                              child: CircularProgressIndicator());
+                          return Loader();
                         default:
                           if (snapshot.hasError) {
                             return Center(
@@ -69,7 +68,7 @@ class Categories_user extends StatelessWidget {
                                       MaterialPageRoute(
                                         builder: (context) => SingleCategory(
                                             categoryData:
-                                                snapshot.data!.data![index],
+                                            snapshot.data!.data![index],
                                             token: token),
                                       ),
                                     );
@@ -141,7 +140,7 @@ class Categories_user extends StatelessWidget {
                   builder: ((context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
-                        return const Center(child: CircularProgressIndicator());
+                        return Loader();
                       default:
                         if (snapshot.hasError) {
                           return Center(
@@ -160,8 +159,10 @@ class Categories_user extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 20,)
           ],
         ),
+      )
       ),
     );
   }

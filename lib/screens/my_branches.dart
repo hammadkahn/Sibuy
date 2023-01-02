@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/screens/branch_details.dart';
 
+import '../constant/color_constant.dart';
 import '../models/branch_model.dart';
 import '../services/branch/branch_services.dart';
+import '../shared/loader.dart';
 
 class MyBranches extends StatelessWidget {
   const MyBranches({Key? key, required this.token}) : super(key: key);
@@ -16,7 +18,7 @@ class MyBranches extends StatelessWidget {
           'Branches',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color(0xFFff6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
         iconTheme: Theme.of(context).iconTheme,
       ),
       body: Container(
@@ -26,9 +28,7 @@ class MyBranches extends StatelessWidget {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                );
+                return Loader();
               default:
                 if (snapshot.hasError) {
                   return Center(
@@ -58,7 +58,7 @@ class MyBranches extends StatelessWidget {
                             iconColor: Colors.white,
                             contentPadding: const EdgeInsets.all(10),
                             textColor: Colors.white,
-                            tileColor: const Color(0xFFff6600),
+                            tileColor: AppColors.APP_PRIMARY_COLOR,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             leading:

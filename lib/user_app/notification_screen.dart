@@ -3,6 +3,8 @@ import 'package:SiBuy/models/notification.dart';
 import 'package:SiBuy/services/notification_services.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import '../../shared/loader.dart';
+import '../../constant/color_constant.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key, required this.token}) : super(key: key);
@@ -26,9 +28,7 @@ class NotificationScreen extends StatelessWidget {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                );
+                return Loader();
               default:
                 if (snapshot.hasError) {
                   return Center(
@@ -84,7 +84,7 @@ class NotificationScreen extends StatelessWidget {
             iconColor: Colors.white,
             contentPadding: const EdgeInsets.all(10),
             textColor: Colors.white,
-            tileColor: const Color(0xFFff6600),
+            tileColor: AppColors.APP_PRIMARY_COLOR,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             leading: const Icon(Icons.notifications),
@@ -139,7 +139,7 @@ class NotificationScreen extends StatelessWidget {
             text: TextSpan(
                 text: '${data.message ?? 'no message'}\n\n',
                 style: const TextStyle(
-                  color: Color(0xffff6600),
+                  color: AppColors.APP_PRIMARY_COLOR,
                 ),
                 children: [
                   TextSpan(

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class Stacked_container2 extends StatelessWidget {
   const Stacked_container2(
-      {Key? key, required this.totalActiveDeals, required this.title})
+      {Key? key, required this.totalActiveDeals, required this.title, required this.iicons})
       : super(key: key);
   final String totalActiveDeals;
   final String title;
+  final String iicons;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class Stacked_container2 extends StatelessWidget {
                   color: const Color(0xffD4A8F9),
                 ),
                 child: Image.asset(
-                  'assets/images/vouch.png',
+                  'assets/images/$iicons.png',
                   color: Colors.white,
                 ),
               ),

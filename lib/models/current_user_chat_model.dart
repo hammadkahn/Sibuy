@@ -86,6 +86,7 @@ class User {
   int? id;
   String? name;
   int? type;
+  String? date;
   String? profilePicture;
   String? profilePicturePath;
   dynamic statusName;
@@ -94,6 +95,7 @@ class User {
       {this.id,
       this.name,
       this.type,
+      this.date,
       this.profilePicture,
       this.profilePicturePath,
       this.statusName});
@@ -102,6 +104,7 @@ class User {
     id = json['id'];
     name = json['name'];
     type = json['type'];
+    date = json['date'];
     profilePicture = json['profile_picture'];
     profilePicturePath = json['profilePicturePath'];
     statusName = json['StatusName'];
@@ -112,6 +115,7 @@ class User {
     data['id'] = id;
     data['name'] = name;
     data['type'] = type;
+    data['date'] = date;
     data['profile_picture'] = profilePicture;
     data['profilePicturePath'] = profilePicturePath;
     data['StatusName'] = statusName;

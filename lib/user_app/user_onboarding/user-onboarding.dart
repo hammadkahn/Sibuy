@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/screens/onboarding/onboard.dart';
 import 'package:SiBuy/user_app/user_auth/user_auth.dart';
-
+import '../../constant/color_constant.dart';
 import '../../shared/custom_button.dart';
 
 class User_onboard extends StatelessWidget {
@@ -58,7 +58,7 @@ class User_onboard extends StatelessWidget {
                     fontFamily: 'Mulish',
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xffff6600)),
+                    color: AppColors.APP_PRIMARY_COLOR),
               ),
             ),
           ),

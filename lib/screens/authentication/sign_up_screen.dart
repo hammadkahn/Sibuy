@@ -6,7 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:provider/provider.dart';
+import '../../constant/color_constant.dart';
 import '../../providers/deal_provider.dart';
+import '../../shared/loader.dart';
 import '../../user_app/verify _code/user_verification.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -261,7 +263,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      hintText: 'Phone Number',
+                      hintText: 'Phone Number (With country code)',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -335,15 +337,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               )
                             : showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(
-                                    color: Colors.white,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                elevation: 3,
-                                backgroundColor: Color(0xFFff6600),
+                                backgroundColor: AppColors.APP_PRIMARY_COLOR,
                                 isScrollControlled: true,
                                 context: context,
                                 builder: (context) => SizedBox(
@@ -372,11 +366,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         child: Container(
                                           margin: const EdgeInsets.fromLTRB(
                                               15, 12, 15, 8),
-                                          child: Text(
-                                            _provider!.allCountries.data![index]
-                                                .name!,
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                _provider!.allCountries
+                                                    .data![index].name!,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const Divider(
+                                                color: Colors.white,
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       );
@@ -417,15 +421,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           )
                         : showModalBottomSheet(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(
-                                color: Colors.white,
-                                width: 2.0,
-                              ),
-                            ),
-                            elevation: 3,
-                            backgroundColor: Color(0xFFff6600),
+                            backgroundColor: AppColors.APP_PRIMARY_COLOR,
                             isScrollControlled: true,
                             context: context,
                             builder: (context) => SizedBox(
@@ -449,8 +445,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         child: Container(
                                           margin: const EdgeInsets.fromLTRB(
                                               15, 12, 15, 8),
-                                          child: Text(_provider!
-                                              .allCities.data![index].name!),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                _provider!.allCities
+                                                    .data![index].name!,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const Divider(
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       );
                                     }),
@@ -585,14 +595,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 //     ),
                 //   ),
                 // ),
-                //border line
-                const Padding(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: Divider(
-                    color: Color(0xFFEAEAEF),
-                    thickness: 1,
-                  ),
-                ),
                 const Text(
                   'Category 1',
                   style: TextStyle(
@@ -608,74 +610,60 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     valueListenable: isLoaded,
                     builder: (BuildContext context, bool value, Widget? child) {
                       return isLoaded.value == false
-                          ? const CircularProgressIndicator()
-                          : Container(
-                              decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(
-                                    color: Color(0xFFEAEAEF),
-                                    width: 2.0,
+                          ? Loader()
+                          : DropdownButton<String>(
+                              dropdownColor: AppColors.APP_PRIMARY_COLOR,
+                              isExpanded: true,
+                              // Initial Value
+                              value: category_1,
+
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: _provider!.allCategories
+                                  .map<DropdownMenuItem<String>>(
+                                      (String items) {
+                                return DropdownMenuItem<String>(
+                                  value: items,
+                                  child: Column(
+                                    children: [
+                                      Text(items),
+                                      const Divider(
+                                        color: Colors.white,
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ),
-                              child: DropdownButton<String>(
-                                dropdownColor: Color(0xFFff6600),
-
-                                elevation: 3,
-
-                                isExpanded: true,
-                                // Initial Value
-                                value: category_1,
-
-                                // Down Arrow Icon
-                                icon: const Icon(Icons.keyboard_arrow_down),
-
-                                // Array list of items
-                                items: _provider!.allCategories
-                                    .map<DropdownMenuItem<String>>(
-                                        (String items) {
-                                  return DropdownMenuItem<String>(
-                                    value: items,
-                                    child: Text(
-                                      items,
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                    onTap: () {
-                                      for (int i = 0;
-                                          i < _provider!.allCategories.length;
-                                          i++) {
-                                        if (items ==
-                                            _provider!.allCategories[i]) {
-                                          categoyId_1 = _provider!
-                                              .catData.data![i].id
-                                              .toString();
-                                          break;
-                                        }
+                                  onTap: () {
+                                    for (int i = 0;
+                                        i < _provider!.allCategories.length;
+                                        i++) {
+                                      if (items ==
+                                          _provider!.allCategories[i]) {
+                                        categoyId_1 = _provider!
+                                            .catData.data![i].id
+                                            .toString();
+                                        break;
                                       }
-                                      print(categoyId_1);
-                                    },
-                                  );
-                                }).toList(),
-                                // After selecting the desired option,it will
-                                // change button value to selected value
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    category_1 = newValue!;
-                                  });
-                                },
-                              ),
+                                    }
+                                    print(categoyId_1);
+                                  },
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  category_1 = newValue!;
+                                });
+                              },
                             );
                     },
                   ),
                 ),
 
-                const Padding(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: Divider(
-                    color: Color(0xFFEAEAEF),
-                    thickness: 1,
-                  ),
+                const SizedBox(
+                  width: 20,
                 ),
                 const Text(
                   'Category 2',
@@ -692,74 +680,59 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     valueListenable: isLoaded,
                     builder: (BuildContext context, bool value, Widget? child) {
                       return isLoaded.value == false
-                          ? const CircularProgressIndicator()
-                          : Container(
-                              decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(
-                                    color: Color(0xFFEAEAEF),
-                                    width: 2.0,
+                          ? Loader()
+                          : DropdownButton<String>(
+                              dropdownColor: AppColors.APP_PRIMARY_COLOR,
+                              isExpanded: true,
+                              // Initial Value
+                              value: category_2,
+
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: _provider!.allCategories
+                                  .map<DropdownMenuItem<String>>(
+                                      (String items) {
+                                return DropdownMenuItem<String>(
+                                  value: items,
+                                  child: Column(
+                                    children: [
+                                      Text(items),
+                                      const Divider(
+                                        color: Colors.white,
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: DropdownButton<String>(
-                                  dropdownColor: Color(0xFFff6600),
-
-                                  elevation: 3,
-                                  isExpanded: true,
-                                  // Initial Value
-                                  value: category_2,
-
-                                  // Down Arrow Icon
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-
-                                  // Array list of items
-                                  items: _provider!.allCategories
-                                      .map<DropdownMenuItem<String>>(
-                                          (String items) {
-                                    return DropdownMenuItem<String>(
-                                      value: items,
-                                      child: Text(items,
-                                          style:
-                                              TextStyle(color: Colors.black)),
-                                      onTap: () {
-                                        for (int i = 0;
-                                            i < _provider!.allCategories.length;
-                                            i++) {
-                                          if (items ==
-                                              _provider!.allCategories[i]) {
-                                            categoyId_2 = _provider!
-                                                .catData.data![i].id
-                                                .toString();
-                                            break;
-                                          }
-                                        }
-                                        print(categoyId_2);
-                                      },
-                                    );
-                                  }).toList(),
-                                  // After selecting the desired option,it will
-                                  // change button value to selected value
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      category_2 = newValue!;
-                                    });
+                                  onTap: () {
+                                    for (int i = 0;
+                                        i < _provider!.allCategories.length;
+                                        i++) {
+                                      if (items ==
+                                          _provider!.allCategories[i]) {
+                                        categoyId_2 = _provider!
+                                            .catData.data![i].id
+                                            .toString();
+                                        break;
+                                      }
+                                    }
+                                    print(categoyId_2);
                                   },
-                                ),
-                              ),
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  category_2 = newValue!;
+                                });
+                              },
                             );
                     },
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: Divider(
-                    color: Color(0xFFEAEAEF),
-                    thickness: 1,
-                  ),
+                const SizedBox(
+                  width: 10,
                 ),
                 const Text(
                   'Language',
@@ -776,8 +749,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     valueListenable: isLoaded,
                     builder: (BuildContext context, bool value, Widget? child) {
                       return isLoaded.value == false
-                          ? const CircularProgressIndicator()
+                          ? Loader()
                           : DropdownButton<String>(
+                              dropdownColor: AppColors.APP_PRIMARY_COLOR,
                               isExpanded: true,
                               // Initial Value
                               value: langDropdownvaluee,
@@ -791,7 +765,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       (String items) {
                                 return DropdownMenuItem<String>(
                                   value: items,
-                                  child: Text(items),
+                                  child: Column(
+                                    children: [
+                                      Text(items),
+                                      const Divider(
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
                                   onTap: () {
                                     for (int i = 0;
                                         i <
@@ -822,12 +803,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: Divider(
-                    color: Color(0xFFEAEAEF),
-                    thickness: 1,
-                  ),
+                const SizedBox(
+                  width: 10,
                 ),
                 //operation days
                 const Text(
@@ -910,13 +887,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: Divider(
-                    color: Color(0xFFEAEAEF),
-                    thickness: 1,
-                  ),
-                ),
 
                 // profile pic
                 InkWell(
@@ -967,13 +937,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: Divider(
-                    color: Color(0xFFEAEAEF),
-                    thickness: 1,
-                  ),
-                ),
+
                 //logo pic
                 InkWell(
                   onTap: () {
@@ -1020,12 +984,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ]),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: Divider(
-                    color: Color(0xFFEAEAEF),
-                    thickness: 1,
-                  ),
+                const SizedBox(
+                  height: 15,
                 ),
                 const Text(
                   'Is registered with ministry of Commerce?',
@@ -1180,6 +1140,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                const SizedBox(
+                  height: 15,
+                ),
 
                 CustomButton(
                   isLoading: isLoading,

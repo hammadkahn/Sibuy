@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../../constant/color_constant.dart';
 import '../../services/auth/authentication.dart';
 
 class Change_pass extends StatefulWidget {
@@ -21,7 +22,7 @@ class _Change_passState extends State<Change_pass> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFFff6600),
+          backgroundColor: AppColors.APP_PRIMARY_COLOR,
           title: const Text('Change Password'),
         ),
         body: Form(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:SiBuy/shared/custom_button.dart';
-import 'package:SiBuy/user_app/user_menu/order_status1.dart';
+import 'package:SiBuy/user_app/user_menu/order_status.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../constant/color_constant.dart';
+import '../../constant/helper.dart';
 import '../../providers/order.dart';
 import 'cart_deals.dart';
 
@@ -30,9 +32,20 @@ class _Cart_userState extends State<Cart_user> {
   // }
 
   @override
+  void initState() {
+    getCity();
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() {
     // getUserAddress();
     super.didChangeDependencies();
+  }
+
+  getCity() async {
+    userLocation = await AppHelper.getPref('city');
+    setState(() { });
   }
 
   @override
@@ -41,7 +54,7 @@ class _Cart_userState extends State<Cart_user> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Cart'),
-          backgroundColor: const Color(0xFFff6600),
+          backgroundColor: AppColors.APP_PRIMARY_COLOR,
         ),
         body: Padding(
           padding: const EdgeInsets.only(left: 24, right: 32, top: 17),
@@ -50,19 +63,20 @@ class _Cart_userState extends State<Cart_user> {
             children: <Widget>[
               Expanded(
                 child: Padding(
-                    padding: const EdgeInsets.only(top: 24),
+                    padding: const EdgeInsets.only(top: 5),
                     child: Consumer<Cart>(
                       builder: ((__, value, _) {
                         return value.cartMap.isEmpty
                             ? const Center(
                                 child: Text('Your cart is empty'),
                               )
-                            : ListView.builder(
+                            : ListView.separated(
                                 itemCount: value.cartMap.length,
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(height: 15);
+                                },
                                 itemBuilder: ((context, index) {
-                                  productId =
-                                      value.cartMap.values.toList()[index].id;
-
+                                  productId = value.cartMap.values.toList()[index].id;
                                   return Slidable(
                                       endActionPane: ActionPane(
                                           motion: const ScrollMotion(),
@@ -90,7 +104,7 @@ class _Cart_userState extends State<Cart_user> {
                     )),
               ),
               Consumer<Cart>(builder: (__, value, _) {
-                return CustomButton(
+                return value.cartMap.isEmpty ? Container() : CustomButton(
                   text: 'Proceed To Payment',
                   onPressed: value.cartMap.isEmpty
                       ? () {
@@ -107,8 +121,7 @@ class _Cart_userState extends State<Cart_user> {
                                   id: int.parse(productId!),
                                   token: widget.token,
                                   location: userLocation,
-                                  imgUrl:
-                                      '${value.cartMap.values.toList()[0].path!}/${value.cartMap.values.toList()[0].image!}')));
+                                  imgUrl: '${value.cartMap.values.toList()[0].path!}/${value.cartMap.values.toList()[0].image!}')));
                         },
                 );
               }),

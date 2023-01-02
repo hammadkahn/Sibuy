@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/branch_model.dart';
 
+import '../constant/color_constant.dart';
+
 class BranchDetails extends StatelessWidget {
   const BranchDetails({Key? key, required this.branchData}) : super(key: key);
   final BranchData? branchData;
@@ -12,7 +14,7 @@ class BranchDetails extends StatelessWidget {
         title: Text(
           branchData!.name!,
         ),
-        backgroundColor: const Color(0xFFff6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),

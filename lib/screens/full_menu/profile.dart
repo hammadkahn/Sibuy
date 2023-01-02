@@ -6,7 +6,7 @@ import 'package:SiBuy/models/merchant_profile_model.dart';
 import 'package:SiBuy/screens/active_deals.dart';
 import 'package:SiBuy/services/branch/branch_services.dart';
 import 'package:SiBuy/services/get_profile/get_user_info.dart';
-
+import '../../shared/loader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../apis/api_urls.dart';
@@ -68,10 +68,12 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                     ),
-
+                  const SizedBox(
+                    height: 20,
+                  ),
                   SizedBox(
                     width: double.maxFinite,
-                    height: MediaQuery.of(context).size.height * 0.3,
+                    height: MediaQuery.of(context).size.height * 0.4,
                     child: FutureBuilder<ProfileModel>(
                       future: UserInformation()
                           .getMerchantInformation(widget.token),
@@ -160,7 +162,7 @@ class _ProfileState extends State<Profile> {
                                                     375,
                                               )
                                             : CircleAvatar(
-                                                radius: 60,
+                                                radius: 70,
                                                 backgroundImage: NetworkImage(
                                                     '${ApiUrls.imgBaseUrl}${data.profilePicturePath}/${data.profilePicture}'),
                                               ),
@@ -184,12 +186,8 @@ class _ProfileState extends State<Profile> {
                             )
                           ];
                         } else {
-                          children = const <Widget>[
-                            SizedBox(
-                              width: 60,
-                              height: 60,
-                              child: CircularProgressIndicator(),
-                            ),
+                          children = <Widget>[
+                            Loader(),
                             Padding(
                               padding: EdgeInsets.only(top: 16),
                               child: Text('Awaiting result...'),
@@ -207,7 +205,7 @@ class _ProfileState extends State<Profile> {
                       },
                     ),
                   ),
-
+                  // const Spacer(),
                   ListTile(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -245,27 +243,26 @@ class _ProfileState extends State<Profile> {
                             fontWeight: FontWeight.w600,
                             color: Color(0xff32324D))),
                   ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              MyBranches(token: widget.token)));
-                      // branches().whenComplete(() =>
-                      //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      //         content: Text(
-                      //             'number of branches: ${allBranches!.data!.length}'))));
-                    },
-                    leading: const Icon(
-                      Icons.travel_explore_outlined,
-                      color: Color(0xff32324D),
-                    ),
-                    title: const Text("My Branches",
-                        style: TextStyle(
-                            fontFamily: 'Mulish',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xff32324D))),
-                  ),
+                  // ListTile(
+                  //   onTap: () {
+                  //     Navigator.of(context).push(MaterialPageRoute(
+                  //         builder: (context) => MyBranches(token: widget.token)));
+                  //     // branches().whenComplete(() =>
+                  //     //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //     //         content: Text(
+                  //     //             'number of branches: ${allBranches!.data!.length}'))));
+                  //   },
+                  //   leading: const Icon(
+                  //     Icons.travel_explore_outlined,
+                  //     color: Color(0xff32324D),
+                  //   ),
+                  //   title: const Text("My Branches",
+                  //       style: TextStyle(
+                  //           fontFamily: 'Mulish',
+                  //           fontSize: 12,
+                  //           fontWeight: FontWeight.w600,
+                  //           color: Color(0xff32324D))),
+                  // ),
                   // ListTile(
                   //   onTap: () {
                   //     Navigator.of(context).push(MaterialPageRoute(

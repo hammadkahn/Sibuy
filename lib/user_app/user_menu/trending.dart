@@ -1,7 +1,7 @@
 import 'package:SiBuy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/apis/api_urls.dart';
-
+import '../../constant/color_constant.dart';
 import 'package:SiBuy/models/reviews_model.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
@@ -103,11 +103,14 @@ class _trending_userState extends State<trending_user> {
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF5F5F5F)),
               ),
+              const SizedBox(
+                width: 5,
+              ),
               Text(
                 'Merchant: ${widget.data.merchantName}',
                 style: const TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 4,
+                    fontSize: 6,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF5F5F5F)),
               ),
@@ -123,7 +126,7 @@ class _trending_userState extends State<trending_user> {
                 '\$',
                 style: TextStyle(
                     fontFamily: 'Mulish',
-                    fontSize: 9,
+                    fontSize: 7,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFFFF6767)),
               ),
@@ -132,20 +135,20 @@ class _trending_userState extends State<trending_user> {
                 style: const TextStyle(
                     decoration: TextDecoration.lineThrough,
                     fontFamily: 'Mulish',
-                    fontSize: 12,
+                    fontSize: 10,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFFFF6767)),
               ),
-              SizedBox(
-                width: 4,
+              const SizedBox(
+                width: 5,
               ),
               const Text(
                 '\$',
                 style: TextStyle(
                     fontFamily: 'Mulish',
-                    fontSize: 9,
+                    fontSize: 7,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFFff6600)),
+                    color: AppColors.APP_PRIMARY_COLOR),
               ),
               Text(
                 Provider.of<DealProvider>(context).calculateDiscount(
@@ -153,12 +156,12 @@ class _trending_userState extends State<trending_user> {
                     '${widget.data.price ?? '0'}'),
                 style: const TextStyle(
                     fontFamily: 'Mulish',
-                    fontSize: 12,
+                    fontSize: 10,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFFff6600)),
+                    color: AppColors.APP_PRIMARY_COLOR),
               ),
-              const SizedBox(
-                width: 4,
+              SizedBox(
+                width: 5,
               ),
               Container(
                 width: 28,

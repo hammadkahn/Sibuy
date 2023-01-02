@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:SiBuy/constant/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/providers/chat_provider.dart';
 import 'package:http/http.dart';
@@ -43,7 +44,7 @@ class _Message_writeState extends State<Message_write> {
   }
 
   void onConnectPressed(String id) async {
-    FocusScope.of(context).requestFocus(FocusNode());
+    UiUtils.disableKeyboard(context);
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     try {

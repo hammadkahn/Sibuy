@@ -1,4 +1,8 @@
+import 'package:SiBuy/constant/app_styles.dart';
 import 'package:flutter/material.dart';
+
+import '../../constant/color_constant.dart';
+import 'card_screen.dart';
 
 class Payments extends StatelessWidget {
   const Payments({Key? key}) : super(key: key);
@@ -8,17 +12,16 @@ class Payments extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFFff6600),
-          title: const Text('Payment Method'),
+          backgroundColor: AppColors.APP_PRIMARY_COLOR,
+          title: const Text('Payment Methods'),
         ),
         //LIST WITH TWO PAYMENT METHODS
-        body: Center(
+        body: Container(
+          margin: const EdgeInsets.all(20),
           child: Column(
             children: [
               //PAYPAL
               Container(
-                margin: const EdgeInsets.all(12),
-                //decoration
                 decoration: BoxDecoration(
                   color: Color(0xFFFF66000),
                   borderRadius: BorderRadius.circular(10),
@@ -50,10 +53,9 @@ class Payments extends StatelessWidget {
                   ),
                 ),
               ),
+              Insets.gapH15,
               //CREDIT CARD
               Container(
-                margin: const EdgeInsets.all(12),
-                //decoration
                 decoration: BoxDecoration(
                   color: Color(0xFFFF66000),
                   borderRadius: BorderRadius.circular(10),
@@ -67,6 +69,12 @@ class Payments extends StatelessWidget {
                   ],
                 ),
                 child: ListTile(
+                  onTap: (){
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => CustomCardPaymentScreen()),
+                    );
+                  },
                   leading: Image.asset(
                     'assets/images/credit.png',
                     height: 50,
@@ -87,7 +95,7 @@ class Payments extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        )
       ),
     );
   }

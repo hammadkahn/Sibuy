@@ -4,7 +4,8 @@ import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/screens/full_menu/location_bar.dart';
 import 'package:SiBuy/services/dashboard_stats/dash_board.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
-
+import '../../constant/app_styles.dart';
+import '../../shared/loader.dart';
 import '../../constant/size_constants.dart';
 import '../../user_app/user_menu/demi_deals.dart';
 import 'percent_ind2.dart';
@@ -28,7 +29,7 @@ class Menu extends StatelessWidget {
                 location_bar(
                   token: token,
                 ),
-                const SizedBox(height: 10),
+                Insets.gapH10,
                 SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 550 / 812,
@@ -54,12 +55,14 @@ class Menu extends StatelessWidget {
                             totalActiveDeals: snapshot
                                 .data!.data!.totalActiveOffers
                                 .toString(),
+                            iicons: 'vouch',
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
                             title: 'Total Deal Sale',
                             totalActiveDeals:
                                 snapshot.data!.data!.totalDealSale.toString(),
+                            iicons: 'vouch1',
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
@@ -67,6 +70,7 @@ class Menu extends StatelessWidget {
                             totalActiveDeals: snapshot
                                 .data!.data!.totalUnredeemedWithHolding
                                 .toString(),
+                            iicons: 'vouch2',
                           ),
                           const SizedBox(height: 8),
                           Stacked_container2(
@@ -74,6 +78,7 @@ class Menu extends StatelessWidget {
                             totalActiveDeals: snapshot
                                 .data!.data!.totalTransactionFee
                                 .toString(),
+                            iicons: 'vouch3',
                           ),
                         ];
                       } else if (snapshot.hasError) {
@@ -89,12 +94,8 @@ class Menu extends StatelessWidget {
                           )
                         ];
                       } else {
-                        children = const <Widget>[
-                          SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: CircularProgressIndicator(),
-                          ),
+                        children = <Widget>[
+                          Loader(),
                           Padding(
                             padding: EdgeInsets.only(top: 16),
                             child: Text('Awaiting result...'),
@@ -106,15 +107,13 @@ class Menu extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 1,
+                  // height: MediaQuery.of(context).size.height / 1,
                   child: FutureBuilder<MerchantDealListModel>(
                     future: DealServices().getAllDeals(token: token),
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return const Center(
-                            child: CircularProgressIndicator.adaptive(),
-                          );
+                          return Loader();
                         default:
                           if (snapshot.hasError) {
                             return Center(
@@ -161,7 +160,7 @@ class Menu extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 20/812,
+                  height: MediaQuery.of(context).size.height * 20 / 812,
                 )
               ],
             ),

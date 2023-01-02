@@ -1,20 +1,25 @@
 import 'dart:developer';
 
+import 'package:SiBuy/shared/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/cart_model.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../apis/api_urls.dart';
+import '../../constant/color_constant.dart';
 import '../../models/user_model.dart';
 import '../../providers/order.dart';
+import '../../shared/loader.dart';
 import 'details_bottom.dart';
 
 class Details_deals extends StatefulWidget {
-  const Details_deals({Key? key, this.dealId, required this.token})
+  Details_deals(
+      {Key? key, this.dealId, required this.token, required this.context})
       : super(key: key);
   final String? dealId;
   final String token;
+  BuildContext context;
 
   @override
   State<Details_deals> createState() => _Details_dealsState();
@@ -26,7 +31,7 @@ class _Details_dealsState extends State<Details_deals> {
   double? priceAfterDiscount;
 
   int? value = 0;
-  var isLaoding = false;
+  var isFavourite = false;
   DealProvider? dealProvider;
 
   @override
@@ -43,10 +48,11 @@ class _Details_dealsState extends State<Details_deals> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      // height: MediaQuery.of(context).size.height / 2,
       padding: const EdgeInsets.only(top: 10),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        // mainAxisSize: MainAxisSize.min,
         children: [
           const Divider(
             color: Color(0xFFC0C0CF),
@@ -56,7 +62,7 @@ class _Details_dealsState extends State<Details_deals> {
           ),
           SizedBox(
             width: double.maxFinite,
-            height: MediaQuery.of(context).size.height - 200,
+            // height: MediaQuery.of(context).size.height /2,
             child: FutureBuilder<UserSingleDealModel>(
               future:
                   dealProvider!.singleDealDetails(widget.token, widget.dealId!),
@@ -68,7 +74,7 @@ class _Details_dealsState extends State<Details_deals> {
                   children = [
                     SizedBox(
                       width: double.infinity,
-                      height: 250,
+                      // height: 250,
                       child: Stack(
                         children: [
                           data.images == null || data.images!.isEmpty
@@ -90,28 +96,36 @@ class _Details_dealsState extends State<Details_deals> {
                                   color: Colors.white, shape: BoxShape.circle),
                               child: IconButton(
                                 icon: Icon(
-                                  isLaoding == false
+                                  isFavourite == false
                                       ? Icons.favorite_border
                                       : Icons.favorite,
-                                  color: isLaoding == false
+                                  color: isFavourite == false
                                       ? Colors.black
                                       : Colors.red,
                                   size: 20,
                                 ),
                                 onPressed: () {
-                                  // dealProvider!.wishList(
-                                  //   widget.token,
-                                  //   {'dealId': widget.dealId},
-                                  // );
-                                  Provider.of<DealProvider>(context,
-                                          listen: false)
-                                      .wishList(widget.token, {
-                                    "deals[0]": widget.dealId,
-                                  }).whenComplete(() {
-                                    setState(() {
-                                      isLaoding = true;
+                                  if (isFavourite) {
+                                    Provider.of<DealProvider>(context,
+                                            listen: false)
+                                        .removeFromWishList(
+                                            widget.dealId!, widget.token)
+                                        .whenComplete(() {
+                                      setState(() {
+                                        isFavourite = false;
+                                      });
                                     });
-                                  });
+                                  } else {
+                                    Provider.of<DealProvider>(context,
+                                            listen: false)
+                                        .wishList(widget.token, {
+                                      "deals[0]": widget.dealId,
+                                    }).whenComplete(() {
+                                      setState(() {
+                                        isFavourite = true;
+                                      });
+                                    });
+                                  }
                                 },
                               ),
                             ),
@@ -127,8 +141,9 @@ class _Details_dealsState extends State<Details_deals> {
                       price: dealProvider!.calculateDiscount(
                           data.discount.toString(),
                           data.price!.toStringAsFixed(0)),
+                      
                     ),
-                    const Spacer(),
+                    // const Spacer(),
                     const Divider(
                       color: Color(0xFFC0C0CF),
                       thickness: 1,
@@ -149,29 +164,20 @@ class _Details_dealsState extends State<Details_deals> {
                     )
                   ];
                 } else {
-                  children = const <Widget>[
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: CircularProgressIndicator(),
-                    ),
+                  children = <Widget>[
+                    Loader(),
                     Padding(
                       padding: EdgeInsets.only(top: 16),
                       child: Text('Awaiting result...'),
                     )
                   ];
                 }
-                return SizedBox(
-                  width: double.maxFinite,
-                  height: MediaQuery.of(context).size.height - 100,
-                  child: Column(
-                    children: children,
-                  ),
+                return Column(
+                  children: children,
                 );
               }),
             ),
           ),
-
           //cart container
           Container(
             width: double.infinity,
@@ -199,7 +205,7 @@ class _Details_dealsState extends State<Details_deals> {
                               width: 200,
                               height: 54,
                               decoration: BoxDecoration(
-                                  color: const Color(0xFFff6600),
+                                  color: AppColors.APP_PRIMARY_COLOR,
                                   borderRadius: BorderRadius.circular(20)),
                               child: Center(
                                 child: InkWell(
@@ -232,12 +238,14 @@ class _Details_dealsState extends State<Details_deals> {
                                               : dealProvider!.dealModel.data!.images![0].path!);
                                       value.checkIsAddedToCart(context);
                                     } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text('Deal is expired'),
-                                        ),
-                                      );
+                                      // ScaffoldMessenger.of(context)
+                                      //     .showSnackBar(
+                                      //   const SnackBar(
+                                      //     content: Text('Deal is expired'),
+                                      //   ),
+                                      // );
+                                      ToastUtil.showToast(
+                                          context, 'Deal is expired');
                                     }
                                   },
                                   child: const Text(
@@ -330,7 +338,7 @@ class _Details_dealsState extends State<Details_deals> {
                                     width: 200,
                                     height: 54,
                                     decoration: BoxDecoration(
-                                        color: const Color(0xFFff6600),
+                                        color: AppColors.APP_PRIMARY_COLOR,
                                         borderRadius:
                                             BorderRadius.circular(20)),
                                     child: Center(
@@ -383,13 +391,13 @@ class _Details_dealsState extends State<Details_deals> {
                                             );
                                             value.checkIsAddedToCart(context);
                                           } else {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                content:
-                                                    Text('Deal is expired'),
-                                              ),
-                                            );
+                                            // ScaffoldMessenger.of(widget.context).showSnackBar(
+                                            //   const SnackBar(
+                                            //     content: Text('Deal is expired'),
+                                            //   ),
+                                            // );
+                                            ToastUtil.showToast(
+                                                context, 'Deal is expired');
                                           }
                                         },
                                         child: const Text(
@@ -411,7 +419,7 @@ class _Details_dealsState extends State<Details_deals> {
                         child: Text(snapshot.error.toString()),
                       );
                     } else {
-                      return const Center(child: CircularProgressIndicator());
+                      return Loader();
                     }
                   },
                 );

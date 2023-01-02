@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constant/color_constant.dart';
 
 class MessageItem extends StatelessWidget {
   final bool send;
@@ -50,7 +51,7 @@ class MessageItem extends StatelessWidget {
                   bottomRight: Radius.circular(send ? 0 : 20),
                 ),
                 color: send
-                    ? const Color(0xFFff6600)
+                    ? AppColors.APP_PRIMARY_COLOR
                     : const Color(0xFFE9E9E9).withOpacity(0.8),
               ),
               child: SelectableText(

@@ -1,6 +1,9 @@
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 import 'package:flutter/material.dart';
 
+import '../../constant/color_constant.dart';
+import '../../shared/loader.dart';
+
 class Request_pay extends StatefulWidget {
   const Request_pay({super.key, required this.token});
   final String token;
@@ -19,7 +22,7 @@ class _Request_payState extends State<Request_pay> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFff6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
         title: const Text('Request Payment'),
       ),
       body: Form(
@@ -61,9 +64,7 @@ class _Request_payState extends State<Request_pay> {
                           child: Text(snapshot.error.toString()),
                         );
                       } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
+                        return Loader();
                       }
                     },
                   )),
@@ -107,7 +108,7 @@ class _Request_payState extends State<Request_pay> {
                       Widget? child) {
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFFff6600),
+                        primary: AppColors.APP_PRIMARY_COLOR,
                       ),
                       onPressed: data!.value.isEmpty ||
                               data!.value['deals'].isEmpty ||

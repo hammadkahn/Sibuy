@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/user_app/user_menu/user_menu.dart';
 import 'package:SiBuy/user_app/verify%20_code/user_verification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../constant/color_constant.dart';
 import '../../constant/size_constants.dart';
 import '../../services/auth/authentication.dart';
 import '../../shared/custom_button.dart';
@@ -22,11 +22,12 @@ class _Email_verState extends State<Email_ver> {
 
   var isLoading = false;
   var isLoggedIn = false;
-
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Form(
         key: _formKey,
         child: Padding(
@@ -71,9 +72,18 @@ class _Email_verState extends State<Email_ver> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     hintText: 'Password',
-                    // suffix: Icon(Icons.visibility)
+                    suffix: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                      child: Icon(_obscureText
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                    ),
                   ),
-                  obscureText: true,
+                  obscureText: _obscureText,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
@@ -93,7 +103,7 @@ class _Email_verState extends State<Email_ver> {
                 onTap: showsimple,
                 child: const Text(
                   'Forgot Your Password?',
-                  style: TextStyle(color: Color(0xffff6600)),
+                  style: TextStyle(color: AppColors.APP_PRIMARY_COLOR),
                 ),
               )
             ],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/shared/mail_button.dart';
 import 'package:SiBuy/user_app/email_verification/email_ver.dart';
-
+import '../../constant/app_styles.dart';
+import '../../constant/color_constant.dart';
 import '../../constant/size_constants.dart';
 import '../../screens/authentication/auth.dart';
 import '../../screens/authentication/sign_up_screen.dart';
@@ -37,7 +38,7 @@ class _user_authState extends State<user_auth> {
                 ),
               ),
               const Text(
-                'Let’s get your started!',
+                'Let’s get you started!',
                 style: TextStyle(
                     fontFamily: 'Dmsans',
                     fontSize: 26,
@@ -59,7 +60,7 @@ class _user_authState extends State<user_auth> {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => const Email_ver()));
                   }),
-              const SizedBox(height: 10),
+              Insets.gapH10,
               CustomButton(
                   text: "Sign In As Merchant",
                   onPressed: () {
@@ -85,52 +86,67 @@ class _user_authState extends State<user_auth> {
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => const User_create_acc())),
-                  child: const Text(
-                    'Sign up',
-                    style: TextStyle(
-                        fontFamily: 'Mulish',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black),
+                  child: const SizedBox(
+                    height: 40,
+                    child: Center(
+                      child: Text(
+                        'Sign up',
+                        style: TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black),
+                      ),
+                    ),
                   ),
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 20 / 812,
+                height: MediaQuery.of(context).size.height * 0.005,
               ),
-              GestureDetector(
+              const InkWell(
                 // onTap: () {
                 //   Navigator.of(context).push(
                 //       MaterialPageRoute(builder: (_) => const SignUpScreen()));
                 // },
-                child: const Text(
-                  'Explore As Guest',
-                  style: TextStyle(
-                      fontFamily: 'Mulish',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
+                child: SizedBox(
+                  height: 40,
+                  child: Center(
+                    child: Text(
+                      'Explore As Guest',
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 20 / 812,
+                height: MediaQuery.of(context).size.height  * 0.005,
               ),
-              GestureDetector(
+              InkWell(
                 onTap: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const SignUpScreen()));
                 },
-                child: const Text(
-                  'Registered as a Merchant',
-                  style: TextStyle(
-                      fontFamily: 'Mulish',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
+                child: const SizedBox(
+                  height: 40,
+                  child: Center(
+                    child: Text(
+                      'Registered as a Merchant',
+                      style: TextStyle(
+                          fontFamily: 'Mulish',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 20 / 812,
+                height: MediaQuery.of(context).size.height * 0.01,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -140,8 +156,9 @@ class _user_authState extends State<user_auth> {
                     child: Container(
                       height: 56,
                       width: 56,
-                      color:
-                          _value == 0 ? Color(0xFFff6600) : Colors.transparent,
+                      color: _value == 0
+                          ? AppColors.APP_PRIMARY_COLOR
+                          : Colors.transparent,
                       child: Image.asset(
                         'assets/images/com.png',
                         height: 24,
@@ -155,8 +172,9 @@ class _user_authState extends State<user_auth> {
                     child: Container(
                       height: 56,
                       width: 56,
-                      color:
-                          _value == 1 ? Color(0xFFff6600) : Colors.transparent,
+                      color: _value == 1
+                          ? AppColors.APP_PRIMARY_COLOR
+                          : Colors.transparent,
                       child: Image.asset(
                         'assets/images/uk.png',
                         height: 24,
@@ -170,8 +188,9 @@ class _user_authState extends State<user_auth> {
                     child: Container(
                       height: 56,
                       width: 56,
-                      color:
-                          _value == 2 ? Color(0xFFff6600) : Colors.transparent,
+                      color: _value == 2
+                          ? AppColors.APP_PRIMARY_COLOR
+                          : Colors.transparent,
                       child: Image.asset(
                         'assets/images/china.png',
                         height: 24,

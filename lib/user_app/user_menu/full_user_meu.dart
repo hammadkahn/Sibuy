@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:SiBuy/models/user_model.dart';
 import 'package:SiBuy/user_app/user_menu/categ.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -7,8 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/user_app/user_menu/details_with_all.dart';
 import 'package:provider/provider.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../constant/app_styles.dart';
+import '../../constant/color_constant.dart';
+import '../../constant/helper.dart';
 import '../../constant/size_constants.dart';
+import '../../shared/loader.dart';
 import '../../shared/search_field.dart';
 import '../notification_screen.dart';
 import 'ham_user.dart';
@@ -24,10 +27,10 @@ class Full_menu_user extends StatefulWidget {
 class _Full_menu_userState extends State<Full_menu_user> {
   DealProvider? dealProvider;
   String? selectedValue;
-  String? cityCode;
+  String? cityCode, city;
+  final prefs = SharedPreferences.getInstance();
   ValueNotifier<List<dynamic>>? items = ValueNotifier([]);
 
-  String? city = '';
   List a = [
     Image.asset('assets/images/bev.png'),
     Image.asset('assets/images/bev.png'),
@@ -40,9 +43,22 @@ class _Full_menu_userState extends State<Full_menu_user> {
   //   country = prefs.getString('country');
   // }
 
+  @override
+  initState() {
+    getCityCode();
+    super.initState();
+  }
+
+  getCityCode() async {
+    cityCode = await AppHelper.getPref('cityId');
+    city = await AppHelper.getPref('city');
+    print(cityCode);
+    print(city);
+    setState(() {});
+  }
+
   Future<void> fetchCitiesAndCountries() async {
     await dealProvider!.getSystemCities(widget.token);
-
     items!.value = dealProvider!.userCities;
   }
 
@@ -97,9 +113,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                   builder: (BuildContext context, bool value, Widget? child) {
                     return SizedBox(
                         child: productLoaded.value == false
-                            ? const Center(
-                                child: CircularProgressIndicator(),
-                              )
+                            ? Loader()
                             : const SizedBox()
                         // : C_slider(
                         //     token: widget.token,
@@ -125,7 +139,6 @@ class _Full_menu_userState extends State<Full_menu_user> {
                 const SizedBox(
                   height: 20,
                 ),
-
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Row(
@@ -139,12 +152,12 @@ class _Full_menu_userState extends State<Full_menu_user> {
                             color: Color(0xFF505050)),
                       ),
                       Text(
-                        city ?? 'fetching...',
+                        city ?? '',
                         style: const TextStyle(
                             fontFamily: 'Mulish',
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFFff6600)),
+                            color: AppColors.APP_PRIMARY_COLOR),
                       ),
                     ],
                   ),
@@ -153,7 +166,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                   height: 190,
                   child: userTrendingDeals(isForSponsored: true),
                 ),
-                const SizedBox(height: 10),
+                Insets.gapH10,
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 15),
                   child: Row(
@@ -167,12 +180,12 @@ class _Full_menu_userState extends State<Full_menu_user> {
                             color: Color(0xFF505050)),
                       ),
                       Text(
-                        city ?? 'fetching...',
+                        city ?? '',
                         style: const TextStyle(
                             fontFamily: 'Mulish',
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFFff6600)),
+                            color: AppColors.APP_PRIMARY_COLOR),
                       ),
                     ],
                   ),
@@ -180,7 +193,8 @@ class _Full_menu_userState extends State<Full_menu_user> {
                 SizedBox(
                   height: 190,
                   child: userTrendingDeals(),
-                )
+                ),
+                SizedBox(height: 30),
               ],
             ),
           ),
@@ -195,39 +209,39 @@ class _Full_menu_userState extends State<Full_menu_user> {
       builder: ((context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return const Center(child: CircularProgressIndicator());
+            return Loader();
           default:
             if (snapshot.hasError) {
-              return Center(
-                child: Text(snapshot.error.toString()),
+              return Center(child: Text(snapshot.error.toString()),
               );
             } else {
               if (snapshot.data!.data == null || snapshot.data!.data!.isEmpty) {
                 return Center(
                   child: Text(isForSponsored == true
-                      ? 'No deals sponsered'
+                      ? 'No deals sponsored'
                       : 'No deals in trending'),
                 );
               } else {
                 return ListView.builder(
-                  // itemCount: snapshot.data!.data!.length >= 7
-                  //     ? 7
-                  //     : snapshot.data!.data!.length,
                   itemCount: snapshot.data!.data!.length,
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   itemBuilder: ((context, index) {
-                    return isForSponsored == false
-                        ? all_details(
-                            dealId: snapshot.data!.data![index],
-                            token: widget.token,
-                          )
-                        : snapshot.data!.data![index].isSponsored == 1
-                            ? all_details(
-                                dealId: snapshot.data!.data![index],
-                                token: widget.token,
-                              )
-                            : const SizedBox();
+                    return all_details(
+                      dealId: snapshot.data!.data![index],
+                      token: widget.token,
+                    );
+                    // return isForSponsored == false
+                    //     ? all_details(
+                    //         dealId: snapshot.data!.data![index],
+                    //         token: widget.token,
+                    //       )
+                    //     : snapshot.data!.data![index].isSponsored == 1
+                    //         ? all_details(
+                    //             dealId: snapshot.data!.data![index],
+                    //             token: widget.token,
+                    //           )
+                    //         : const SizedBox();
                   }),
                 );
               }
@@ -258,7 +272,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                             fontFamily: 'Mulish',
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFFff6600)),
+                            color: AppColors.APP_PRIMARY_COLOR),
                         overflow: TextOverflow.ellipsis,
                       ),
                       items: items!.value
@@ -270,25 +284,30 @@ class _Full_menu_userState extends State<Full_menu_user> {
                                       fontFamily: 'Mulish',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFFff6600)),
+                                      color: AppColors.APP_PRIMARY_COLOR),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ))
                           .toList(),
-                      value: selectedValue,
+                      value: city,
                       onChanged: (value) {
                         setState(() {
-                          selectedValue = value as String;
-                          city = value;
+                          city = value as String?;
                         });
-                        for (var i in dealProvider!.userCitiesData.data!) {
-                          if (i.cityName == city) {
-                            cityCode = i.cityId.toString();
-                            log('matched');
-                          } else {
-                            log('no match found');
-                          }
-                        }
+                        cityCode = dealProvider!.userCitiesData.data!
+                            .firstWhere((element) => element.cityName == city)
+                            .cityId
+                            .toString();
+                        AppHelper.setPref('cityId', cityCode);
+                        AppHelper.setPref('city', city);
+                        // for (var i in dealProvider!.userCitiesData.data!) {
+                        //   if (i.cityName == city) {
+                        //     cityCode = i.cityId.toString();
+                        //     log('matched');
+                        //   } else {
+                        //     log('no match found');
+                        //   }
+                        // }
                       },
                       underline: const SizedBox(),
                       buttonHeight: 30,

@@ -1,5 +1,6 @@
 import 'package:SiBuy/user_app/user_menu/demi_deals.dart';
 import 'package:flutter/material.dart';
+import '../../constant/color_constant.dart';
 
 class All_offer extends StatelessWidget {
   const All_offer({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class All_offer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFff6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
         title: const Text('All Offers'),
       ),
       body: Padding(

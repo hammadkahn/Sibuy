@@ -4,6 +4,9 @@ import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/user_app/user_menu/my_qrs_cont.dart';
 import 'package:provider/provider.dart';
 
+import '../../constant/color_constant.dart';
+import '../../shared/loader.dart';
+
 class My_Qrs extends StatefulWidget {
   const My_Qrs({Key? key, required this.token}) : super(key: key);
   final String token;
@@ -25,83 +28,28 @@ class _My_QrsState extends State<My_Qrs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFF6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
         title: const Text('My Purchased Deals'),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(right: 24, left: 24),
+        padding: const EdgeInsets.all(25),
         child: Column(
           children: [
-            SizedBox(
-              height: 20,
-            ),
-            //row with 3 small contianers
             Row(
               children: [
                 //container with small button
-                Container(
-                  height: MediaQuery.of(context).size.height * 40 / 812,
-                  width: MediaQuery.of(context).size.width * 60 / 375,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFff6600),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'All',
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
+                getFilterBox('All'),
                 const SizedBox(
                   width: 8,
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 40 / 812,
-                  width: MediaQuery.of(context).size.width * 60 / 375,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFff6600),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Used',
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
+                getFilterBox('Used'),
                 const SizedBox(
                   width: 8,
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 40 / 812,
-                  width: MediaQuery.of(context).size.width * 60 / 375,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFff6600),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Unused',
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                  ),
-                )
+                getFilterBox('Unused'),
               ],
             ),
-
+            const SizedBox(height: 15),
             Expanded(
               flex: 6,
               child: FutureBuilder<CartListModel>(
@@ -109,9 +57,7 @@ class _My_QrsState extends State<My_Qrs> {
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return Loader();
                     default:
                       if (snapshot.hasError) {
                         return Center(
@@ -124,8 +70,11 @@ class _My_QrsState extends State<My_Qrs> {
                             child: Text('no data found'),
                           );
                         } else {
-                          return ListView.builder(
+                          return ListView.separated(
                             itemCount: provider!.cartData.length,
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(height: 15);
+                            },
                             itemBuilder: (context, index) {
                               if (provider!
                                       .cartData[index].availabilityStatus ==
@@ -147,6 +96,32 @@ class _My_QrsState extends State<My_Qrs> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget getFilterBox(String text){
+    return GestureDetector(
+      onTap: (){
+
+      },
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.045,
+        width: MediaQuery.of(context).size.width * 0.15,
+        decoration: BoxDecoration(
+          color: AppColors.APP_PRIMARY_COLOR,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: const TextStyle(
+                fontFamily: 'Mulish',
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: Colors.white),
+          ),
         ),
       ),
     );

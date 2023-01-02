@@ -53,4 +53,6 @@ class ApiUrls {
 
   //category urls
   static final getAllCat = Uri.parse('${baseUrl}categoryAutoComplete');
+
+  static final getAllRef = Uri.parse('${baseUrl}user/getReferralUsers');
 }

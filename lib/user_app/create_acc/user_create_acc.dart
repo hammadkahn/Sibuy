@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:SiBuy/constant/color_constant.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,8 @@ import 'package:SiBuy/shared/custom_button.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
+import '../../constant/app_styles.dart';
+import '../../shared/loader.dart';
 import '../verify _code/user_verification.dart';
 
 class User_create_acc extends StatefulWidget {
@@ -41,6 +44,7 @@ class _User_create_accState extends State<User_create_acc> {
     'Female',
     'Other',
   ];
+  bool _obscureText = true;
   String? selectedCountry;
   String? languageId;
   @override
@@ -144,7 +148,7 @@ class _User_create_accState extends State<User_create_acc> {
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      hintText: 'Phone Number',
+                      hintText: 'Phone Number (With country code)',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -155,21 +159,14 @@ class _User_create_accState extends State<User_create_acc> {
                   ),
                 ),
                 Container(
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(
-                        color: Color(0xFFEAEAEF),
-                        width: 2.0,
-                      ),
-                    ),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey, width: 0.5),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.all(8.0),
                     child: DropdownButton(
-                      dropdownColor: Color(0xFFff6600),
-
-                      elevation: 3,
+                      dropdownColor: AppColors.APP_PRIMARY_COLOR,
                       underline: Container(),
                       isExpanded: true,
                       // Initial Value
@@ -182,10 +179,7 @@ class _User_create_accState extends State<User_create_acc> {
                       items: items.map((String items) {
                         return DropdownMenuItem(
                           value: items,
-                          child: Text(
-                            items,
-                            style: TextStyle(color: Colors.black),
-                          ),
+                          child: Text(items),
                         );
                       }).toList(),
                       // After selecting the desired option,it will
@@ -223,6 +217,7 @@ class _User_create_accState extends State<User_create_acc> {
                           initialDate: DateTime.now(),
                           firstDate: DateTime(1970),
                           lastDate: DateTime(2030));
+
                       if (pickdate != null) {
                         setState(() {
                           dobCtr.text =
@@ -238,14 +233,23 @@ class _User_create_accState extends State<User_create_acc> {
                     textInputAction: TextInputAction.next,
                     controller: passCtr,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      hintText: 'Password',
-                      // suffix: Icon(Icons.visibility)
-                    ),
-                    obscureText: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        hintText: 'Password',
+                        suffix: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                          child: Icon(_obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        )),
+                    obscureText: _obscureText,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please a strong password';
@@ -254,20 +258,30 @@ class _User_create_accState extends State<User_create_acc> {
                     },
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.only(bottom: 26),
                   child: TextFormField(
                     textInputAction: TextInputAction.next,
                     controller: passCtr,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      hintText: ' Confirm Password',
-                      // suffix: Icon(Icons.visibility)
-                    ),
-                    obscureText: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Color(0xFFEAEAEF)),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        hintText: ' Confirm Password',
+                        suffix: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                          child: Icon(_obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        )),
+                    obscureText: _obscureText,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please a strong password';
@@ -294,6 +308,7 @@ class _User_create_accState extends State<User_create_acc> {
                                 ),
                               )
                             : showModalBottomSheet(
+                                backgroundColor: AppColors.APP_PRIMARY_COLOR,
                                 isScrollControlled: true,
                                 context: context,
                                 builder: (context) => SizedBox(
@@ -322,8 +337,23 @@ class _User_create_accState extends State<User_create_acc> {
                                         child: Container(
                                           margin: const EdgeInsets.fromLTRB(
                                               15, 12, 15, 8),
-                                          child: Text(_provider!
-                                              .allCountries.data![index].name!),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                _provider!.allCountries
+                                                    .data![index].name!,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const Divider(
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       );
                                     }),
@@ -365,6 +395,7 @@ class _User_create_accState extends State<User_create_acc> {
                             ),
                           )
                         : showModalBottomSheet(
+                            backgroundColor: AppColors.APP_PRIMARY_COLOR,
                             isScrollControlled: true,
                             context: context,
                             builder: (context) => SizedBox(
@@ -388,8 +419,22 @@ class _User_create_accState extends State<User_create_acc> {
                                         child: Container(
                                           margin: const EdgeInsets.fromLTRB(
                                               15, 12, 15, 8),
-                                          child: Text(_provider!
-                                              .allCities.data![index].name!),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                _provider!.allCities
+                                                    .data![index].name!,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const Divider(
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       );
                                     }),
@@ -432,78 +477,60 @@ class _User_create_accState extends State<User_create_acc> {
                     valueListenable: isLoaded,
                     builder: (BuildContext context, bool value, Widget? child) {
                       return isLoaded.value == false
-                          ? const CircularProgressIndicator()
-                          : Container(
-                              decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(
-                                    color: Color(0xFFEAEAEF),
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: DropdownButton<String>(
-                                  dropdownColor: Color(0xFFff6600),
+                          ? Loader()
+                          : DropdownButton<String>(
+                              dropdownColor: AppColors.APP_PRIMARY_COLOR,
+                              isExpanded: true,
+                              // Initial Value
+                              value: langDropdownvaluee,
 
-                                  elevation: 3,
-                                  underline: Container(),
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
 
-                                  isExpanded: true,
-                                  // Initial Value
-                                  value: langDropdownvaluee,
-
-                                  // Down Arrow Icon
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-
-                                  // Array list of items
-                                  items: _provider!.languages
-                                      .map<DropdownMenuItem<String>>(
-                                          (String items) {
-                                    return DropdownMenuItem<String>(
-                                      value: items,
-                                      child: Text(items),
-                                      onTap: () {
-                                        for (int i = 0;
-                                            i <
-                                                _provider!.languageData['data']
-                                                    .length;
-                                            i++) {
-                                          if (items ==
-                                              _provider!.languageData['data'][i]
-                                                  ['name']) {
-                                            languageId = _provider!
-                                                .languageData['data'][i]['id']
-                                                .toString();
-                                            break;
-                                          }
-                                        }
-                                        print(languageId);
-                                      },
-                                    );
-                                  }).toList(),
-                                  // After selecting the desired option,it will
-                                  // change button value to selected value
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      langDropdownvaluee = newValue!;
-                                    });
+                              // Array list of items
+                              items: _provider!.languages
+                                  .map<DropdownMenuItem<String>>(
+                                      (String items) {
+                                return DropdownMenuItem<String>(
+                                  value: items,
+                                  child: Text(items),
+                                  onTap: () {
+                                    for (int i = 0;
+                                        i <
+                                            _provider!
+                                                .languageData['data'].length;
+                                        i++) {
+                                      if (items ==
+                                          _provider!.languageData['data'][i]
+                                              ['name']) {
+                                        languageId = _provider!
+                                            .languageData['data'][i]['id']
+                                            .toString();
+                                        break;
+                                      }
+                                    }
+                                    print(languageId);
                                   },
-                                ),
-                              ),
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  langDropdownvaluee = newValue!;
+                                });
+                              },
                             );
                     },
                   ),
                 ),
-                SizedBox(height: 15),
+                Insets.gapH10,
                 CustomButton(
                   isLoading: isLoading,
                   text: 'Next',
                   onPressed: _handleRegister,
                 ),
-                SizedBox(height: 15),
+                Insets.gapH10,
               ],
             ),
           ),

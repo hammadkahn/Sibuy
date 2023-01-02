@@ -5,6 +5,7 @@ import 'package:SiBuy/user_app/user_menu/wishlist.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/wish_list_model.dart';
+import '../../shared/loader.dart';
 
 class Fav_user extends StatefulWidget {
   const Fav_user({Key? key, required this.token}) : super(key: key);
@@ -77,59 +78,79 @@ class _Fav_userState extends State<Fav_user> {
                         return FutureBuilder<WishListModel>(
                           future: value.getWishList(widget.token),
                           builder: ((context, snapshot) {
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.waiting:
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              default:
-                                if (snapshot.hasError) {
-                                  return Column(
-                                    children: [
-                                      const Icon(
-                                        Icons.error_outline,
-                                        color: Colors.red,
-                                        size: 60,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 16),
-                                        child: Text('Error: ${snapshot.error}'),
-                                      )
-                                    ],
-                                  );
-                                } else {
-                                  var data = snapshot.data!.data!;
-                                  return ListView.builder(
-                                    itemCount: data.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: ((context, index) {
-                                      return Dismissible(
-                                        key: Key(data[index].id.toString()),
-                                        onDismissed: (direction) {
-                                          value
-                                              .removeFromWishList(
-                                                  data[index]
-                                                      .wishlistId
-                                                      .toString(),
-                                                  widget.token)
-                                              .whenComplete(() =>
-                                                  showSnackBar(value.msg));
-                                        },
-                                        direction: DismissDirection.endToStart,
-                                        background: Container(
+                            if (snapshot.hasData) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.waiting:
+                                  return Loader();
+                                default:
+                                  if (snapshot.hasError) {
+                                    return Column(
+                                      children: [
+                                        const Icon(
+                                          Icons.error_outline,
                                           color: Colors.red,
-                                          child: const Icon(
-                                            Icons.delete,
-                                            color: Colors.white,
-                                          ),
+                                          size: 60,
                                         ),
-                                        child: Wishlist(
-                                            wishData: data[index],
-                                            token: widget.token),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 16),
+                                          child:
+                                              Text('Error: ${snapshot.error}'),
+                                        )
+                                      ],
+                                    );
+                                  } else {
+                                    var data = snapshot.data!.data!;
+                                    print(data.length);
+                                    if (data.length == 0) {
+                                      return Center(
+                                          child: Text(
+                                        'Nothing in WishList',
+                                        style: TextStyle(
+                                          fontFamily: 'Mulish',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFF32324D),
+                                        ),
+                                      ));
+                                    } else {
+                                      return ListView.builder(
+                                        itemCount: data.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: ((context, index) {
+                                          return Dismissible(
+                                            key: Key(data[index].id.toString()),
+                                            onDismissed: (direction) {
+                                              value
+                                                  .removeFromWishList(
+                                                      data[index]
+                                                          .wishlistId
+                                                          .toString(),
+                                                      widget.token)
+                                                  .whenComplete(() =>
+                                                      showSnackBar(value.msg));
+                                            },
+                                            direction:
+                                                DismissDirection.endToStart,
+                                            background: Container(
+                                              color: Colors.red,
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            child: Wishlist(
+                                                wishData: data[index],
+                                                token: widget.token),
+                                          );
+                                        }),
                                       );
-                                    }),
-                                  );
-                                }
-                            } //test
+                                    }
+                                  }
+                              }
+                            } else {
+                              return Center(child: Loader());
+                            }
                           }),
                         );
                       }),

@@ -12,8 +12,10 @@ import 'package:SiBuy/models/wish_list_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../apis/api_urls.dart';
+import '../constant/helper.dart';
 import '../models/category_model.dart';
 import '../models/deal_model.dart';
+import '../models/referral_model.dart';
 import '../models/user_model.dart';
 import '../services/user_merchant_services.dart';
 
@@ -142,6 +144,7 @@ class DealProvider with ChangeNotifier {
 
   Future<void> wishList(String token, Map<String, dynamic> data) async {
     //ApiUrls.addToWishList
+    print(token);
     await tryCatch(
       token,
       ApiUrls.addToWishList,
@@ -158,6 +161,24 @@ class DealProvider with ChangeNotifier {
       final result = WishListModel.fromJson(jsonDecode(response.body));
       if (response.statusCode == 200) {
         return result;
+      } else {
+        throw Exception(result.message);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> getReferral(String token) async {
+    try {
+      final response = await http.get(
+        ApiUrls.getAllRef,
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+      );
+      final result = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        _referrals = ReferralModel.fromJson(result['data']);
+        notifyListeners();
       } else {
         throw Exception(result.message);
       }
@@ -229,8 +250,7 @@ class DealProvider with ChangeNotifier {
       } else {
         _msg = result['message'];
         debugPrint(response.reasonPhrase);
-
-        throw Exception(response.statusCode);
+        // throw Exception(response.statusCode);
       }
     } catch (e) {
       throw Exception(e);
@@ -457,6 +477,9 @@ class DealProvider with ChangeNotifier {
   CountryModel? _allCountries;
   CountryModel get allCountries => _allCountries!;
 
+  ReferralModel? _referrals;
+  ReferralModel? get referrals => _referrals;
+
   Future<void> getAllCountries() async {
     final result = await http.get(Uri.parse('${ApiUrls.baseUrl}getCountries'));
     final responseData = CountryModel.fromJson(jsonDecode(result.body));
@@ -536,13 +559,35 @@ class DealProvider with ChangeNotifier {
   //list of deals category wise
   Future<UserDealListModel> cityWiseDealsList(
       {String? languageId, String? cityCode}) async {
-    log('$cityCode');
     try {
       final response = await http.get(
         Uri.parse(
-            '${ApiUrls.baseUrl}user/getDeals?returnType=customPagination&timeSort=asc&language_id=${languageId ?? 1}&city[0]=${cityCode ?? 64967}'),
+            '${ApiUrls.baseUrl}user/getDeals?returnType=customPagination&timeSort=asc&language_id=${languageId ?? 1}&city[0]=$cityCode'),
         // headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}
       );
+      final result = UserDealListModel.fromJson(jsonDecode(response.body));
+      if (response.statusCode == 200) {
+        debugPrint(result.message);
+        return result;
+      } else {
+        debugPrint(response.reasonPhrase);
+        throw Exception(response.statusCode);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<UserDealListModel> categoryWiseDealsList(int? categoryId, {String? languageId}) async {
+    var cityCode = await AppHelper.getPref('cityId');
+    print('$cityCode');
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '${ApiUrls.baseUrl}user/getDeals?returnType=customPagination&timeSort=asc&language_id=${languageId ?? 1}&city[0]=$cityCode&category[0]=$categoryId'),
+        // headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}
+      );
+      print(response.body);
       final result = UserDealListModel.fromJson(jsonDecode(response.body));
       if (response.statusCode == 200) {
         debugPrint(result.message);

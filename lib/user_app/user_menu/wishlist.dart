@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:provider/provider.dart';
-
+import '../../constant/app_styles.dart';
+import '../../constant/color_constant.dart';
 import '../../apis/api_urls.dart';
 import '../../constant/size_constants.dart';
 import '../../models/wish_list_model.dart';
@@ -150,7 +151,7 @@ class _WishlistState extends State<Wishlist> {
                               fontFamily: 'Mulish',
                               fontSize: 9,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFFff6600)),
+                              color: AppColors.APP_PRIMARY_COLOR),
                         ),
                         Text(
                           Provider.of<DealProvider>(context).calculateDiscount(
@@ -161,7 +162,7 @@ class _WishlistState extends State<Wishlist> {
                               fontFamily: 'Mulish',
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xFFff6600)),
+                              color: AppColors.APP_PRIMARY_COLOR),
                         ),
                         Container(
                           width: 28,
@@ -177,13 +178,13 @@ class _WishlistState extends State<Wishlist> {
                                   fontSize: 5,
                                   fontFamily: 'Mulish',
                                   fontWeight: FontWeight.w900,
-                                  color: Color(0xFFff6600)),
+                                  color: AppColors.APP_PRIMARY_COLOR),
                             ),
                           ),
                         ),
                       ],
                     )),
-                const SizedBox(height: 10),
+                Insets.gapH10,
                 CustomButton(
                     padding: true,
                     text: 'Add to Cart ➔',

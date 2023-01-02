@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:SiBuy/user_app/user_menu/my_qrs.dart';
 
+import '../../constant/color_constant.dart';
+
 class stats3 extends StatelessWidget {
   const stats3({Key? key, required this.token, required this.productName})
       : super(key: key);
@@ -38,7 +40,7 @@ class stats3 extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                         fontFamily: 'Mulish',
-                        color: Color(0xFFff6600))),
+                        color: AppColors.APP_PRIMARY_COLOR)),
                 const Text(
                   'is Successfuly added in SiBuy365',
                   style: TextStyle(

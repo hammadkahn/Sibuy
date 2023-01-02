@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../constant/color_constant.dart';
 import '../../models/user_model.dart';
 
 class bottom_detail extends StatelessWidget {
@@ -67,7 +67,7 @@ class bottom_detail extends StatelessWidget {
           //       ],
           //     )),
           Padding(
-              padding: const EdgeInsets.only(top: 4),
+              padding: const EdgeInsets.only(top: 4, bottom: 4),
               child: Row(
                 children: [
                   Image.asset('assets/images/rating.png', width: 6, height: 6),
@@ -91,8 +91,27 @@ class bottom_detail extends StatelessWidget {
                   ),
                 ],
               )),
+          Text(
+            'Category : Deal',
+            style: TextStyle(
+                fontFamily: 'Mulish',
+                fontSize: 9,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF8E8EA9)),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            'Location : Combodia',
+            style: TextStyle(
+                fontFamily: 'Mulish',
+                fontSize: 9,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF8E8EA9)),
+          ),
           Padding(
-              padding: const EdgeInsets.only(top: 2.83),
+              padding: const EdgeInsets.only(top: 2.83, right: 5),
               child: Row(
                 children: [
                   const Text(
@@ -112,13 +131,16 @@ class bottom_detail extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         color: Color(0xFFFF6767)),
                   ),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   const Text(
                     '\$',
                     style: TextStyle(
                         fontFamily: 'Mulish',
                         fontSize: 9,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFFff6600)),
+                        color: AppColors.APP_PRIMARY_COLOR),
                   ),
                   Text(
                     price ?? '0',
@@ -126,7 +148,10 @@ class bottom_detail extends StatelessWidget {
                         fontFamily: 'Mulish',
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
-                        color: Color(0xFFff6600)),
+                        color: AppColors.APP_PRIMARY_COLOR),
+                  ),
+                  SizedBox(
+                    width: 10,
                   ),
                   Container(
                     decoration: const BoxDecoration(
@@ -139,7 +164,7 @@ class bottom_detail extends StatelessWidget {
                             fontSize: 10,
                             fontFamily: 'Mulish',
                             fontWeight: FontWeight.w900,
-                            color: Color(0xFFff6600)),
+                            color: AppColors.APP_PRIMARY_COLOR),
                       ),
                     ),
                   )

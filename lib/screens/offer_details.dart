@@ -3,6 +3,7 @@ import 'package:SiBuy/models/deal_model.dart';
 import 'package:provider/provider.dart';
 
 import '../apis/api_urls.dart';
+import '../constant/color_constant.dart';
 import '../providers/deal_provider.dart';
 
 class OfferDetails extends StatefulWidget {
@@ -33,7 +34,7 @@ class _OfferDetailsState extends State<OfferDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.data.name ?? 'Details'),
-        backgroundColor: const Color(0xFFff6600),
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 10),
@@ -58,6 +59,7 @@ class _OfferDetailsState extends State<OfferDetails> {
                           width: MediaQuery.of(context).size.width,
                         ),
             ),
+            const SizedBox(height: 12),
             Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: ListTile(
@@ -110,91 +112,69 @@ class _OfferDetailsState extends State<OfferDetails> {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Divider(
-                        color: Colors.grey,
-                        thickness: 2.0,
-                        indent: 10.0,
-                        endIndent: 10.0,
-                      ),
                     ],
                   ),
                 )),
-            Container(
-              color: Color(0xFFE0E0E0), // light grey color
-
-              child: ListTile(
-                title: Row(
-                  children: [
-                    const Text(
-                      '\$',
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 9,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFFFF6767)),
-                    ),
-                    Text(
-                      '${widget.data.price ?? 0}',
-                      style: const TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          fontFamily: 'Mulish',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFFFF6767)),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    const Text(
-                      '\$',
-                      style: TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 9,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF0D9BFF)),
-                    ),
-                    Text(
-                      Provider.of<DealProvider>(context, listen: false)
-                          .calculateDiscount(
-                              widget.data.discountOnPrice!.toString(),
-                              widget.data.price!.toStringAsFixed(0)),
-                      style: const TextStyle(
-                          fontFamily: 'Mulish',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF0D9BFF)),
-                    ),
-                    Container(
-                      width: 28,
-                      height: 11,
-                      margin: const EdgeInsets.only(left: 12),
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(3))),
-                      child: Center(
-                        child: Text(
-                          '${widget.data.discountOnPrice ?? 0}% OFF',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 9,
-                              fontFamily: 'Mulish',
-                              fontWeight: FontWeight.w900,
-                              color: Color(0xFF0D9BFF)),
-                        ),
+            ListTile(
+              title: Row(
+                children: [
+                  const Text(
+                    '\$',
+                    style: TextStyle(
+                        fontFamily: 'Mulish',
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFFFF6767)),
+                  ),
+                  Text(
+                    '${widget.data.price ?? 0}',
+                    style: const TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        fontFamily: 'Mulish',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFFFF6767)),
+                  ),
+                  const Text(
+                    '\$',
+                    style: TextStyle(
+                        fontFamily: 'Mulish',
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF0D9BFF)),
+                  ),
+                  Text(
+                    Provider.of<DealProvider>(context, listen: false)
+                        .calculateDiscount(
+                            widget.data.discountOnPrice!.toString(),
+                            widget.data.price!.toStringAsFixed(0)),
+                    style: const TextStyle(
+                        fontFamily: 'Mulish',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF0D9BFF)),
+                  ),
+                  Container(
+                    width: 28,
+                    height: 11,
+                    margin: const EdgeInsets.only(left: 12),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(3))),
+                    child: Center(
+                      child: Text(
+                        '${widget.data.discountOnPrice ?? 0}% OFF',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 9,
+                            fontFamily: 'Mulish',
+                            fontWeight: FontWeight.w900,
+                            color: Color(0xFF0D9BFF)),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
-            ),
-            Divider(
-              color: Colors.grey,
-              thickness: 2.0,
-              indent: 10.0,
-              endIndent: 10.0,
             ),
             ListTile(
               title: const Text(
@@ -213,90 +193,78 @@ class _OfferDetailsState extends State<OfferDetails> {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(right: 50, left: 10, top: 10, bottom: 10),
-              // add padding on all sides
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: Colors.white,
-                border: Border.all(
-                  color: Colors.grey, // grey border
-                  width: 2, // border width of 2
-                ),
-              ),
-              child: ListTile(
-                  title: const Text(
-                    'Deal Reports',
-                    style: TextStyle(
-                      fontFamily: 'Mulish',
-                      fontWeight: FontWeight.w700,
-                    ),
+            ListTile(
+                title: const Text(
+                  'Deal Reports',
+                  style: TextStyle(
+                    fontFamily: 'Mulish',
+                    fontWeight: FontWeight.w700,
                   ),
-                  subtitle: Column(
-                    children: [
-                      Row(
-                        children: [
-                          const Text(
-                            'Total Sales: ',
-                            style: TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400,
-                            ),
+                ),
+                subtitle: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          'Total Sales: ',
+                          style: TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 11,
+                            fontWeight: FontWeight.w400,
                           ),
-                          Text(
-                            '${widget.data.totalPurchase ?? '0'}',
-                            style: const TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        ),
+                        Text(
+                          '${widget.data.totalPurchase ?? '0'}',
+                          style: const TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 11,
+                            fontWeight: FontWeight.w400,
                           ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            'Total Reviews: ',
-                            style: TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          'Total Reviews: ',
+                          style: TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 11,
+                            fontWeight: FontWeight.w400,
                           ),
-                          Text(
-                            '${widget.data.reviewAndCount ?? '0'}',
-                            style: const TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        ),
+                        Text(
+                          '${widget.data.reviewAndCount ?? '0'}',
+                          style: const TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 11,
+                            fontWeight: FontWeight.w400,
                           ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            'Total Redeem: ',
-                            style: TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          'Total Redeem: ',
+                          style: TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 11,
+                            fontWeight: FontWeight.w400,
                           ),
-                          Text(
-                            '${widget.data.totalRadeem ?? '0'}',
-                            style: const TextStyle(
-                              fontFamily: 'Mulish',
-                              fontSize: 11,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        ),
+                        Text(
+                          '${widget.data.totalRadeem ?? '0'}',
+                          style: const TextStyle(
+                            fontFamily: 'Mulish',
+                            fontSize: 11,
+                            fontWeight: FontWeight.w400,
                           ),
-                        ],
-                      )
-                    ],
-                  )),
-            ),
+                        ),
+                      ],
+                    )
+                  ],
+                )),
           ],
         ),
       ),
