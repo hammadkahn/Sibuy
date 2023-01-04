@@ -97,31 +97,31 @@ class _MyProfileState extends State<MyProfile> {
           const SizedBox(
             height: 20,
           ),
-          const Text("Phone Number",
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
-          const SizedBox(
-            height: 5,
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 300 / 375,
-            child: TextFormField(
-              controller: phoneNumberCtr,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: widget.userData['phone_no'],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-            ),
-          ),
+          // const Text("Phone Number",
+          //     style: TextStyle(
+          //         fontSize: 16,
+          //         fontWeight: FontWeight.bold,
+          //         color: Colors.black)),
+          // const SizedBox(
+          //   height: 5,
+          // ),
+          // SizedBox(
+          //   width: MediaQuery.of(context).size.width * 300 / 375,
+          //   child: TextFormField(
+          //     controller: phoneNumberCtr,
+          //     keyboardType: TextInputType.number,
+          //     decoration: InputDecoration(
+          //       hintText: widget.userData['phone_no'],
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(20.0),
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
-          const SizedBox(
-            height: 20,
-          ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
 
           //dropdown for gender selection
 

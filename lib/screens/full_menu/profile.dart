@@ -123,16 +123,16 @@ class _ProfileState extends State<Profile> {
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          Text('${data.phone}',
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                  fontFamily: 'DMSans',
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.white)),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
+                                          // Text('${data.phone}',
+                                          //     textAlign: TextAlign.center,
+                                          //     style: const TextStyle(
+                                          //         fontFamily: 'DMSans',
+                                          //         fontSize: 12,
+                                          //         fontWeight: FontWeight.w500,
+                                          //         color: Colors.white)),
+                                          // const SizedBox(
+                                          //   height: 10,
+                                          // ),
                                           Text('${data.email}',
                                               textAlign: TextAlign.center,
                                               style: const TextStyle(
