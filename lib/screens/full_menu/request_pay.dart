@@ -1,4 +1,5 @@
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
+import 'package:SiBuy/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant/color_constant.dart';
@@ -49,8 +50,7 @@ class _Request_payState extends State<Request_pay> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         data!.value = snapshot.data!['data'];
-                        amountCtr.text =
-                            snapshot.data!['data']['totalBalance'].toString();
+                        amountCtr.text = snapshot.data!['data']['totalBalance'].toString();
                         return TextFormField(
                           controller: amountCtr,
                           readOnly: true,
@@ -106,16 +106,16 @@ class _Request_payState extends State<Request_pay> {
                   valueListenable: data!,
                   builder: (BuildContext context, Map<String, dynamic> value,
                       Widget? child) {
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColors.APP_PRIMARY_COLOR,
-                      ),
-                      onPressed: data!.value.isEmpty ||
-                              data!.value['deals'].isEmpty ||
-                              data!.value['totalBalance'] == 0
-                          ? null
-                          : _paymentWithdrawal,
-                      child: const Text('Submit'),
+                    return CustomButton(
+                      onPressed: (){
+                        if(data!.value != null || data!.value!.isEmpty ||
+                            data!.value!['deals'].isEmpty ||
+                            data!.value!['totalBalance'] == 0){
+                          return;
+                        }
+                        _paymentWithdrawal();
+                      },
+                      text: 'Submit',
                     );
                   },
                 ),

@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 
 class DealServices {
   Future<MerchantDealListModel> getAllDeals({required String token}) async {
+    print(token);
     final response = await http.get(
       ApiUrls.allDeals,
       headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},

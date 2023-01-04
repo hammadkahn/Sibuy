@@ -17,6 +17,7 @@ class My_Qrs extends StatefulWidget {
 
 class _My_QrsState extends State<My_Qrs> {
   DealProvider? provider;
+  String selectedFilter = 'All';
 
   @override
   void didChangeDependencies() {
@@ -42,11 +43,11 @@ class _My_QrsState extends State<My_Qrs> {
                 const SizedBox(
                   width: 8,
                 ),
-                getFilterBox('Used'),
+                getFilterBox('Available'),
                 const SizedBox(
                   width: 8,
                 ),
-                getFilterBox('Unused'),
+                getFilterBox('Expired'),
               ],
             ),
             const SizedBox(height: 15),
@@ -76,15 +77,21 @@ class _My_QrsState extends State<My_Qrs> {
                               return const SizedBox(height: 15);
                             },
                             itemBuilder: (context, index) {
-                              if (provider!
-                                      .cartData[index].availabilityStatus ==
-                                  "Available") {
+                              if(selectedFilter == "All"){
                                 return qr_cont(
                                   key: Key(snapshot.data!.data![index].name!),
                                   cartData: provider!.cartData[index],
                                   token: widget.token,
                                 );
-                              } else {
+                              }
+                              else if (provider!.cartData[index].availabilityStatus == selectedFilter) {
+                                return qr_cont(
+                                  key: Key(snapshot.data!.data![index].name!),
+                                  cartData: provider!.cartData[index],
+                                  token: widget.token,
+                                );
+                              }
+                              else{
                                 return const SizedBox();
                               }
                             },
@@ -104,23 +111,25 @@ class _My_QrsState extends State<My_Qrs> {
   Widget getFilterBox(String text){
     return GestureDetector(
       onTap: (){
-
+        selectedFilter = text;
+        setState(() { });
       },
       child: Container(
         height: MediaQuery.of(context).size.height * 0.045,
-        width: MediaQuery.of(context).size.width * 0.15,
+        width: MediaQuery.of(context).size.width * 0.2,
         decoration: BoxDecoration(
-          color: AppColors.APP_PRIMARY_COLOR,
+          color: selectedFilter == text ? AppColors.APP_PRIMARY_COLOR : Colors.white,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(
           child: Text(
             text,
-            style: const TextStyle(
+            style: TextStyle(
                 fontFamily: 'Mulish',
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: Colors.white),
+                color: selectedFilter == text ? Colors.white : AppColors.APP_PRIMARY_COLOR
+            ),
           ),
         ),
       ),

@@ -226,7 +226,7 @@ class _ProfileState extends State<Profile> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const All_offer()));
+                          builder: (context) => All_offer(token: widget.token)));
                       // branches().whenComplete(() =>
                       //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       //         content: Text(

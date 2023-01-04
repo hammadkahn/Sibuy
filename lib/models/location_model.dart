@@ -2,8 +2,10 @@ class LocationModel {
   int? id;
   int? userId;
   String? address;
-  String? country;
-  String? city;
+  String? cityName;
+  String? countryName;
+  String? countryId;
+  String? cityId;
   double? lat;
   double? long;
   String? createdAt;
@@ -13,8 +15,10 @@ class LocationModel {
       {this.id,
       this.userId,
       this.address,
-      this.country,
-      this.city,
+      this.countryName,
+      this.cityName,
+      this.countryId,
+      this.cityId,
       this.lat,
       this.long,
       this.createdAt,
@@ -24,8 +28,10 @@ class LocationModel {
     id = json['id'];
     userId = json['user_id'];
     address = json['address'];
-    country = json['country'];
-    city = json['city'];
+    countryName = json['countryName'];
+    countryId = json['countryId'].toString();
+    cityId = json['cityId'].toString();
+    cityName = json['cityName'];
     lat = json['lat'];
     long = json['long'];
     createdAt = json['created_at'];
@@ -37,8 +43,10 @@ class LocationModel {
     data['id'] = id;
     data['user_id'] = userId;
     data['address'] = address;
-    data['country'] = country;
-    data['city'] = city;
+    data['cityName'] = cityName;
+    data['countryName'] = countryName;
+    data['cityId'] = cityId;
+    data['countryId'] = countryId;
     data['lat'] = lat;
     data['long'] = long;
     data['created_at'] = createdAt;

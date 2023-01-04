@@ -4,6 +4,7 @@ import 'package:SiBuy/screens/full_menu/sheet_deals.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
 
 import '../constant/color_constant.dart';
+import '../shared/loader.dart';
 import '../user_app/user_menu/demi_deals.dart';
 import 'full_menu/deals.dart';
 
@@ -25,9 +26,7 @@ class ActiveMerchantDeals extends StatelessWidget {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                );
+                return Loader();
               default:
                 if (snapshot.hasError) {
                   return Center(

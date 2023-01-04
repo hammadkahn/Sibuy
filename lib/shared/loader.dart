@@ -3,12 +3,13 @@ import '../../constant/color_constant.dart';
 
 class Loader extends StatelessWidget {
   Color? color;
-  Loader({Key? key, this.color}) : super(key: key);
+  bool allowPadding;
+  Loader({Key? key, this.color, this.allowPadding = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: allowPadding ? const EdgeInsets.all(10.0) : const EdgeInsets.all(0.0),
       child: Center(
         child: CircularProgressIndicator(color: color??AppColors.APP_PRIMARY_COLOR),
       ),

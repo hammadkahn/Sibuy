@@ -106,61 +106,58 @@ class Menu extends StatelessWidget {
                     },
                   ),
                 ),
-                SizedBox(
-                  // height: MediaQuery.of(context).size.height / 1,
-                  child: FutureBuilder<MerchantDealListModel>(
-                    future: DealServices().getAllDeals(token: token),
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return Loader();
-                        default:
-                          if (snapshot.hasError) {
-                            return Center(
-                              child: Text(snapshot.error.toString()),
-                            );
-                          } else if (snapshot.data!.data!.isEmpty) {
-                            return Column(
-                              children: const [
-                                SizedBox(
-                                  height: 50,
+                FutureBuilder<MerchantDealListModel>(
+                  future: DealServices().getAllDeals(token: token),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Loader();
+                      default:
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(snapshot.error.toString()),
+                          );
+                        } else if (snapshot.data!.data!.isEmpty) {
+                          return Column(
+                            children: const [
+                              SizedBox(
+                                height: 50,
+                              ),
+                            ],
+                          );
+                          // const Center(
+                          //     child: Text('No deals available'));
+                        } else {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.data!.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              var data = snapshot.data!.data![index];
+                              return InkWell(
+                                onTap: () {
+                                  print(data.id);
+                                  // showModalBottomSheet(
+                                  //     isScrollControlled: true,
+                                  //     context: context,
+                                  //     builder: (context) => sheet_deals(
+                                  //           dealId: data.id.toString(),
+                                  //           token: token,
+                                  //         ));
+                                },
+                                child: Demo_Deals(
+                                  token: token,
+                                  data: data,
                                 ),
-                              ],
-                            );
-                            // const Center(
-                            //     child: Text('No deals available'));
-                          } else {
-                            return ListView.builder(
-                              itemCount: snapshot.data!.data!.length,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                var data = snapshot.data!.data![index];
-                                return InkWell(
-                                  onTap: () {
-                                    print(data.id);
-                                    // showModalBottomSheet(
-                                    //     isScrollControlled: true,
-                                    //     context: context,
-                                    //     builder: (context) => sheet_deals(
-                                    //           dealId: data.id.toString(),
-                                    //           token: token,
-                                    //         ));
-                                  },
-                                  child: Demo_Deals(
-                                    token: token,
-                                    data: data,
-                                  ),
-                                );
-                              },
-                            );
-                          }
-                      }
-                    },
-                  ),
+                              );
+                            },
+                          );
+                        }
+                    }
+                  },
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 20 / 812,
+                  height: MediaQuery.of(context).size.height * 0.05,
                 )
               ],
             ),

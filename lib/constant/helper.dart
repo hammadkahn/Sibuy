@@ -11,4 +11,9 @@ class AppHelper {
     var pref = await SharedPreferences.getInstance();
     return pref.getString(key);
   }
+
+  static removePref(key) async {
+    var pref = await SharedPreferences.getInstance();
+    return pref.remove(key);
+  }
 }

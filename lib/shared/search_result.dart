@@ -47,14 +47,23 @@ class SearchResult extends StatelessWidget {
                           borderRadius:
                           BorderRadius.all(Radius.circular(16))),
                       child: InkWell(
-                        onTap: () => showModalBottomSheet(
-                          // isScrollControlled: true,
+                        onTap: () {
+                          showModalBottomSheet(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(26))),
+                            isScrollControlled: true,
                             context: context,
-                            builder: (context) => Details_deals(
-                              context: context,
-                              dealId: data.id.toString(),
-                              token: token,
-                            )),
+                            builder: (ct) => Wrap(
+                              children: [
+                                Details_deals(
+                                  context: context,
+                                  dealId: data.id.toString(),
+                                  token: token,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                         child: Row(
                           children: [
                             Column(

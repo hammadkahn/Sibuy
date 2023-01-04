@@ -8,9 +8,17 @@ import 'package:SiBuy/user_app/categories/widget/categories_list.dart';
 import '../../shared/loader.dart';
 import 'widget/trending_deals.dart';
 
-class Categories_user extends StatelessWidget {
-  const Categories_user({Key? key, required this.token}) : super(key: key);
+class Categories_user extends StatefulWidget {
+  Categories_user({Key? key, required this.token}) : super(key: key);
   final String token;
+
+  @override
+  State<Categories_user> createState() => _Categories_userState();
+}
+
+class _Categories_userState extends State<Categories_user> {
+
+  int parentId = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +31,7 @@ class Categories_user extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 2),
               child: Location_bar_user(
-                token: token,
+                token: widget.token,
               ),
             ),
             const SizedBox(
@@ -41,7 +49,7 @@ class Categories_user extends StatelessWidget {
               child: SizedBox(
                 height: 131,
                 child: FutureBuilder<GetAllCategoriesModel>(
-                    future: CategoryServices().getAllCategories(token: token),
+                    future: CategoryServices().getAllCategories(token: widget.token),
                     builder: ((context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
@@ -57,24 +65,30 @@ class Categories_user extends StatelessWidget {
                             //   direction: Axis.horizontal,
                             //   categoryList: snapshot.data!.data!,
                             // );
+                            var list = getParents(snapshot.data!.data!);
+                            // parentId = list[0].id;
+                            // print(parentId);
                             return ListView.builder(
-                              itemCount: snapshot.data!.data!.length,
+                              itemCount: list.length,
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: ((context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => SingleCategory(
-                                            categoryData:
-                                            snapshot.data!.data![index],
-                                            token: token),
-                                      ),
-                                    );
+                                    // Navigator.of(context).push(
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => SingleCategory(
+                                    //         categoryData: list[index],
+                                    //         token: token),
+                                    //   ),
+                                    // );
+                                    setState((){
+                                      parentId = list[index].id;
+                                    });
+                                    print(parentId);
                                   },
                                   child: TrendingDealsWidget(
-                                    categoryData: snapshot.data!.data![index],
+                                    categoryData: list![index],
                                   ),
                                 );
                               }),
@@ -136,7 +150,7 @@ class Categories_user extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 child: FutureBuilder<GetAllCategoriesModel>(
-                  future: CategoryServices().getAllCategories(token: token),
+                  future: CategoryServices().getAllCategories(token: widget.token),
                   builder: ((context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
@@ -147,11 +161,12 @@ class Categories_user extends StatelessWidget {
                             child: Text(snapshot.error.toString()),
                           );
                         } else {
+                          var list = getChildren(snapshot.data!.data!, parentId);
                           return AllCategoriesWidget(
-                            token: token,
-                            length: snapshot.data!.data!.length,
+                            token: widget.token,
+                            length: list.length,
                             direction: Axis.vertical,
-                            categoryList: snapshot.data!.data!,
+                            categoryList: list,
                           );
                         }
                     }
@@ -165,5 +180,13 @@ class Categories_user extends StatelessWidget {
       )
       ),
     );
+  }
+
+  getParents(List<CategoryData> list){
+    return list.where((element) => element.parentId == 0).toList();
+  }
+
+  getChildren(List<CategoryData> list, parentId){
+    return list.where((element) => element.parentId == parentId).toList();
   }
 }

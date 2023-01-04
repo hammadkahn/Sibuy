@@ -238,12 +238,6 @@ class _Details_dealsState extends State<Details_deals> {
                                               : dealProvider!.dealModel.data!.images![0].path!);
                                       value.checkIsAddedToCart(context);
                                     } else {
-                                      // ScaffoldMessenger.of(context)
-                                      //     .showSnackBar(
-                                      //   const SnackBar(
-                                      //     content: Text('Deal is expired'),
-                                      //   ),
-                                      // );
                                       ToastUtil.showToast(
                                           context, 'Deal is expired');
                                     }
@@ -266,12 +260,12 @@ class _Details_dealsState extends State<Details_deals> {
                       log('snapshot : ${snapshot.data!.data!.isNotEmpty}');
 
                       String name = dealProvider!.dealModel.data!.name!;
+                      int id = dealProvider!.dealModel.data!.id!;
                       final list = snapshot.data!.data;
                       bool isPurchased = false;
 
                       for (int i = 0; i < list!.length; i++) {
-                        if (list[i].id == dealProvider!.dealData.id ||
-                            list[i].name == name) {
+                        if (list[i].id == id || list[i].name == name) {
                           isPurchased = true;
                           break;
                         }

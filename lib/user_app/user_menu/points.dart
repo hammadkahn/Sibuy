@@ -19,7 +19,7 @@ class Points extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Image.asset('assets/images/points.png', height: 200, width: 200),
+            Image.asset('assets/images/points.png', height: 100, width: 100),
             SizedBox(
               height: 20,
             ),
@@ -28,7 +28,7 @@ class Points extends StatelessWidget {
               'You Have 1857 Points',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 30,
+                fontSize: 26,
               ),
             ),
             SizedBox(
@@ -39,7 +39,7 @@ class Points extends StatelessWidget {
               'History',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 20,
+                fontSize: 18,
               ),
             ),
             SizedBox(

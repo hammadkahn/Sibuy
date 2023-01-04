@@ -101,7 +101,7 @@ class Data {
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    averageRating = json['averageRating'];
+    averageRating = json['averageRating'].toDouble();
     if (json['reviews'] != null) {
       reviews = <Reviews>[];
       json['reviews'].forEach((v) {

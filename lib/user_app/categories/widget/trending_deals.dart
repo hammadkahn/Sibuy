@@ -34,19 +34,21 @@ class TrendingDealsWidget extends StatelessWidget {
           ],
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             categoryData.image == null || categoryData.image!.isEmpty
                 ? Image.asset(
-                    'assets/images/voucher.png',
-                    height: 100,
-                    width: 100,
+                    'assets/images/gigi-logo.png',
+                    height: 75,
+                    width: 75,
                   )
                 : Image.network(
                     '${ApiUrls.imgBaseUrl}${categoryData.imagePath}/${categoryData.image}',
                     height: 100,
                     width: 100,
                   ),
-            Text(categoryData.name!),
+            Text(categoryData.name!, style: TextStyle(fontSize: 12), textAlign: TextAlign.center,),
           ],
         ),
       ),

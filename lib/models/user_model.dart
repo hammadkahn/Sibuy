@@ -5,7 +5,7 @@ import 'merchant_single_deal.dart';
 
 class UserProfileModel {
   bool? status;
-  int? responseCode;
+  String? responseCode;
   String? message;
   UserProfileData? data;
 
@@ -13,7 +13,7 @@ class UserProfileModel {
 
   UserProfileModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    responseCode = json['responseCode'];
+    responseCode = json['responseCode'].toString();
     message = json['message'];
     data = json['data'] != null ? UserProfileData.fromJson(json['data']) : null;
   }

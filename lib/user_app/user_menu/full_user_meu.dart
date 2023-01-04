@@ -11,6 +11,7 @@ import '../../constant/app_styles.dart';
 import '../../constant/color_constant.dart';
 import '../../constant/helper.dart';
 import '../../constant/size_constants.dart';
+import '../../services/get_profile/get_user_info.dart';
 import '../../shared/loader.dart';
 import '../../shared/search_field.dart';
 import '../notification_screen.dart';
@@ -28,6 +29,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
   DealProvider? dealProvider;
   String? selectedValue;
   String? cityCode, city;
+  late UserProfileModel user;
   final prefs = SharedPreferences.getInstance();
   ValueNotifier<List<dynamic>>? items = ValueNotifier([]);
 
@@ -46,15 +48,39 @@ class _Full_menu_userState extends State<Full_menu_user> {
   @override
   initState() {
     getCityCode();
+    getUser();
+    dealProvider = Provider.of<DealProvider>(context, listen: false);
+    fetchCitiesAndCountries().whenComplete(
+      () => dealProvider!.getCarousalsDeals(widget.token).whenComplete(
+        () {
+          productLoaded.value = true;
+        },
+      ),
+    );
     super.initState();
+  }
+
+  getUser() async {
+    user = await UserInformation().getUserProfile(widget.token);
+    cityCode = user.data!.userLocations![0].cityId;
+    city = user.data!.userLocations![0].cityName;
+    AppHelper.setPref('cityId', cityCode);
+    AppHelper.setPref('city', city);
+    setState(() {});
   }
 
   getCityCode() async {
     cityCode = await AppHelper.getPref('cityId');
     city = await AppHelper.getPref('city');
+    print('cityCode');
     print(cityCode);
     print(city);
-    setState(() {});
+    if(city == null){
+      getUser();
+    }
+    else{
+      setState(() {});
+    }
   }
 
   Future<void> fetchCitiesAndCountries() async {
@@ -64,20 +90,20 @@ class _Full_menu_userState extends State<Full_menu_user> {
 
   ValueNotifier<bool> productLoaded = ValueNotifier(false);
 
-  @override
-  void didChangeDependencies() {
-    dealProvider = Provider.of<DealProvider>(context, listen: false);
-
-    super.didChangeDependencies();
-
-    fetchCitiesAndCountries().whenComplete(
-      () => dealProvider!.getCarousalsDeals(widget.token).whenComplete(
-        () {
-          productLoaded.value = true;
-        },
-      ),
-    );
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   dealProvider = Provider.of<DealProvider>(context, listen: false);
+  //
+  //   super.didChangeDependencies();
+  //
+  //   fetchCitiesAndCountries().whenComplete(
+  //     () => dealProvider!.getCarousalsDeals(widget.token).whenComplete(
+  //       () {
+  //         productLoaded.value = true;
+  //       },
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -222,13 +248,14 @@ class _Full_menu_userState extends State<Full_menu_user> {
                       : 'No deals in trending'),
                 );
               } else {
-                return ListView.builder(
-                  itemCount: snapshot.data!.data!.length,
+                var list = snapshot.data!.data!.where((element) => element.isSponsored == 1 || isForSponsored == false).toList();
+                return list.length > 0 ? ListView.builder(
+                  itemCount: list.length,
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   itemBuilder: ((context, index) {
                     return all_details(
-                      dealId: snapshot.data!.data![index],
+                      dealId: list[index],
                       token: widget.token,
                     );
                     // return isForSponsored == false
@@ -243,6 +270,10 @@ class _Full_menu_userState extends State<Full_menu_user> {
                     //           )
                     //         : const SizedBox();
                   }),
+                ) : Center(
+                  child: Text(isForSponsored == true
+                      ? 'No deals sponsored'
+                      : 'No deals in trending'),
                 );
               }
             }

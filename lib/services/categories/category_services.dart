@@ -14,7 +14,7 @@ class CategoryServices {
         ApiUrls.getAllCat,
         headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
       );
-      // print(token);
+      print(token);
       final result = GetAllCategoriesModel.fromJson(jsonDecode(response.body));
       if (response.statusCode == 429) {
         throw Exception('user has sent too many requests in a given amount of time ("rate limiting")');

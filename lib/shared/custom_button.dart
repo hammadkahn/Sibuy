@@ -32,14 +32,16 @@ class CustomButton extends StatelessWidget {
           minWidth: padding == true ? 150 : 327),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: padding == true
-            ? const EdgeInsets.all(4)
-            : const EdgeInsets.only(top: 16, bottom: 24, left: 16, right: 24),
-        child: Row(
+        padding: EdgeInsets.zero,
+        // padding: padding == true
+        //     ? const EdgeInsets.all(4)
+        //     : const EdgeInsets.only(top: 16, bottom: 24, left: 16, right: 24),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             isLoading == true
-                ? Loader(color: Colors.white,)
+                ? Loader(color: Colors.white, allowPadding: false)
                 : Text(
                     text,
                     style: const TextStyle(
@@ -47,7 +49,6 @@ class CustomButton extends StatelessWidget {
                       fontSize: 16,
                       fontFamily: 'Mulish',
                     ),
-                    textAlign: TextAlign.center,
                   ),
           ],
         ),

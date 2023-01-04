@@ -26,7 +26,7 @@ class _scan_qrState extends State<scan_qr> {
     final result = await _provider!
         .singleDealDetails(widget.token, widget.qrCode.id.toString());
     setState(() {
-      branchData = _provider!.dealData.branches;
+      branchData = _provider!.dealData!.branches;
     });
   }
 
@@ -101,7 +101,7 @@ class _scan_qrState extends State<scan_qr> {
                           gapless: false,
                         ),
               SizedBox(height: 20),
-              Text('QR Code: Hr5J6oF4LA912 ',
+              Text('QR Code: ${widget.qrCode.name}',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

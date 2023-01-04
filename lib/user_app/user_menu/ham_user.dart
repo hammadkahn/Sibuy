@@ -41,9 +41,9 @@ class _ham_userState extends State<ham_user> {
   }
 
   @override
-  void didChangeDependencies() {
+  void initState() {
     getUserAddress();
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
@@ -442,7 +442,7 @@ class _ham_userState extends State<ham_user> {
                               indent: 26,
                               endIndent: 26,
                             )),
-                        GestureDetector(
+                        InkWell(
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
@@ -706,8 +706,8 @@ class _ham_userState extends State<ham_user> {
                       text: "Add New Preferences ➔",
                       isLoading: isLoading,
                       onPressed: () {
-                        UserInformation().updatePreferences(
-                            widget.token, {'preferences[0]': ''});
+                        // UserInformation().updatePreferences(
+                        //     widget.token, {'preferences[0]': ''});
                         // Navigator.of(context).push(MaterialPageRoute(
                         //     builder: (context) => const WebViewExample()));
                       }),
