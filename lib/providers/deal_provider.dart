@@ -352,10 +352,12 @@ class DealProvider with ChangeNotifier {
     double? priceAfterDiscount = 0;
     double? getPrice;
     double? percentage;
-    percentage = double.parse(discountOnPrice) / 100;
-    getPrice = percentage * double.parse(price);
-    priceAfterDiscount = (double.parse(price) - getPrice);
 
+    // getPrice = percentage * double.parse(price);
+    priceAfterDiscount = (double.parse(price) - double.parse(discountOnPrice));
+    // percentage =
+    //     ((double.parse(price) - priceAfterDiscount) / double.parse(price)) *
+    //         100;
     return priceAfterDiscount.toStringAsFixed(2);
   }
 
@@ -578,7 +580,8 @@ class DealProvider with ChangeNotifier {
     }
   }
 
-  Future<UserDealListModel> categoryWiseDealsList(int? categoryId, {String? languageId}) async {
+  Future<UserDealListModel> categoryWiseDealsList(int? categoryId,
+      {String? languageId}) async {
     var cityCode = await AppHelper.getPref('cityId');
     print('$cityCode');
     try {

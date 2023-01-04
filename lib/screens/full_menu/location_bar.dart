@@ -50,7 +50,7 @@ class _location_barState extends State<location_bar> {
                   icon: const SizedBox(),
                   isExpanded: true,
                   hint: Text(
-                    data!.isEmpty ? 'no branch' : data![0]!,
+                    data!.isEmpty ? 'Main' : data![0]!,
                     style: const TextStyle(
                         fontFamily: 'Mulish',
                         fontSize: 16,

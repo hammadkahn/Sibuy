@@ -112,14 +112,17 @@ class _ProfileState extends State<Profile> {
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          Text(
-                                              '${data.userLocations == null ? 'no location specified' : data.userLocations![0].address}',
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                  fontFamily: 'DMSans',
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.white)),
+                                          SizedBox(
+                                            width: 200,
+                                            child: Text(
+                                                '${data.userLocations == null ? 'no location specified' : data.userLocations![0].address}',
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                    fontFamily: 'DMSans',
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.white)),
+                                          ),
                                           const SizedBox(
                                             height: 10,
                                           ),
@@ -226,7 +229,8 @@ class _ProfileState extends State<Profile> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => All_offer(token: widget.token)));
+                          builder: (context) =>
+                              All_offer(token: widget.token)));
                       // branches().whenComplete(() =>
                       //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       //         content: Text(
@@ -372,7 +376,7 @@ class _ProfileState extends State<Profile> {
                             color: Color(0xff32324D),
                           ),
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 10 / 375,
+                            width: MediaQuery.of(context).size.width * 25 / 375,
                           ),
                           const Text(
                             'Log out',
@@ -381,7 +385,7 @@ class _ProfileState extends State<Profile> {
                               fontFamily: 'Mulish',
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xff9E9E9E),
+                              color: Color(0xff32324D),
                             ),
                           ),
                         ],
