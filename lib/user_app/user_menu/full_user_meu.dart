@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:SiBuy/models/user_model.dart';
+import 'package:SiBuy/user_app/user_menu/carousel_user.dart';
 import 'package:SiBuy/user_app/user_menu/categ.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -75,10 +76,9 @@ class _Full_menu_userState extends State<Full_menu_user> {
     print('cityCode');
     print(cityCode);
     print(city);
-    if(city == null){
+    if (city == null) {
       getUser();
-    }
-    else{
+    } else {
       setState(() {});
     }
   }
@@ -138,33 +138,26 @@ class _Full_menu_userState extends State<Full_menu_user> {
                   valueListenable: productLoaded,
                   builder: (BuildContext context, bool value, Widget? child) {
                     return SizedBox(
-                        child: productLoaded.value == false
-                            ? Loader()
-                            : const SizedBox()
-                        // : C_slider(
-                        //     token: widget.token,
-                        //     merchantList:
-                        //         dealProvider!.userListOfDeals['data']!,
-                        //   ),
-                        );
+                      child: CSlider(),
+                    );
                   },
                 ),
                 //two rows with 8 icons of categories
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
-                  'Categories',
-                  style: TextStyle(
-                      fontFamily: 'DMSans',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF32324D)),
-                ),
-                categ(),
-                const SizedBox(
-                  height: 20,
-                ),
+                // const Text(
+                //   'Categories',
+                //   style: TextStyle(
+                //       fontFamily: 'DMSans',
+                //       fontSize: 18,
+                //       fontWeight: FontWeight.w500,
+                //       color: Color(0xFF32324D)),
+                // ),
+                // categ(),
+                // const SizedBox(
+                //   height: 20,
+                // ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Row(
@@ -238,7 +231,8 @@ class _Full_menu_userState extends State<Full_menu_user> {
             return Loader();
           default:
             if (snapshot.hasError) {
-              return Center(child: Text(snapshot.error.toString()),
+              return Center(
+                child: Text(snapshot.error.toString()),
               );
             } else {
               if (snapshot.data!.data == null || snapshot.data!.data!.isEmpty) {
@@ -248,33 +242,38 @@ class _Full_menu_userState extends State<Full_menu_user> {
                       : 'No deals in trending'),
                 );
               } else {
-                var list = snapshot.data!.data!.where((element) => element.isSponsored == 1 || isForSponsored == false).toList();
-                return list.length > 0 ? ListView.builder(
-                  itemCount: list.length,
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemBuilder: ((context, index) {
-                    return all_details(
-                      dealId: list[index],
-                      token: widget.token,
-                    );
-                    // return isForSponsored == false
-                    //     ? all_details(
-                    //         dealId: snapshot.data!.data![index],
-                    //         token: widget.token,
-                    //       )
-                    //     : snapshot.data!.data![index].isSponsored == 1
-                    //         ? all_details(
-                    //             dealId: snapshot.data!.data![index],
-                    //             token: widget.token,
-                    //           )
-                    //         : const SizedBox();
-                  }),
-                ) : Center(
-                  child: Text(isForSponsored == true
-                      ? 'No deals sponsored'
-                      : 'No deals in trending'),
-                );
+                var list = snapshot.data!.data!
+                    .where((element) =>
+                        element.isSponsored == 1 || isForSponsored == false)
+                    .toList();
+                return list.length > 0
+                    ? ListView.builder(
+                        itemCount: list.length,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemBuilder: ((context, index) {
+                          return all_details(
+                            dealId: list[index],
+                            token: widget.token,
+                          );
+                          // return isForSponsored == false
+                          //     ? all_details(
+                          //         dealId: snapshot.data!.data![index],
+                          //         token: widget.token,
+                          //       )
+                          //     : snapshot.data!.data![index].isSponsored == 1
+                          //         ? all_details(
+                          //             dealId: snapshot.data!.data![index],
+                          //             token: widget.token,
+                          //           )
+                          //         : const SizedBox();
+                        }),
+                      )
+                    : Center(
+                        child: Text(isForSponsored == true
+                            ? 'No deals sponsored'
+                            : 'No deals in trending'),
+                      );
               }
             }
         }
