@@ -95,7 +95,7 @@ class _Location_bar_userState extends State<Location_bar_user> {
                 },
                 underline: const SizedBox(),
                 buttonHeight: 30,
-                buttonWidth: 100,
+                buttonWidth: 160,
                 buttonPadding: const EdgeInsets.only(left: 14, right: 8),
                 buttonDecoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),

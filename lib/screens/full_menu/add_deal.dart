@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:SiBuy/constant/color_constant.dart';
 
+import '../../constant/app_styles.dart';
 import '../../shared/loader.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/services/deals/merchant_deal_services.dart';
@@ -289,7 +290,7 @@ class _Add_dealState extends State<Add_deal> {
                       child: TextFormField(
                         controller: expiryCtr,
                         decoration: InputDecoration(
-                          icon: const Icon(Icons.calendar_today_rounded),
+                          prefixIcon: const Icon(Icons.calendar_today_rounded),
                           labelText: 'Deal Sale Expiry',
                           enabledBorder: OutlineInputBorder(
                             borderSide:
@@ -346,7 +347,7 @@ class _Add_dealState extends State<Add_deal> {
                       child: TextFormField(
                         controller: reedemExpiryCtr,
                         decoration: InputDecoration(
-                            icon: const Icon(Icons.calendar_today_rounded),
+                            prefixIcon: const Icon(Icons.calendar_today_rounded),
                             labelText: 'Deal Redemption Expiry',
                             enabledBorder: OutlineInputBorder(
                               borderSide:
@@ -852,11 +853,7 @@ class _Add_dealState extends State<Add_deal> {
                     controlAffinity: ListTileControlAffinity.trailing,
                     contentPadding: EdgeInsets.zero,
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-
-                  //submit button
+                  Insets.gapH20,
                   SizedBox(
                     width: double.maxFinite,
                     child: ValueListenableBuilder(
@@ -879,9 +876,7 @@ class _Add_dealState extends State<Add_deal> {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  Insets.gapH30,
                 ],
               ),
             ),

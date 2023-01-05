@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/user_app/user_menu/deals_user.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/user_carousel_model.dart';
 
@@ -13,18 +14,24 @@ class CSlider extends StatelessWidget {
     Key? key,
     required this.data
   }) : super(key: key);
-  // final String token;
 
-  DateTime now = DateTime.now();
-  DateTime? now_1w;
+  CarouselController? controller = CarouselController();
   final List<String> imagePaths = [
     'assets/images/menu.png',
     'assets/images/TV.png',
   ];
 
-  CarouselController? controller = CarouselController();
 
-  int activeIndex = 0;
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double carouselwidth = MediaQuery.of(context).size.width;
@@ -52,19 +59,24 @@ class CSlider extends StatelessWidget {
         itemCount: data.length,
         itemBuilder: (BuildContext context, int index, int realIndex) {
           final imagepath = '${data[index].link}${data[index].imagePath}/${data[index].image}';
-          return buildImage(imagepath, index);
+          return buildImage(imagepath, data[index]!.link!);
         },
       ),
     );
   }
 
-  Widget buildImage(String imagePath, int index) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5.0),
-      color: Colors.grey[200],
-      child: Image(
-        image: AssetImage(imagePath),
-        fit: BoxFit.cover,
+  Widget buildImage(String imagePath, String url) {
+    return GestureDetector(
+      onTap: (){
+        _launchInBrowser(Uri.parse(url));
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 5.0),
+        color: Colors.grey[200],
+        child: Image(
+          image: AssetImage(imagePath),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

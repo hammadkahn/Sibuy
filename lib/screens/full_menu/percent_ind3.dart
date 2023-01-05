@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Stacked_container2 extends StatelessWidget {
-  const Stacked_container2(
-      {Key? key, required this.totalActiveDeals, required this.title, required this.iicons})
+class StackedContainer extends StatelessWidget {
+  const StackedContainer(
+      {Key? key, required this.totalActiveDeals, required this.title,
+        this.color = const Color(0xffD4A8F9),
+        required this.icon})
       : super(key: key);
   final String totalActiveDeals;
   final String title;
-  final String iicons;
+  final String icon;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +27,16 @@ class Stacked_container2 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.all(10),
               child: Container(
-                width: 60,
-                height: MediaQuery.of(context).size.height * 60 / 812,
+                width: 50,
+                height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
-                  color: const Color(0xffD4A8F9),
+                  color: color,
                 ),
                 child: Image.asset(
-                  'assets/images/$iicons.png',
+                  'assets/images/$icon.png',
                   color: Colors.white,
                 ),
               ),

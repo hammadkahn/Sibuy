@@ -26,7 +26,9 @@ class _QR_scan extends State<QR_scan> {
     if (Platform.isAndroid) {
       await controller!.pauseCamera();
     }
-    controller!.resumeCamera();
+    else{
+      controller!.resumeCamera();
+    }
   }
 
   @override

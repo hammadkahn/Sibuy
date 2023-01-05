@@ -151,26 +151,26 @@ class Demo_Deals extends StatelessWidget {
                                     fontWeight: FontWeight.w400,
                                     color: Color(0xFFFFFFFF)),
                               ),
-                              Container(
-                                width: 28,
-                                height: 11,
-                                decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(3))),
-                                child: Center(
-                                  child: Text(
-                                    data != null
-                                        ? '${data!.discountOnPrice ?? 20}% OFF'
-                                        : '0% Off',
-                                    style: const TextStyle(
-                                        fontSize: 5,
-                                        fontFamily: 'Mulish',
-                                        fontWeight: FontWeight.w900,
-                                        color: Color(0xFF0D9BFF)),
-                                  ),
-                                ),
-                              )
+                              // Container(
+                              //   width: 28,
+                              //   height: 11,
+                              //   decoration: const BoxDecoration(
+                              //       color: Colors.white,
+                              //       borderRadius:
+                              //           BorderRadius.all(Radius.circular(3))),
+                              //   child: Center(
+                              //     child: Text(
+                              //       data != null
+                              //           ? '${data!.discountOnPrice ?? 20}% OFF'
+                              //           : '0% Off',
+                              //       style: const TextStyle(
+                              //           fontSize: 5,
+                              //           fontFamily: 'Mulish',
+                              //           fontWeight: FontWeight.w900,
+                              //           color: Color(0xFF0D9BFF)),
+                              //     ),
+                              //   ),
+                              // )
                             ],
                           )),
                     ],

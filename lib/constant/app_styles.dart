@@ -85,6 +85,9 @@ class Insets {
   /// [SizedBox] of height **25**
   static const gapH25 = SizedBox(height: 25);
 
+  /// [SizedBox] of height **30**
+  static const gapH30 = SizedBox(height: 30);
+
   /// [SizedBox] of height **25**
   static const gapH40 = SizedBox(height: 40);
 

@@ -239,12 +239,18 @@ class MerchantAuthServices {
       });
 
       final result = jsonDecode(response.body) as Map<String, dynamic>;
-
+      print('result');
+      print(result);
       if (response.statusCode == 200) {
         debugPrint(response.body);
-        return result['meassge'];
+        return result['message'];
       } else {
-        return response.reasonPhrase.toString();
+        if(result['message'] != null){
+          return result['message'].toString();
+        }
+        else{
+          return result['error'].toString();
+        }
       }
     } catch (e) {
       throw Exception(e);

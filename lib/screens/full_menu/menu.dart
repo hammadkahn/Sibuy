@@ -32,53 +32,48 @@ class Menu extends StatelessWidget {
                 Insets.gapH10,
                 SizedBox(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 550 / 812,
                   child: FutureBuilder<DashboardStatsModel>(
                     future: DashBoardStats().getDashBoardStats(token),
                     builder: (context, snapshot) {
                       List<Widget> children;
                       if (snapshot.hasData) {
                         children = [
-                          Dashboard(
-                            totalSale:
-                                snapshot.data!.data!.totalSales.toString(),
+                          StackedContainer(
+                            title: 'Total Sale: ',
+                            totalActiveDeals: checkNull(snapshot.data!.data!.totalSales),
+                            color: const Color(0xffA7E3B8),
+                            icon: 'shop',
                           ),
                           const SizedBox(height: 8),
-                          Stacked_container(
-                            discountAvailed: snapshot
-                                .data!.data!.totalCouponRadeemed
-                                .toString(),
+                          StackedContainer(
+                            title: 'Total Deal Redeemed',
+                            totalActiveDeals: checkNull(snapshot.data!.data!.totalCouponRadeemed),
+                            color: const Color(0xffF8B2CB),
+                            icon: 'bg1',
                           ),
                           const SizedBox(height: 8),
-                          Stacked_container2(
+                          StackedContainer(
                             title: 'Total Active Deals',
-                            totalActiveDeals: snapshot
-                                .data!.data!.totalActiveOffers
-                                .toString(),
-                            iicons: 'vouch',
+                            totalActiveDeals: checkNull(snapshot.data!.data!.totalActiveOffers),
+                            icon: 'vouch',
                           ),
                           const SizedBox(height: 8),
-                          Stacked_container2(
+                          StackedContainer(
                             title: 'Total Deal Sale',
-                            totalActiveDeals:
-                                snapshot.data!.data!.totalDealSale.toString(),
-                            iicons: 'vouch1',
+                            totalActiveDeals: checkNull(snapshot.data!.data!.totalDealSale),
+                            icon: 'vouch1',
                           ),
                           const SizedBox(height: 8),
-                          Stacked_container2(
+                          StackedContainer(
                             title: 'Total Unredeemed Withholding',
-                            totalActiveDeals: snapshot
-                                .data!.data!.totalUnredeemedWithHolding
-                                .toString(),
-                            iicons: 'vouch2',
+                            totalActiveDeals: checkNull(snapshot.data!.data!.totalUnredeemedWithHolding),
+                            icon: 'vouch2',
                           ),
                           const SizedBox(height: 8),
-                          Stacked_container2(
+                          StackedContainer(
                             title: 'Total Transaction Fee',
-                            totalActiveDeals: snapshot
-                                .data!.data!.totalTransactionFee
-                                .toString(),
-                            iicons: 'vouch3',
+                            totalActiveDeals: checkNull(snapshot.data!.data!.totalTransactionFee),
+                            icon: 'vouch3',
                           ),
                         ];
                       } else if (snapshot.hasError) {
@@ -106,6 +101,7 @@ class Menu extends StatelessWidget {
                     },
                   ),
                 ),
+                Insets.gapH20,
                 FutureBuilder<MerchantDealListModel>(
                   future: DealServices().getAllDeals(token: token),
                   builder: (context, snapshot) {
@@ -163,6 +159,10 @@ class Menu extends StatelessWidget {
             ),
           ),
         ));
+  }
+
+  checkNull(val){
+    return val == null ? '0' : val.toString();
   }
 
   // Map<String, dynamic>? dashBoardModel;

@@ -140,7 +140,7 @@ class _OfferDetailsState extends State<OfferDetails> {
                   Text(
                     Provider.of<DealProvider>(context, listen: false)
                         .calculateDiscount(
-                            widget.data.discountOnPrice!.toString(),
+                            widget.data.discount!.toString(),
                             widget.data.price!.toStringAsFixed(0)),
                     style: const TextStyle(
                         fontFamily: 'Mulish',
@@ -148,25 +148,25 @@ class _OfferDetailsState extends State<OfferDetails> {
                         fontWeight: FontWeight.w400,
                         color: Color(0xFF0D9BFF)),
                   ),
-                  Container(
-                    width: 28,
-                    height: 11,
-                    margin: const EdgeInsets.only(left: 12),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(3))),
-                    child: Center(
-                      child: Text(
-                        '${widget.data.discountOnPrice ?? 0}% OFF',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 9,
-                            fontFamily: 'Mulish',
-                            fontWeight: FontWeight.w900,
-                            color: Color(0xFF0D9BFF)),
-                      ),
-                    ),
-                  )
+                  // Container(
+                  //   width: 28,
+                  //   height: 11,
+                  //   margin: const EdgeInsets.only(left: 12),
+                  //   decoration: const BoxDecoration(
+                  //       color: Colors.white,
+                  //       borderRadius: BorderRadius.all(Radius.circular(3))),
+                  //   child: Center(
+                  //     child: Text(
+                  //       '${widget.data.discountOnPrice ?? 0}% OFF',
+                  //       textAlign: TextAlign.center,
+                  //       style: const TextStyle(
+                  //           fontSize: 9,
+                  //           fontFamily: 'Mulish',
+                  //           fontWeight: FontWeight.w900,
+                  //           color: Color(0xFF0D9BFF)),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),

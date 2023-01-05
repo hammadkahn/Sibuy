@@ -1,3 +1,5 @@
+import 'package:SiBuy/constant/app_styles.dart';
+import 'package:SiBuy/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -91,41 +93,14 @@ class _Change_passState extends State<Change_pass> {
                       height: 20,
                     ),
                     //button for the changing password
-                    Container(
-                      margin: const EdgeInsets.all(12),
-                      //decoration
-                      decoration: BoxDecoration(
-                        color: const Color(0xffff66000),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: ListTile(
-                        onTap: () {
-                          updatePassword().whenComplete(() {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(SnackBar(content: Text(message)));
-                          });
-                        },
-                        title: const Text(
-                          'Change Password',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                        ),
-                        trailing: const Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                        ),
-                      ),
+                    CustomButton(
+                      text: 'Change Password',
+                      onPressed: () {
+                        updatePassword().whenComplete(() {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text(message)));
+                        });
+                      }
                     ),
                   ]),
             ),
@@ -137,6 +112,7 @@ class _Change_passState extends State<Change_pass> {
 
   Future<void> updatePassword() async {
     if (_formKey.currentState!.validate()) {
+      UiUtils.disableKeyboard(context);
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Processing...')));
       final result = await MerchantAuthServices().changePassword(
@@ -147,7 +123,15 @@ class _Change_passState extends State<Change_pass> {
       );
       if (result.isNotEmpty) {
         setState(() {
-          message = result;
+          if(result == "success"){
+            currentPassCtr.text = '';
+            newPassCtr.text = '';
+            confirmCtr.text = '';
+            message = "Password Changed Successfully";
+          }
+          else{
+            message = result;
+          }
         });
       } else {
         debugPrint('cant change password');
