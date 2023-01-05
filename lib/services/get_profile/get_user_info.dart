@@ -8,6 +8,8 @@ import 'package:SiBuy/models/merchant_profile_model.dart';
 import 'package:SiBuy/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../../models/user_carousel_model.dart';
+
 class UserInformation {
   Future<ProfileModel> getMerchantInformation(String token) async {
     try {
@@ -39,6 +41,23 @@ class UserInformation {
       } else {
         debugPrint(response.reasonPhrase);
         return result;
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<UserCarouselData> getCarouselData(String token) async {
+    try {
+      final response = await http.get(
+        ApiUrls.getCarousel,
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
+      );
+      final result = UserCarouselData.fromJson(jsonDecode(response.body));
+      if (response.statusCode == 200) {
+        return result;
+      } else {
+        throw Exception('error');
       }
     } catch (e) {
       throw Exception(e);

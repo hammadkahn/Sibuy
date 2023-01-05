@@ -55,4 +55,8 @@ class ApiUrls {
   static final getAllCat = Uri.parse('${baseUrl}categoryAutoComplete');
 
   static final getAllRef = Uri.parse('${baseUrl}user/getReferralUsers');
+
+  static final getCarousel = Uri.parse('${baseUrl}user/getCarousals');
+
+  static final getAdvertisements = Uri.parse('${baseUrl}admin/getAdvertisements?limit=10&page=1&returnType=customPagination');
 }

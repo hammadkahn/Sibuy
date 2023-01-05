@@ -46,6 +46,7 @@ class _BarState extends State<Bar> {
   void initState() {
     super.initState();
     currentScreen = Menu(token: widget.token);
+
     _children = [
       Menu(
         token: widget.token,

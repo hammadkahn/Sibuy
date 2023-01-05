@@ -37,14 +37,13 @@ class _Cart_userState extends State<Cart_user> {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    // getUserAddress();
-    super.didChangeDependencies();
-  }
-
   getCity() async {
-    userLocation = await AppHelper.getPref('city');
+    if(widget.token == ""){
+      userLocation = "Phnom Phen";
+    }
+    else{
+      userLocation = await AppHelper.getPref('city');
+    }
     setState(() { });
   }
 

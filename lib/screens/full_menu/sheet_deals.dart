@@ -25,14 +25,8 @@ class _sheet_dealsState extends State<sheet_deals> {
 
   @override
   void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
     getRating();
-    // totalReviews = Reviews().getRating(widget.data!.reviews!);
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override

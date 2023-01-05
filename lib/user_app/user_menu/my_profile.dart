@@ -46,20 +46,15 @@ class _MyProfileState extends State<MyProfile> {
   @override
   void initState() {
     _provider = Provider.of<DealProvider>(context, listen: false);
-    super.initState();
-    nameCtr = TextEditingController(text: widget.userData['name']);
-    phoneNumberCtr = TextEditingController(text: widget.userData['phone_no']);
-  }
-
-  @override
-  void didChangeDependencies() {
     _provider!
         .getAllLanguages()
         .then((value) => _provider!.getAllCountries())
         .whenComplete(() {
       isLoaded.value = true;
     });
-    super.didChangeDependencies();
+    nameCtr = TextEditingController(text: widget.userData['name']);
+    phoneNumberCtr = TextEditingController(text: widget.userData['phone_no']);
+    super.initState();
   }
 
   @override
@@ -388,7 +383,7 @@ class _MyProfileState extends State<MyProfile> {
             textInputAction: TextInputAction.next,
             readOnly: true,
             decoration: InputDecoration(
-                icon: const Icon(Icons.calendar_today_rounded,
+                prefixIcon: const Icon(Icons.calendar_today_rounded,
                     color: AppColors.APP_PRIMARY_COLOR),
                 labelText: 'Date of Birth',
                 labelStyle: const TextStyle(color: AppColors.APP_BLACK_COLOR),

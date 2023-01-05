@@ -33,11 +33,6 @@ class _Scanned_detailsState extends State<Scanned_details> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // final result = scannedData.rawBytes as Map<String, dynamic>;
 

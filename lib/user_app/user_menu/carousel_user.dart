@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:SiBuy/models/deal_model.dart';
 import 'package:SiBuy/user_app/user_menu/deals_user.dart';
 
-class CSlider extends StatefulWidget {
-  const CSlider({
+import '../../models/user_carousel_model.dart';
+
+class CSlider extends StatelessWidget {
+
+  List<UserCarousel> data;
+  CSlider({
     Key? key,
+    required this.data
   }) : super(key: key);
   // final String token;
 
-  @override
-  State<CSlider> createState() => _CSliderState();
-}
-
-class _CSliderState extends State<CSlider> {
   DateTime now = DateTime.now();
   DateTime? now_1w;
   final List<String> imagePaths = [
@@ -23,11 +23,6 @@ class _CSliderState extends State<CSlider> {
   ];
 
   CarouselController? controller = CarouselController();
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   int activeIndex = 0;
   @override
@@ -46,7 +41,7 @@ class _CSliderState extends State<CSlider> {
         options: CarouselOptions(
           aspectRatio: 2.0,
           height: 200.0,
-          autoPlay: true,
+          // autoPlay: true,
           autoPlayInterval: Duration(seconds: 3),
           autoPlayAnimationDuration: Duration(milliseconds: 800),
           autoPlayCurve: Curves.fastOutSlowIn,
@@ -54,10 +49,9 @@ class _CSliderState extends State<CSlider> {
           scrollDirection: Axis.horizontal,
           enlargeStrategy: CenterPageEnlargeStrategy.height,
         ),
-        itemCount: imagePaths.length,
+        itemCount: data.length,
         itemBuilder: (BuildContext context, int index, int realIndex) {
-          final imagepath = imagePaths[index];
-
+          final imagepath = '${data[index].link}${data[index].imagePath}/${data[index].image}';
           return buildImage(imagepath, index);
         },
       ),

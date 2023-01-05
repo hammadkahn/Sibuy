@@ -33,9 +33,9 @@ class _qr_contState extends State<qr_cont> {
   }
 
   @override
-  void didChangeDependencies() {
+  void initState() {
     getMerchantAddress();
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override

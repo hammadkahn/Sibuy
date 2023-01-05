@@ -353,7 +353,7 @@ class ChatProvider with ChangeNotifier {
       final result = jsonDecode(response.body) as Map<String, dynamic>;
       if (response.statusCode == 200) {
         debugPrint(response.body);
-        _conversationId = result['data']['id'];
+        _conversationId = result['data']['id'].toString();
         return result['data']['id'].toString();
       } else {
         debugPrint(response.reasonPhrase);

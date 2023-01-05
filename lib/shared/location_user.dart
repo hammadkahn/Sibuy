@@ -26,10 +26,16 @@ class _Location_bar_userState extends State<Location_bar_user> {
   @override
   void initState() {
     super.initState();
-    // getCountry().whenComplete(() {
-    fetchCitiesAndCountries();
-    getCity();
-    // });
+    if(widget.token != ''){
+      fetchCitiesAndCountries();
+      getCity();
+    }
+    else{
+      selectedValue = "15883";
+      country = "Phnom Phen";
+      setState(() { });
+    }
+
   }
 
   getCity() async {
@@ -47,7 +53,13 @@ class _Location_bar_userState extends State<Location_bar_user> {
             Image.asset('assets/images/Vector.png'),
             Padding(
               padding: const EdgeInsets.only(left: 10.94),
-              child: items == null
+              child: widget.token == "" ? Text(country!, style: const TextStyle(
+                  fontFamily: 'Mulish',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.APP_PRIMARY_COLOR),
+                overflow: TextOverflow.ellipsis,
+              ) : items == null
                   ? const Text('fetching...')
                   : DropdownButton2(
                 icon: const SizedBox(),
@@ -108,7 +120,7 @@ class _Location_bar_userState extends State<Location_bar_user> {
         ),
         Row(
           children: [
-            GestureDetector(
+            widget.token == "" ? Container() : GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => ham_user(
@@ -117,7 +129,7 @@ class _Location_bar_userState extends State<Location_bar_user> {
                 },
                 child: Image.asset('assets/images/drawer.png')),
             const SizedBox(width: 13),
-            InkWell(
+            widget.token == "" ? Container() : InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: ((context) =>
@@ -143,8 +155,7 @@ class _Location_bar_userState extends State<Location_bar_user> {
   List<dynamic>? items;
 
   Future<void> fetchCitiesAndCountries() async {
-    final result =
-        await UserDealServices().getSystemCities(widget.token, 'Pakistan');
+    final result = await UserDealServices().getSystemCities(widget.token, 'Pakistan');
 
     setState(() {
       items = result.data;

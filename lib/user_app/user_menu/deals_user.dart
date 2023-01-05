@@ -26,7 +26,7 @@ class _dealsUserState extends State<dealsUser> {
   ValueNotifier<bool> isLoaded = ValueNotifier(false);
 
   @override
-  void didChangeDependencies() {
+  void initState() {
     dealProvider = Provider.of<DealProvider>(context, listen: false);
     if (mounted) {
       dealProvider!
@@ -35,7 +35,7 @@ class _dealsUserState extends State<dealsUser> {
         isLoaded.value = true;
       });
     }
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override

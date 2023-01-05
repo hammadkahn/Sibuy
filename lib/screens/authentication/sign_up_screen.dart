@@ -1,5 +1,9 @@
 import 'dart:developer';
 
+import 'package:SiBuy/constant/app_styles.dart';
+import 'package:SiBuy/constant/size_constants.dart';
+import 'package:country_code_picker/country_code.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final countryCtr = TextEditingController();
   final cityCtr = TextEditingController();
   final passCtr = TextEditingController();
+  final confirmPassCtr = TextEditingController();
   final dobCtr = TextEditingController();
   final emailCtr = TextEditingController();
   final phoneNumberCtr = TextEditingController();
@@ -51,6 +56,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   File? logoImage;
   int radioValue = 0;
+  bool _obscureTextPass = true;
+  bool _obscureTextCPass = true;
+  String phoneCode = '+65';
 
   //logo picker
   Future _logoPicker() async {
@@ -125,10 +133,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   //   });
   // }
 
-  String category_2 = 'For Men';
+  String category_2 = 'Men';
 
   // Initial Selected Value
-  String category_1 = 'For Men';
+  String category_1 = 'Men';
 
   String langDropdownvaluee = 'English';
 
@@ -147,6 +155,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     _provider = Provider.of<DealProvider>(context, listen: false);
+    _provider!.getAllLanguages().then((value) => _provider!
+        .getAllCat()
+        .then((value) => _provider!.getAllCountries())
+        .whenComplete(() {
+      isLoaded.value = true;
+      // setState(() {
+      //   // items = Provider.of<DealProvider>(context, listen: false).languages;
+      // });
+    }));
     // selectedCountry = const Country(
     //   name: "Azerbaijan",
     //   flag: "🇦🇿",
@@ -193,20 +210,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   ];
 
   @override
-  void didChangeDependencies() {
-    _provider!.getAllLanguages().then((value) => _provider!
-            .getAllCat()
-            .then((value) => _provider!.getAllCountries())
-            .whenComplete(() {
-          isLoaded.value = true;
-          // setState(() {
-          //   // items = Provider.of<DealProvider>(context, listen: false).languages;
-          // });
-        }));
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -218,6 +221,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                SizedBox(height: SizeConfig.screenHeight * 0.05),
                 const Text(
                   'Getting started! ✌️',
                   style: TextStyle(
@@ -257,13 +261,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: TextFormField(
                     controller: phoneNumberCtr,
                     keyboardType: TextInputType.phone,
-                    maxLength: 11,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      hintText: 'Phone Number (With country code)',
+                      hintText: 'Phone No',
+                      prefixIcon: CountryCodePicker(
+                        dialogSize: Size(SizeConfig.screenWidth * 0.8, SizeConfig.screenHeight * 0.8),
+                        initialSelection: phoneCode,
+                        alignLeft: false,
+                        onChanged: (CountryCode? code) {
+                          print(code!.code);
+                          phoneCode = code!.dialCode!;
+                        },
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -494,9 +506,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       hintText: 'Password',
-                      // suffix: Icon(Icons.visibility)
+                        suffix: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _obscureTextPass = !_obscureTextPass;
+                            });
+                          },
+                          child: Icon(_obscureTextPass
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        )
                     ),
-                    obscureText: true,
+                    obscureText: _obscureTextPass,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please a strong password';
@@ -508,16 +529,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 26),
                   child: TextFormField(
-                    controller: passCtr,
+                    controller: confirmPassCtr,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       hintText: 'Confirm Password',
-                      // suffix: Icon(Icons.visibility)
+                        suffix: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _obscureTextCPass = !_obscureTextCPass;
+                            });
+                          },
+                          child: Icon(_obscureTextCPass
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        )
                     ),
-                    obscureText: true,
+                    obscureText: _obscureTextCPass,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please a strong password';
@@ -602,21 +632,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
+                Insets.gapH10,
                 // category 1 dropdown
-                SizedBox(
-                  width: double.maxFinite,
-                  child: ValueListenableBuilder(
-                    valueListenable: isLoaded,
-                    builder: (BuildContext context, bool value, Widget? child) {
-                      return isLoaded.value == false
-                          ? Loader()
-                          : DropdownButton<String>(
+                ValueListenableBuilder(
+                  valueListenable: isLoaded,
+                  builder: (BuildContext context, bool value, Widget? child) {
+                    return isLoaded.value == false
+                        ? Loader()
+                        : Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 0.5),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            child: DropdownButton<String>(
                               dropdownColor: AppColors.APP_PRIMARY_COLOR,
                               isExpanded: true,
                               // Initial Value
                               value: category_1,
-
+                              underline: Container(),
                               // Down Arrow Icon
                               icon: const Icon(Icons.keyboard_arrow_down),
 
@@ -624,32 +659,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               items: _provider!.allCategories
                                   .map<DropdownMenuItem<String>>(
                                       (String items) {
-                                return DropdownMenuItem<String>(
-                                  value: items,
-                                  child: Column(
-                                    children: [
-                                      Text(items),
-                                      const Divider(
-                                        color: Colors.white,
+                                    return DropdownMenuItem<String>(
+                                      value: items,
+                                      child: Column(
+                                        children: [
+                                          Text(items),
+                                          const Divider(
+                                            color: Colors.white,
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                  onTap: () {
-                                    for (int i = 0;
+                                      onTap: () {
+                                        for (int i = 0;
                                         i < _provider!.allCategories.length;
                                         i++) {
-                                      if (items ==
-                                          _provider!.allCategories[i]) {
-                                        categoyId_1 = _provider!
-                                            .catData.data![i].id
-                                            .toString();
-                                        break;
-                                      }
-                                    }
-                                    print(categoyId_1);
-                                  },
-                                );
-                              }).toList(),
+                                          if (items ==
+                                              _provider!.allCategories[i]) {
+                                            categoyId_1 = _provider!
+                                                .catData.data![i].id
+                                                .toString();
+                                            break;
+                                          }
+                                        }
+                                        print(categoyId_1);
+                                      },
+                                    );
+                                  }).toList(),
                               // After selecting the desired option,it will
                               // change button value to selected value
                               onChanged: (String? newValue) {
@@ -657,14 +692,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   category_1 = newValue!;
                                 });
                               },
-                            );
-                    },
-                  ),
+                            )));
+                  },
                 ),
-
-                const SizedBox(
-                  width: 20,
-                ),
+                Insets.gapH20,
                 const Text(
                   'Category 2',
                   style: TextStyle(
@@ -672,21 +703,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
+                Insets.gapH10,
                 //category 2 dropdown
-                SizedBox(
-                  width: double.maxFinite,
-                  child: ValueListenableBuilder(
-                    valueListenable: isLoaded,
-                    builder: (BuildContext context, bool value, Widget? child) {
-                      return isLoaded.value == false
-                          ? Loader()
-                          : DropdownButton<String>(
+                ValueListenableBuilder(
+                  valueListenable: isLoaded,
+                  builder: (BuildContext context, bool value, Widget? child) {
+                    return isLoaded.value == false
+                        ? Loader()
+                        : Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 0.5),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            child: DropdownButton<String>(
                               dropdownColor: AppColors.APP_PRIMARY_COLOR,
                               isExpanded: true,
                               // Initial Value
                               value: category_2,
-
+                              underline: Container(),
                               // Down Arrow Icon
                               icon: const Icon(Icons.keyboard_arrow_down),
 
@@ -694,32 +730,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               items: _provider!.allCategories
                                   .map<DropdownMenuItem<String>>(
                                       (String items) {
-                                return DropdownMenuItem<String>(
-                                  value: items,
-                                  child: Column(
-                                    children: [
-                                      Text(items),
-                                      const Divider(
-                                        color: Colors.white,
+                                    return DropdownMenuItem<String>(
+                                      value: items,
+                                      child: Column(
+                                        children: [
+                                          Text(items),
+                                          const Divider(
+                                            color: Colors.white,
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                  onTap: () {
-                                    for (int i = 0;
+                                      onTap: () {
+                                        for (int i = 0;
                                         i < _provider!.allCategories.length;
                                         i++) {
-                                      if (items ==
-                                          _provider!.allCategories[i]) {
-                                        categoyId_2 = _provider!
-                                            .catData.data![i].id
-                                            .toString();
-                                        break;
-                                      }
-                                    }
-                                    print(categoyId_2);
-                                  },
-                                );
-                              }).toList(),
+                                          if (items ==
+                                              _provider!.allCategories[i]) {
+                                            categoyId_2 = _provider!
+                                                .catData.data![i].id
+                                                .toString();
+                                            break;
+                                          }
+                                        }
+                                        print(categoyId_2);
+                                      },
+                                    );
+                                  }).toList(),
                               // After selecting the desired option,it will
                               // change button value to selected value
                               onChanged: (String? newValue) {
@@ -727,13 +763,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   category_2 = newValue!;
                                 });
                               },
-                            );
-                    },
-                  ),
+                            )));
+                  },
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                Insets.gapH20,
                 const Text(
                   'Language',
                   style: TextStyle(
@@ -741,21 +774,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
+                Insets.gapH10,
                 //language dropdwon
-                SizedBox(
-                  width: double.maxFinite,
-                  child: ValueListenableBuilder(
-                    valueListenable: isLoaded,
-                    builder: (BuildContext context, bool value, Widget? child) {
-                      return isLoaded.value == false
-                          ? Loader()
-                          : DropdownButton<String>(
+                ValueListenableBuilder(
+                  valueListenable: isLoaded,
+                  builder: (BuildContext context, bool value, Widget? child) {
+                    return isLoaded.value == false
+                        ? Loader()
+                        : Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 0.5),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            child: DropdownButton<String>(
                               dropdownColor: AppColors.APP_PRIMARY_COLOR,
                               isExpanded: true,
                               // Initial Value
                               value: langDropdownvaluee,
-
+                              underline: Container(),
                               // Down Arrow Icon
                               icon: const Icon(Icons.keyboard_arrow_down),
 
@@ -763,35 +801,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               items: _provider!.languages
                                   .map<DropdownMenuItem<String>>(
                                       (String items) {
-                                return DropdownMenuItem<String>(
-                                  value: items,
-                                  child: Column(
-                                    children: [
-                                      Text(items),
-                                      const Divider(
-                                        color: Colors.white,
+                                    return DropdownMenuItem<String>(
+                                      value: items,
+                                      child: Column(
+                                        children: [
+                                          Text(items),
+                                          const Divider(
+                                            color: Colors.white,
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                  onTap: () {
-                                    for (int i = 0;
+                                      onTap: () {
+                                        for (int i = 0;
                                         i <
                                             _provider!
                                                 .languageData['data'].length;
                                         i++) {
-                                      if (items ==
-                                          _provider!.languageData['data'][i]
+                                          if (items ==
+                                              _provider!.languageData['data'][i]
                                               ['name']) {
-                                        languageId = _provider!
-                                            .languageData['data'][i]['id']
-                                            .toString();
-                                        break;
-                                      }
-                                    }
-                                    print(languageId);
-                                  },
-                                );
-                              }).toList(),
+                                            languageId = _provider!
+                                                .languageData['data'][i]['id']
+                                                .toString();
+                                            break;
+                                          }
+                                        }
+                                        print(languageId);
+                                      },
+                                    );
+                                  }).toList(),
                               // After selecting the desired option,it will
                               // change button value to selected value
                               onChanged: (String? newValue) {
@@ -799,13 +837,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   langDropdownvaluee = newValue!;
                                 });
                               },
-                            );
-                    },
-                  ),
+                            )));
+                  },
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                Insets.gapH20,
                 //operation days
                 const Text(
                   'Operation Days',
@@ -887,7 +922,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-
+                Insets.gapH20,
                 // profile pic
                 InkWell(
                   onTap: () {
@@ -984,9 +1019,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ]),
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                Insets.gapH20,
                 const Text(
                   'Is registered with ministry of Commerce?',
                   style: TextStyle(
@@ -1102,10 +1135,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                const SizedBox(
-                  height: 15,
-                ),
-
                 //document 2 picker
                 if (radioValue == 1)
                   InkWell(
@@ -1140,10 +1169,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                const SizedBox(
-                  height: 15,
-                ),
-
+                Insets.gapH20,
                 CustomButton(
                   isLoading: isLoading,
                   text: 'Next',
@@ -1169,7 +1195,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       Map<String, dynamic> userData = {
         'name': nameCtr.text,
         'email': emailCtr.text,
-        'phone_no': phoneNumberCtr.text,
+        'phone_no': phoneCode+phoneNumberCtr.text,
         'password': passCtr.text,
         'password_confirmation': passCtr.text,
         'address': branchCtr.text,

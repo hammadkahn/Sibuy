@@ -8,6 +8,8 @@ import '../../screens/authentication/auth.dart';
 import '../../screens/authentication/sign_up_screen.dart';
 import '../../shared/custom_button.dart';
 import '../create_acc/user_create_acc.dart';
+import '../user_menu/full_user_meu.dart';
+import '../user_menu/user_menu.dart';
 
 class user_auth extends StatefulWidget {
   const user_auth({Key? key}) : super(key: key);
@@ -104,12 +106,15 @@ class _user_authState extends State<user_auth> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.005,
               ),
-              const InkWell(
-                // onTap: () {
-                //   Navigator.of(context).push(
-                //       MaterialPageRoute(builder: (_) => const SignUpScreen()));
-                // },
-                child: SizedBox(
+              InkWell(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const User_bar(token: '',)),
+                          (route) => false);
+                },
+                child: const SizedBox(
                   height: 40,
                   child: Center(
                     child: Text(

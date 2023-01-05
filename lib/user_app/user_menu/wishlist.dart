@@ -35,12 +35,6 @@ class _WishlistState extends State<Wishlist> {
   // }
 
   @override
-  void didChangeDependencies() {
-    // getMerchantAddress();
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Container(

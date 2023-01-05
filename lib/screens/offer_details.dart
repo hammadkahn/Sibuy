@@ -24,12 +24,6 @@ class _OfferDetailsState extends State<OfferDetails> {
   }
 
   @override
-  void didChangeDependencies() {
-    // totalReviews = Reviews().getRating(widget.data!.reviews!);
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

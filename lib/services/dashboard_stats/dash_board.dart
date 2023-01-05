@@ -17,8 +17,6 @@ class DashBoardStats {
       final result = DashboardStatsModel.fromJson(jsonDecode(response.body));
 
       if (response.statusCode == 200) {
-        //jsonDecode(response.body) as Map<String, dynamic>;
-
         return result;
       } else {
         throw Exception(response.reasonPhrase);

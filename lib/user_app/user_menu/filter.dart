@@ -45,11 +45,6 @@ class _filter_listState extends State<filter_list> {
   @override
   void initState() {
     _dealProvider = Provider.of<DealProvider>(context, listen: false);
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
     fetchCitiesAndCountries().whenComplete(() {
       setState(() {
         currentCity = _dealProvider!.citiesList.isEmpty
@@ -58,7 +53,7 @@ class _filter_listState extends State<filter_list> {
       });
       log('city: ${currentCountry!}');
     });
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override

@@ -30,13 +30,6 @@ class _trending_userState extends State<trending_user> {
   //   });
   // }
 
-  @override
-  void didChangeDependencies() {
-    // Future.microtask(
-    //     () => getRating().whenComplete(() => getMerchantAddress()));
-
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {

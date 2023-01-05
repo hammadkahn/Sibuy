@@ -86,23 +86,17 @@ class _Add_dealState extends State<Add_deal> {
   @override
   void initState() {
     _provider = Provider.of<DealProvider>(context, listen: false);
-
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
     _provider!.getAllLanguages().then((value) => _provider!
-            .getAllCat()
-            .then((value) => _provider!.getAllTags())
-            .whenComplete(() {
-          isLoaded.value = true;
-          category = _provider!.allCategories[0];
-          // setState(() {
-          //   // items = Provider.of<DealProvider>(context, listen: false).languages;
-          // });
-        }));
-    super.didChangeDependencies();
+        .getAllCat()
+        .then((value) => _provider!.getAllTags())
+        .whenComplete(() {
+      isLoaded.value = true;
+      category = _provider!.allCategories[0];
+      // setState(() {
+      //   // items = Provider.of<DealProvider>(context, listen: false).languages;
+      // });
+    }));
+    super.initState();
   }
 
   @override

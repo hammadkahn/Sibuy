@@ -1,9 +1,10 @@
 import 'dart:developer';
 
 import 'package:SiBuy/constant/color_constant.dart';
+import 'package:SiBuy/constant/size_constants.dart';
 import 'package:SiBuy/providers/deal_provider.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
-
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/shared/custom_button.dart';
 import 'package:intl/intl.dart';
@@ -26,6 +27,7 @@ class _User_create_accState extends State<User_create_acc> {
   final countryCtr = TextEditingController();
   final cityCtr = TextEditingController();
   final passCtr = TextEditingController();
+  final confirmPassCtr = TextEditingController();
   final dobCtr = TextEditingController();
   final emailCtr = TextEditingController();
   final phoneNumberCtr = TextEditingController();
@@ -44,18 +46,16 @@ class _User_create_accState extends State<User_create_acc> {
     'Female',
     'Other',
   ];
-  bool _obscureText = true;
+  bool _obscureTextPass = true;
+  bool _obscureTextCPass = true;
   String? selectedCountry;
   String? languageId;
+  String phoneCode = '+65';
+
   @override
   void initState() {
     _provider = Provider.of<DealProvider>(context, listen: false);
     debugPrint(countryCtr.text);
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
     _provider!
         .getAllLanguages()
         .then((value) => _provider!.getAllCountries())
@@ -65,7 +65,7 @@ class _User_create_accState extends State<User_create_acc> {
       //   // items = Provider.of<DealProvider>(context, listen: false).languages;
       // });
     });
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
@@ -75,7 +75,7 @@ class _User_create_accState extends State<User_create_acc> {
       body: Form(
         key: _key,
         child: Padding(
-          padding: const EdgeInsets.only(right: 24, left: 24, top: 116),
+          padding: const EdgeInsets.only(right: 24, left: 24, top: 60),
           child: SingleChildScrollView(
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -137,18 +137,26 @@ class _User_create_accState extends State<User_create_acc> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 16),
+                  padding: const EdgeInsets.only(top: 5, bottom: 16),
                   child: TextFormField(
                     controller: phoneNumberCtr,
                     textInputAction: TextInputAction.next,
-                    maxLength: 11,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Color(0xFFEAEAEF)),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      hintText: 'Phone Number (With country code)',
+                      hintText: 'Phone No',
+                      prefixIcon: CountryCodePicker(
+                        dialogSize: Size(SizeConfig.screenWidth * 0.8, SizeConfig.screenHeight * 0.8),
+                        initialSelection: phoneCode,
+                        alignLeft: false,
+                        onChanged: (CountryCode? code) {
+                          print(code!.code);
+                          phoneCode = code!.dialCode!;
+                        },
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -161,10 +169,10 @@ class _User_create_accState extends State<User_create_acc> {
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey, width: 0.5),
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                     child: DropdownButton(
                       dropdownColor: AppColors.APP_PRIMARY_COLOR,
                       underline: Container(),
@@ -199,7 +207,7 @@ class _User_create_accState extends State<User_create_acc> {
                     textInputAction: TextInputAction.next,
                     readOnly: true,
                     decoration: InputDecoration(
-                        icon: const Icon(Icons.calendar_today_rounded),
+                        prefixIcon: const Icon(Icons.calendar_today_rounded, color: AppColors.APP_PRIMARY_COLOR),
                         labelText: 'Date of Birth',
                         enabledBorder: OutlineInputBorder(
                           borderSide:
@@ -216,7 +224,21 @@ class _User_create_accState extends State<User_create_acc> {
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime(1970),
-                          lastDate: DateTime(2030));
+                          lastDate: DateTime(2030),
+                        builder: (BuildContext context, Widget? child) {
+                          return Theme(
+                            data: ThemeData.light().copyWith(
+                              primaryColor: AppColors.APP_PRIMARY_COLOR,
+                              colorScheme: const ColorScheme.light(
+                                primary: AppColors.APP_PRIMARY_COLOR,
+                              ),
+                              buttonTheme: const ButtonThemeData(
+                                  textTheme: ButtonTextTheme.primary),
+                            ),
+                            child: child!,
+                          );
+                        },
+                      );
 
                       if (pickdate != null) {
                         setState(() {
@@ -228,7 +250,7 @@ class _User_create_accState extends State<User_create_acc> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 26, top: 16),
+                  padding: const EdgeInsets.only(bottom: 20, top: 16),
                   child: TextFormField(
                     textInputAction: TextInputAction.next,
                     controller: passCtr,
@@ -242,14 +264,14 @@ class _User_create_accState extends State<User_create_acc> {
                         suffix: InkWell(
                           onTap: () {
                             setState(() {
-                              _obscureText = !_obscureText;
+                              _obscureTextPass = !_obscureTextPass;
                             });
                           },
-                          child: Icon(_obscureText
+                          child: Icon(_obscureTextPass
                               ? Icons.visibility_off
                               : Icons.visibility),
                         )),
-                    obscureText: _obscureText,
+                    obscureText: _obscureTextPass,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please a strong password';
@@ -258,12 +280,11 @@ class _User_create_accState extends State<User_create_acc> {
                     },
                   ),
                 ),
-
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 26),
+                  padding: const EdgeInsets.only(bottom: 5),
                   child: TextFormField(
                     textInputAction: TextInputAction.next,
-                    controller: passCtr,
+                    controller: confirmPassCtr,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide:
@@ -274,14 +295,14 @@ class _User_create_accState extends State<User_create_acc> {
                         suffix: InkWell(
                           onTap: () {
                             setState(() {
-                              _obscureText = !_obscureText;
+                              _obscureTextCPass = !_obscureTextCPass;
                             });
                           },
-                          child: Icon(_obscureText
+                          child: Icon(_obscureTextCPass
                               ? Icons.visibility_off
                               : Icons.visibility),
                         )),
-                    obscureText: _obscureText,
+                    obscureText: _obscureTextCPass,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please a strong password';
@@ -290,9 +311,6 @@ class _User_create_accState extends State<User_create_acc> {
                     },
                   ),
                 ),
-
-                const SizedBox(height: 8),
-
                 //country dropdown
                 ValueListenableBuilder(
                   valueListenable: isLoaded,
@@ -470,67 +488,73 @@ class _User_create_accState extends State<User_create_acc> {
                     hintText: 'Referral Code (Optional)',
                   ),
                 ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: double.maxFinite,
-                  child: ValueListenableBuilder(
-                    valueListenable: isLoaded,
-                    builder: (BuildContext context, bool value, Widget? child) {
-                      return isLoaded.value == false
-                          ? Loader()
-                          : DropdownButton<String>(
-                              dropdownColor: AppColors.APP_PRIMARY_COLOR,
-                              isExpanded: true,
-                              // Initial Value
-                              value: langDropdownvaluee,
+                const SizedBox(height: 15),
+                ValueListenableBuilder(
+                  valueListenable: isLoaded,
+                  builder: (BuildContext context, bool value, Widget? child) {
+                    return isLoaded.value == false
+                        ? Loader()
+                        : Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 0.5),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            child: DropdownButton<String>(
+                            dropdownColor: AppColors.APP_PRIMARY_COLOR,
+                            isExpanded: true,
+                            // Initial Value
+                            value: langDropdownvaluee,
+                            underline: Container(),
+                            // Down Arrow Icon
+                            icon: const Icon(Icons.keyboard_arrow_down),
 
-                              // Down Arrow Icon
-                              icon: const Icon(Icons.keyboard_arrow_down),
-
-                              // Array list of items
-                              items: _provider!.languages
-                                  .map<DropdownMenuItem<String>>(
-                                      (String items) {
-                                return DropdownMenuItem<String>(
-                                  value: items,
-                                  child: Text(items),
-                                  onTap: () {
-                                    for (int i = 0;
-                                        i <
-                                            _provider!
-                                                .languageData['data'].length;
-                                        i++) {
-                                      if (items ==
-                                          _provider!.languageData['data'][i]
-                                              ['name']) {
-                                        languageId = _provider!
-                                            .languageData['data'][i]['id']
-                                            .toString();
-                                        break;
-                                      }
+                            // Array list of items
+                            items: _provider!.languages
+                                .map<DropdownMenuItem<String>>(
+                                    (String items) {
+                              return DropdownMenuItem<String>(
+                                value: items,
+                                child: Text(items),
+                                onTap: () {
+                                  for (int i = 0;
+                                      i <
+                                          _provider!
+                                              .languageData['data'].length;
+                                      i++) {
+                                    if (items ==
+                                        _provider!.languageData['data'][i]
+                                            ['name']) {
+                                      languageId = _provider!
+                                          .languageData['data'][i]['id']
+                                          .toString();
+                                      break;
                                     }
-                                    print(languageId);
-                                  },
-                                );
-                              }).toList(),
-                              // After selecting the desired option,it will
-                              // change button value to selected value
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  langDropdownvaluee = newValue!;
-                                });
-                              },
-                            );
-                    },
-                  ),
+                                  }
+                                  print(languageId);
+                                },
+                              );
+                            }).toList(),
+                            // After selecting the desired option,it will
+                            // change button value to selected value
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                langDropdownvaluee = newValue!;
+                              });
+                            },
+                          )
+                        )
+                    );
+                  },
                 ),
-                Insets.gapH10,
+                Insets.gapH20,
                 CustomButton(
                   isLoading: isLoading,
                   text: 'Next',
                   onPressed: _handleRegister,
                 ),
-                Insets.gapH10,
+                Insets.gapH20,
               ],
             ),
           ),
@@ -554,7 +578,7 @@ class _User_create_accState extends State<User_create_acc> {
       Map<String, dynamic> userData = {
         'name': nameCtr.text,
         'email': emailCtr.text,
-        'phone_no': phoneNumberCtr.text,
+        'phone_no': phoneCode+phoneNumberCtr.text,
         'date_of_birth': dobCtr.text,
         'password': passCtr.text,
         'password_confirmation': passCtr.text,

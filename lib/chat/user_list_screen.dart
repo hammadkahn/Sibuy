@@ -14,6 +14,28 @@ class UserListScreen extends StatefulWidget {
 }
 
 class _UserListScreenState extends State<UserListScreen> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    createConvers();
+    super.initState();
+  }
+
+  Future<void> createConvers() async {
+    final result = await Provider.of<ChatProvider>(context, listen: false).createCoversation(widget.token, 'hello');
+    print(result);
+    Navigator.push(context,
+      MaterialPageRoute(
+        builder: (ctx) => ChatScreen(
+          token: widget.token,
+          conversationId: result!,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context, listen: false)

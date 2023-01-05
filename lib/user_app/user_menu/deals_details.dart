@@ -42,11 +42,6 @@ class _Details_dealsState extends State<Details_deals> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       // height: MediaQuery.of(context).size.height / 2,

@@ -16,6 +16,7 @@ import '../constant/helper.dart';
 import '../models/category_model.dart';
 import '../models/deal_model.dart';
 import '../models/referral_model.dart';
+import '../models/user_carousel_model.dart';
 import '../models/user_model.dart';
 import '../services/user_merchant_services.dart';
 

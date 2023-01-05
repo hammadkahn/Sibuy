@@ -12,6 +12,7 @@ import '../../constant/app_styles.dart';
 import '../../constant/color_constant.dart';
 import '../../constant/helper.dart';
 import '../../constant/size_constants.dart';
+import '../../models/user_carousel_model.dart';
 import '../../services/get_profile/get_user_info.dart';
 import '../../shared/loader.dart';
 import '../../shared/search_field.dart';
@@ -31,6 +32,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
   String? selectedValue;
   String? cityCode, city;
   late UserProfileModel user;
+  UserCarouselData? carouselData;
   final prefs = SharedPreferences.getInstance();
   ValueNotifier<List<dynamic>>? items = ValueNotifier([]);
 
@@ -48,17 +50,30 @@ class _Full_menu_userState extends State<Full_menu_user> {
 
   @override
   initState() {
-    getCityCode();
-    getUser();
     dealProvider = Provider.of<DealProvider>(context, listen: false);
-    fetchCitiesAndCountries().whenComplete(
-      () => dealProvider!.getCarousalsDeals(widget.token).whenComplete(
-        () {
-          productLoaded.value = true;
-        },
-      ),
-    );
+    if(widget.token != ''){
+      getCityCode();
+      getUser();
+      getCarousel();
+      fetchCitiesAndCountries().whenComplete(
+            () => dealProvider!.getCarousalsDeals(widget.token).whenComplete(
+              () {
+            productLoaded.value = true;
+          },
+        ),
+      );
+    }
+    else{
+      cityCode = "15883";
+      city = "Phnom Phen";
+    }
     super.initState();
+  }
+
+  getCarousel() async {
+    carouselData = await UserInformation().getCarouselData(widget.token);
+    print(carouselData!.data);
+    setState(() { });
   }
 
   getUser() async {
@@ -90,21 +105,6 @@ class _Full_menu_userState extends State<Full_menu_user> {
 
   ValueNotifier<bool> productLoaded = ValueNotifier(false);
 
-  // @override
-  // void didChangeDependencies() {
-  //   dealProvider = Provider.of<DealProvider>(context, listen: false);
-  //
-  //   super.didChangeDependencies();
-  //
-  //   fetchCitiesAndCountries().whenComplete(
-  //     () => dealProvider!.getCarousalsDeals(widget.token).whenComplete(
-  //       () {
-  //         productLoaded.value = true;
-  //       },
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
@@ -134,11 +134,11 @@ class _Full_menu_userState extends State<Full_menu_user> {
                 SearchField(
                   token: widget.token,
                 ),
-                ValueListenableBuilder(
+                carouselData == null ? Loader() : ValueListenableBuilder(
                   valueListenable: productLoaded,
                   builder: (BuildContext context, bool value, Widget? child) {
                     return SizedBox(
-                      child: CSlider(),
+                      child: CSlider(data: carouselData!.data!,),
                     );
                   },
                 ),
@@ -246,7 +246,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                     .where((element) =>
                         element.isSponsored == 1 || isForSponsored == false)
                     .toList();
-                return list.length > 0
+                return list.isNotEmpty
                     ? ListView.builder(
                         itemCount: list.length,
                         scrollDirection: Axis.horizontal,
@@ -341,7 +341,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                       },
                       underline: const SizedBox(),
                       buttonHeight: 30,
-                      buttonWidth: 100,
+                      buttonWidth: 160,
                       buttonPadding: const EdgeInsets.only(left: 14, right: 8),
                       buttonDecoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
@@ -365,7 +365,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
           },
         ),
         const Spacer(),
-        GestureDetector(
+        widget.token == "" ? Container() : GestureDetector(
             onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(
@@ -378,7 +378,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
             },
             child: Image.asset('assets/images/drawer.png')),
         const SizedBox(width: 13),
-        InkWell(
+        widget.token == "" ? Container() : InkWell(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: ((context) =>

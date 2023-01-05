@@ -3,7 +3,11 @@ import 'package:SiBuy/user_app/user_auth/user_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/user_model.dart';
+import '../../screens/authentication/auth.dart';
 import '../../screens/full_menu/bar.dart';
+import '../../services/auth/authentication.dart';
+import '../../services/get_profile/get_user_info.dart';
 import '../user_menu/user_menu.dart';
 
 class user_splash extends StatefulWidget {
@@ -76,12 +80,32 @@ class _user_splashState extends State<user_splash>
     userId = prefs.getInt('userId');
     debugPrint('user type: $status');
 
+    if(token != null){
+      UserProfileModel user = await UserInformation().getUserProfile(token!);
+      print(user);
+
+      if(user.data == null){
+        isLogOut();
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (_) => const user_auth()),
+                (route) => false);
+        return;
+      }
+    }
+
     debugPrint(token);
     debugPrint(email);
     debugPrint(userType.toString());
     setState(() {
       isChecked = true;
     });
+  }
+
+  Future<void> isLogOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 
   @override

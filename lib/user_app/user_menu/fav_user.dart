@@ -70,7 +70,7 @@ class _Fav_userState extends State<Fav_user> {
                   ),
                 ],
               ),
-              Expanded(
+              widget.token == "" ? Container() : Expanded(
                 child: Padding(
                     padding: const EdgeInsets.only(top: 24),
                     child: Consumer<DealProvider>(

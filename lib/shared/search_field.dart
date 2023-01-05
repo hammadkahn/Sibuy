@@ -55,6 +55,9 @@ class _SearchFieldState extends State<SearchField> {
         controller: controller,
         textInputAction: TextInputAction.search,
         onSubmitted: (val){
+          if(widget.token == ''){
+            return;
+          }
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Searching...')));
           searchData().whenComplete(() {
@@ -89,6 +92,9 @@ class _SearchFieldState extends State<SearchField> {
                   //         const SnackBar(content: Text('Set Filters first')))
                   // :
                   () {
+                    if(widget.token == ''){
+                      return;
+                    }
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('searching...')));
                 searchData().whenComplete(() {

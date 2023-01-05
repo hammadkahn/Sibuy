@@ -20,9 +20,9 @@ class _My_QrsState extends State<My_Qrs> {
   String selectedFilter = 'All';
 
   @override
-  void didChangeDependencies() {
+  void initState() {
     provider = Provider.of<DealProvider>(context, listen: false);
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
@@ -51,7 +51,7 @@ class _My_QrsState extends State<My_Qrs> {
               ],
             ),
             const SizedBox(height: 15),
-            Expanded(
+            widget.token == "" ? Container() : Expanded(
               flex: 6,
               child: FutureBuilder<CartListModel>(
                 future: provider!.getCartItemsList(widget.token),

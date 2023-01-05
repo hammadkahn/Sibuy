@@ -9,11 +9,14 @@ import 'package:SiBuy/models/user_model.dart';
 import 'package:SiBuy/services/auth/authentication.dart';
 import 'package:SiBuy/services/get_profile/get_user_info.dart';
 import 'package:SiBuy/user_app/user_menu/my_qrs.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../apis/api_urls.dart';
+import '../../chat/chat_screen.dart';
 import '../../chat/user_list_screen.dart';
 import '../../constant/color_constant.dart';
+import '../../providers/chat_provider.dart';
 import '../../shared/custom_button.dart';
 import '../../shared/loader.dart';
 import 'change_pass.dart';
@@ -368,7 +371,7 @@ class _ham_userState extends State<ham_user> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => const Points(),
+                                builder: (context) => Points(points: data!.points!),
                               ),
                             );
                           },
@@ -444,11 +447,12 @@ class _ham_userState extends State<ham_user> {
                             )),
                         InkWell(
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (_) => UserListScreen(
-                                      token: widget.token)),
-                            );
+                            createConversation();
+                            // Navigator.of(context).push(
+                            //   MaterialPageRoute(
+                            //       builder: (_) => UserListScreen(
+                            //           token: widget.token)),
+                            // );
                           },
                           child: Row(
                             children: [
@@ -541,6 +545,19 @@ class _ham_userState extends State<ham_user> {
               );
             }),
           ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> createConversation() async {
+    final result = await Provider.of<ChatProvider>(context, listen: false).createCoversation(widget.token, 'hello');
+    print(result);
+    Navigator.push(context,
+      MaterialPageRoute(
+        builder: (ctx) => ChatScreen(
+          token: widget.token,
+          conversationId: result!,
         ),
       ),
     );
