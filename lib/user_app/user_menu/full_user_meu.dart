@@ -53,6 +53,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
   @override
   initState() {
     dealProvider = Provider.of<DealProvider>(context, listen: false);
+    getCarousel();
     if(widget.token != ''){
       UiUtils.checkInternet().then((value){
         isInternetAvailable = value;
@@ -60,7 +61,6 @@ class _Full_menu_userState extends State<Full_menu_user> {
       });
       getCityCode();
       getUser();
-      getCarousel();
       fetchCitiesAndCountries().whenComplete(
             () => dealProvider!.getCarousalsDeals(widget.token).whenComplete(
               () {
@@ -72,13 +72,14 @@ class _Full_menu_userState extends State<Full_menu_user> {
     else{
       cityCode = "15883";
       city = "Phnom Phen";
+      AppHelper.setPref('cityId', cityCode);
+      AppHelper.setPref('city', city);
     }
     super.initState();
   }
 
   getCarousel() async {
-    carouselData = await UserInformation().getCarouselData(widget.token);
-    print(carouselData!.data);
+    carouselData = await UserInformation().getCarouselData();
     setState(() { });
   }
 

@@ -47,11 +47,10 @@ class UserInformation {
     }
   }
 
-  Future<UserCarouselData> getCarouselData(String token) async {
+  Future<UserCarouselData> getCarouselData() async {
     try {
       final response = await http.get(
         ApiUrls.getCarousel,
-        headers: {HttpHeaders.authorizationHeader: 'Bearer $token'},
       );
       final result = UserCarouselData.fromJson(jsonDecode(response.body));
       if (response.statusCode == 200) {
