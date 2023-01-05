@@ -13,7 +13,7 @@ class UserCarouselData {
     if (json['data'] != null) {
       data = <UserCarousel>[];
       json['data'].forEach((v) {
-        data!.add(new UserCarousel.fromJson(v));
+        data!.add(UserCarousel.fromJson(v));
       });
     }
   }

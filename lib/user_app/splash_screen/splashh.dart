@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:SiBuy/user_app/user_auth/user_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/user_model.dart';
@@ -10,14 +11,14 @@ import '../../services/auth/authentication.dart';
 import '../../services/get_profile/get_user_info.dart';
 import '../user_menu/user_menu.dart';
 
-class user_splash extends StatefulWidget {
-  const user_splash({Key? key}) : super(key: key);
+class UserSplash extends StatefulWidget {
+  const UserSplash({Key? key}) : super(key: key);
 
   @override
-  State<user_splash> createState() => _user_splashState();
+  State<UserSplash> createState() => _UserSplashState();
 }
 
-class _user_splashState extends State<user_splash>
+class _UserSplashState extends State<UserSplash>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
 
@@ -25,6 +26,7 @@ class _user_splashState extends State<user_splash>
   void initState() {
     super.initState();
     // navigate to next page after 5 seconds
+
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
@@ -46,7 +48,7 @@ class _user_splashState extends State<user_splash>
                 : Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => User_bar(
+                      builder: (context) => UserBottomBar(
                         token: token!,
                       ),
                     ),

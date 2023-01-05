@@ -15,6 +15,7 @@ import '../../constant/size_constants.dart';
 import '../../models/user_carousel_model.dart';
 import '../../services/get_profile/get_user_info.dart';
 import '../../shared/loader.dart';
+import '../../shared/no_internet_widget.dart';
 import '../../shared/search_field.dart';
 import '../notification_screen.dart';
 import 'ham_user.dart';
@@ -32,6 +33,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
   String? selectedValue;
   String? cityCode, city;
   late UserProfileModel user;
+  bool isInternetAvailable = true;
   UserCarouselData? carouselData;
   final prefs = SharedPreferences.getInstance();
   ValueNotifier<List<dynamic>>? items = ValueNotifier([]);
@@ -52,6 +54,10 @@ class _Full_menu_userState extends State<Full_menu_user> {
   initState() {
     dealProvider = Provider.of<DealProvider>(context, listen: false);
     if(widget.token != ''){
+      UiUtils.checkInternet().then((value){
+        isInternetAvailable = value;
+        setState(() { });
+      });
       getCityCode();
       getUser();
       getCarousel();
@@ -112,7 +118,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.only(right: 24, left: 24, top: 20),
-          child: SingleChildScrollView(
+          child: !isInternetAvailable ? NoInternetWidget() : SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

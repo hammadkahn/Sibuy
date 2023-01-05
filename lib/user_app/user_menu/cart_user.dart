@@ -5,9 +5,11 @@ import 'package:SiBuy/user_app/user_menu/order_status.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../constant/app_styles.dart';
 import '../../constant/color_constant.dart';
 import '../../constant/helper.dart';
 import '../../providers/order.dart';
+import '../../shared/no_internet_widget.dart';
 import 'cart_deals.dart';
 
 class Cart_user extends StatefulWidget {
@@ -31,8 +33,15 @@ class _Cart_userState extends State<Cart_user> {
   //   });
   // }
 
+  bool isInternetAvailable = true;
+
   @override
   void initState() {
+    // TODO: implement initState
+    UiUtils.checkInternet().then((value){
+      isInternetAvailable = value;
+      setState(() { });
+    });
     getCity();
     super.initState();
   }
@@ -57,7 +66,7 @@ class _Cart_userState extends State<Cart_user> {
         ),
         body: Padding(
           padding: const EdgeInsets.only(left: 24, right: 32, top: 17),
-          child: Column(
+          child: !isInternetAvailable ? NoInternetWidget() : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(

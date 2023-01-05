@@ -4,8 +4,10 @@ import 'package:SiBuy/user_app/user_menu/user_menu.dart';
 import 'package:SiBuy/user_app/user_menu/wishlist.dart';
 import 'package:provider/provider.dart';
 
+import '../../constant/app_styles.dart';
 import '../../models/wish_list_model.dart';
 import '../../shared/loader.dart';
+import '../../shared/no_internet_widget.dart';
 
 class Fav_user extends StatefulWidget {
   const Fav_user({Key? key, required this.token}) : super(key: key);
@@ -18,8 +20,15 @@ class Fav_user extends StatefulWidget {
 class _Fav_userState extends State<Fav_user> {
   final _key = GlobalKey<ScaffoldState>();
 
+  bool isInternetAvailable = true;
+
   @override
   void initState() {
+    // TODO: implement initState
+    UiUtils.checkInternet().then((value){
+      isInternetAvailable = value;
+      setState(() { });
+    });
     super.initState();
   }
 
@@ -28,7 +37,7 @@ class _Fav_userState extends State<Fav_user> {
     return SafeArea(
       child: Scaffold(
         key: _key,
-        body: Padding(
+        body: !isInternetAvailable ? NoInternetWidget() : Padding(
           padding: const EdgeInsets.only(left: 24, right: 32, top: 17),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +62,7 @@ class _Fav_userState extends State<Fav_user> {
                     child: GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => User_bar(token: widget.token)));
+                              builder: (_) => UserBottomBar(token: widget.token)));
                         },
                         child: Image.asset('assets/images/arrow-left.png')),
                   ),

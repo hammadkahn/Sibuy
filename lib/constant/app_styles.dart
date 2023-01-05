@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'color_constant.dart';
 
 /// A class that holds all the icon sizes used throughout
@@ -27,6 +28,10 @@ class UiUtils {
   static double getScreenWidth(context) => MediaQuery.of(context).size.width;
 
   static double getScreenHeight(context) => MediaQuery.of(context).size.height;
+
+  static Future<bool> checkInternet() async {
+    return await InternetConnectionChecker().hasConnection;
+  }
 }
 
 /// A class that holds all the gaps and insets used

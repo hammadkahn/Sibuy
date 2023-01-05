@@ -151,7 +151,7 @@ class _Email_verState extends State<Email_ver> {
     if (res['message'] == 'success' && res['data']['type'] == 1) {
       String accessToken = res['data']['token'];
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => User_bar(token: accessToken)),
+          MaterialPageRoute(builder: (context) => UserBottomBar(token: accessToken)),
           (route) => false);
     } else {
       prefs.clear();

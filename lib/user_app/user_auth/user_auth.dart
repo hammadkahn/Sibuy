@@ -7,6 +7,7 @@ import '../../constant/size_constants.dart';
 import '../../screens/authentication/auth.dart';
 import '../../screens/authentication/sign_up_screen.dart';
 import '../../shared/custom_button.dart';
+import '../../shared/no_internet_widget.dart';
 import '../create_acc/user_create_acc.dart';
 import '../user_menu/full_user_meu.dart';
 import '../user_menu/user_menu.dart';
@@ -20,6 +21,19 @@ class user_auth extends StatefulWidget {
 }
 
 class _user_authState extends State<user_auth> {
+
+  bool isInternetAvailable = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    UiUtils.checkInternet().then((value){
+      isInternetAvailable = value;
+      setState(() { });
+    });
+    super.initState();
+  }
+
   int _value = 0;
   @override
   Widget build(BuildContext context) {
@@ -27,7 +41,7 @@ class _user_authState extends State<user_auth> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(right: 24, left: 24, top: 84),
-        child: SingleChildScrollView(
+        child: !isInternetAvailable ? NoInternetWidget() : SingleChildScrollView(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -111,7 +125,7 @@ class _user_authState extends State<user_auth> {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const User_bar(token: '',)),
+                          builder: (_) => const UserBottomBar(token: '',)),
                           (route) => false);
                 },
                 child: const SizedBox(

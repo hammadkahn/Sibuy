@@ -5,7 +5,9 @@ import 'package:SiBuy/shared/location_user.dart';
 import 'package:SiBuy/user_app/categories/single_category.dart';
 import 'package:SiBuy/user_app/categories/widget/categories_list.dart';
 
+import '../../constant/app_styles.dart';
 import '../../shared/loader.dart';
+import '../../shared/no_internet_widget.dart';
 import 'widget/trending_deals.dart';
 
 class Categories_user extends StatefulWidget {
@@ -20,11 +22,24 @@ class _Categories_userState extends State<Categories_user> {
 
   int parentId = -1;
 
+  bool isInternetAvailable = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    UiUtils.checkInternet().then((value){
+      isInternetAvailable = value;
+      setState(() { });
+    });
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Padding(
+          body: !isInternetAvailable ? NoInternetWidget() : Padding(
             padding: const EdgeInsets.only(right: 24, left: 24, top: 20),
         child: Column(
           children: <Widget>[

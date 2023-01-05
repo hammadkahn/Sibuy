@@ -4,8 +4,10 @@ import 'package:SiBuy/providers/deal_provider.dart';
 import 'package:SiBuy/user_app/user_menu/my_qrs_cont.dart';
 import 'package:provider/provider.dart';
 
+import '../../constant/app_styles.dart';
 import '../../constant/color_constant.dart';
 import '../../shared/loader.dart';
+import '../../shared/no_internet_widget.dart';
 
 class My_Qrs extends StatefulWidget {
   const My_Qrs({Key? key, required this.token}) : super(key: key);
@@ -19,8 +21,15 @@ class _My_QrsState extends State<My_Qrs> {
   DealProvider? provider;
   String selectedFilter = 'All';
 
+  bool isInternetAvailable = true;
+
   @override
   void initState() {
+    // TODO: implement initState
+    UiUtils.checkInternet().then((value){
+      isInternetAvailable = value;
+      setState(() { });
+    });
     provider = Provider.of<DealProvider>(context, listen: false);
     super.initState();
   }
@@ -34,7 +43,7 @@ class _My_QrsState extends State<My_Qrs> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(25),
-        child: Column(
+        child: !isInternetAvailable ? NoInternetWidget() : Column(
           children: [
             Row(
               children: [

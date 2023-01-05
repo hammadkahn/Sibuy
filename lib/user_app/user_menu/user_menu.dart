@@ -6,15 +6,15 @@ import 'package:SiBuy/user_app/user_menu/fav_user.dart';
 import 'package:SiBuy/user_app/user_menu/full_user_meu.dart';
 import '../../constant/color_constant.dart';
 
-class User_bar extends StatefulWidget {
-  const User_bar({Key? key, required this.token}) : super(key: key);
+class UserBottomBar extends StatefulWidget {
+  const UserBottomBar({Key? key, required this.token}) : super(key: key);
   final String token;
 
   @override
-  State<User_bar> createState() => _User_barState();
+  State<UserBottomBar> createState() => _UserBottomBarState();
 }
 
-class _User_barState extends State<User_bar> {
+class _UserBottomBarState extends State<UserBottomBar> {
   Future<bool?> showWarning(BuildContext context) async => showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
