@@ -134,12 +134,11 @@ class _Full_menu_userState extends State<Full_menu_user> {
                       fontWeight: FontWeight.w500,
                       color: Color(0xFF32324D)),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                Insets.gapH20,
                 SearchField(
                   token: widget.token,
                 ),
+                Insets.gapH10,
                 carouselData == null ? Loader() : ValueListenableBuilder(
                   valueListenable: productLoaded,
                   builder: (BuildContext context, bool value, Widget? child) {
@@ -149,9 +148,7 @@ class _Full_menu_userState extends State<Full_menu_user> {
                   },
                 ),
                 //two rows with 8 icons of categories
-                const SizedBox(
-                  height: 20,
-                ),
+                Insets.gapH10,
                 // const Text(
                 //   'Categories',
                 //   style: TextStyle(
