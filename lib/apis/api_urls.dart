@@ -12,6 +12,8 @@ class ApiUrls {
   //password update url
   static final changePass = Uri.parse('${baseUrl}user/updatePassword');
 
+  static final changePassMerchant = Uri.parse('${baseUrl}merchant/updatePassword');
+
   //deal urls
   static final getSingleDeal = Uri.parse('${baseUrl}merchant/getDeal/');
   static final allDeals = Uri.parse(
@@ -41,7 +43,6 @@ class ApiUrls {
   static final userSignUp = Uri.parse('${baseUrl}userRegister');
   static final updateUserProfile = Uri.parse('${baseUrl}user/updateProfile');
   static final updatePreferences = Uri.parse('${baseUrl}user/updatePreference');
-  static final updateUserPass = Uri.parse('${baseUrl}user/updatePassword');
 
   //verify account urls
   static final verifyAccount = Uri.parse('${baseUrl}verifyAccount');

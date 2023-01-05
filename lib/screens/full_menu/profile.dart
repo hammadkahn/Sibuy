@@ -306,7 +306,7 @@ class _ProfileState extends State<Profile> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Change_pass(
-                                token: widget.token,
+                                token: widget.token, role: 'merchant',
                               )));
                       // branches().whenComplete(() =>
                       //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

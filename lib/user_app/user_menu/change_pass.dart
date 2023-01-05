@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../../apis/api_urls.dart';
 import '../../constant/color_constant.dart';
 import '../../services/auth/authentication.dart';
 
 class Change_pass extends StatefulWidget {
-  const Change_pass({super.key, required this.token});
-  final String token;
+  const Change_pass({super.key, required this.token, required this.role});
+  final String token, role;
 
   @override
   State<Change_pass> createState() => _Change_passState();
@@ -84,7 +85,7 @@ class _Change_passState extends State<Change_pass> {
                         if (value == null ||
                             value.isEmpty ||
                             newPassCtr.text != confirmCtr.text) {
-                          return 'Passwod not matched';
+                          return 'Password not matched';
                         }
                         return null;
                       },
@@ -120,6 +121,7 @@ class _Change_passState extends State<Change_pass> {
         currentPassCtr.text,
         newPassCtr.text,
         confirmCtr.text,
+        widget.role == 'user' ? ApiUrls.changePass : ApiUrls.changePassMerchant
       );
       if (result.isNotEmpty) {
         setState(() {

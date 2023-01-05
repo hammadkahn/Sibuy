@@ -332,7 +332,7 @@ class _ham_userState extends State<ham_user> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    Change_pass(token: widget.token),
+                                    Change_pass(token: widget.token, role: 'user',),
                               ),
                             );
                           },

@@ -58,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   int radioValue = 0;
   bool _obscureTextPass = true;
   bool _obscureTextCPass = true;
-  String phoneCode = '+65';
+  String phoneCode = '+855';
 
   //logo picker
   Future _logoPicker() async {

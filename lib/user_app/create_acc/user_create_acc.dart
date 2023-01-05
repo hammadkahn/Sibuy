@@ -50,7 +50,7 @@ class _User_create_accState extends State<User_create_acc> {
   bool _obscureTextCPass = true;
   String? selectedCountry;
   String? languageId;
-  String phoneCode = '+65';
+  String phoneCode = '+855';
 
   @override
   void initState() {

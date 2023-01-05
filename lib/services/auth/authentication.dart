@@ -227,10 +227,11 @@ class MerchantAuthServices {
     String currPass,
     String newPass,
     String confirmPass,
+    Uri apiUrl
   ) async {
     try {
       print('$token, $currPass, $newPass, $confirmPass');
-      final response = await http.post(ApiUrls.changePass, body: {
+      final response = await http.post(apiUrl, body: {
         'old_password': currPass,
         'password': newPass,
         'password_confirmation': confirmPass,
