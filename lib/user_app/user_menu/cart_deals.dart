@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:SiBuy/apis/api_urls.dart';
 import 'package:SiBuy/providers/order.dart';
+import 'package:provider/provider.dart';
 import '../../constant/color_constant.dart';
 import '../../constant/size_constants.dart';
 
@@ -57,12 +58,12 @@ class _cart_dealsState extends State<cart_deals> {
             child: widget.cart.image == null
                 ? Image.asset(
                     'assets/images/cart_deal.png',
-                    height: 119,
+                    height: 80,
                     fit: BoxFit.cover,
                   )
                 : Image.network(
                     '${ApiUrls.imgBaseUrl}${widget.cart.path}/${widget.cart.image}',
-                    height: 119,
+                    height: 80,
                     width: 80,
                   ),
           ),
@@ -192,70 +193,69 @@ class _cart_dealsState extends State<cart_deals> {
               ),
             ),
           ),
-          // Expanded(
-          //   flex: 2,
-          //   child: Consumer<Cart>(
-          //     builder: ((__, value, _) => Column(
-          //           mainAxisAlignment: MainAxisAlignment.center,
-          //           children: [
-          //             InkWell(
-          //                 onTap: () => value.removeSingleItem(widget.cart.id!),
-          //                 child: Container(
-          //                   height: 32,
-          //                   width: 32,
-          //                   decoration: const BoxDecoration(
-          //                       shape: BoxShape.circle,
-          //                       color: Color(0xFFEAFFFA)),
-          //                   child: const Icon(
-          //                     Icons.remove,
-          //                     color: Color(0xFF0D9BFF),
-          //                     size: 16,
-          //                   ),
-          //                 )),
-          //             Container(
-          //               margin: const EdgeInsets.symmetric(horizontal: 8),
-          //               padding: const EdgeInsets.symmetric(
-          //                   horizontal: 8, vertical: 14),
-          //               decoration: BoxDecoration(
-          //                 borderRadius: BorderRadius.circular(3),
-          //               ),
-          //               child: Text(
-          //                 widget.cart.qty!,
-          //                 style: const TextStyle(
-          //                     color: Color(0xff666687),
-          //                     fontSize: 14,
-          //                     fontFamily: 'Mulish',
-          //                     fontWeight: FontWeight.w600),
-          //               ),
-          //             ),
-          //             InkWell(
-          //                 onTap: () {
-          //                   value.addTCart(
-          //                       merchantId: widget.cart.merchantId,
-          //                       id: widget.cart.id,
-          //                       price: widget.cart.price,
-          //                       title: widget.cart.title,
-          //                       image: widget.cart.image ?? '',
-          //                       reviews: '0',
-          //                       discountOnPrice: widget.cart.discountOnPrice,
-          //                       path: widget.cart.path ?? '');
-          //                 },
-          //                 child: Container(
-          //                   height: 32,
-          //                   width: 32,
-          //                   decoration: const BoxDecoration(
-          //                       shape: BoxShape.circle,
-          //                       color: Color(0xFFEAFFFA)),
-          //                   child: const Icon(
-          //                     Icons.add,
-          //                     color: Color(0xFF0D9BFF),
-          //                     size: 16,
-          //                   ),
-          //                 )),
-          //           ],
-          //         )),
-          //   ),
-          // ),
+          Expanded(
+            flex: 2,
+            child: Consumer<Cart>(
+              builder: ((__, value, _) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                          onTap: () => value.removeSingleItem(widget.cart.id!),
+                          child: Container(
+                            height: 20,
+                            width: 20,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFFEAFFFA)),
+                            child: const Icon(
+                              Icons.remove,
+                              color: Color(0xFF0D9BFF),
+                              size: 16,
+                            ),
+                          )),
+                      Container(
+                        // margin: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        child: Text(
+                          widget.cart.qty!,
+                          style: const TextStyle(
+                              color: Color(0xff666687),
+                              fontSize: 14,
+                              fontFamily: 'Mulish',
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      InkWell(
+                          onTap: () {
+                            value.addTCart(
+                                merchantId: widget.cart.merchantId,
+                                id: widget.cart.id,
+                                price: widget.cart.price,
+                                title: widget.cart.title,
+                                image: widget.cart.image ?? '',
+                                reviews: '0',
+                                discountOnPrice: widget.cart.discountOnPrice,
+                                path: widget.cart.path ?? '');
+                          },
+                          child: Container(
+                            height: 20,
+                            width: 20,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFFEAFFFA)),
+                            child: const Icon(
+                              Icons.add,
+                              color: Color(0xFF0D9BFF),
+                              size: 16,
+                            ),
+                          )),
+                    ],
+                  )),
+            ),
+          ),
         ],
       ),
     );

@@ -166,7 +166,7 @@ class _DealsState extends State<Deals> {
                                     BorderRadius.all(Radius.circular(3))),
                             child: Center(
                               child: Text(
-                                '${widget.merchantListOfDeals.discountOnPrice} % OFF',
+                                '${widget.merchantListOfDeals.discount} % OFF',
                                 style: const TextStyle(
                                     fontSize: 10,
                                     fontFamily: 'Mulish',

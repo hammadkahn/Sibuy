@@ -217,7 +217,7 @@ class _dealsUserState extends State<dealsUser> {
                                                 Radius.circular(3))),
                                         child: Center(
                                           child: Text(
-                                            '${dealProvider!.dealData.discountOnPrice ?? '0'}% OFF',
+                                            '${dealProvider!.dealData.discount ?? '0'}% OFF',
                                             style: const TextStyle(
                                                 fontSize: 10,
                                                 fontFamily: 'Mulish',

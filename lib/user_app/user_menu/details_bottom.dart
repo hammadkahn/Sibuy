@@ -159,7 +159,7 @@ class bottom_detail extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(3))),
                     child: Center(
                       child: Text(
-                        '${dealData.discountOnPrice ?? 0}% OFF',
+                        '${dealData.discount ?? 0}% OFF',
                         style: const TextStyle(
                             fontSize: 10,
                             fontFamily: 'Mulish',

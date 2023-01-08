@@ -112,7 +112,7 @@ class OrderDetails extends StatelessWidget {
                             children: [
                               Details_deals(
                                 context: context,
-                                dealId: cart.cartMap.values.toList()[index].image,
+                                dealId: cart.cartMap.values.toList()[index].id,
                                 token: token,
                               ),
                             ],

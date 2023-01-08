@@ -187,7 +187,7 @@ class _sheet_dealsState extends State<sheet_deals> {
                                       BorderRadius.all(Radius.circular(3))),
                               child: Center(
                                 child: Text(
-                                  '${data.discountOnPrice ?? 0}% OFF',
+                                  '${data.discount ?? 0}% OFF',
                                   style: const TextStyle(
                                       fontSize: 8,
                                       fontFamily: 'Mulish',

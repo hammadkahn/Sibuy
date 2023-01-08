@@ -32,8 +32,6 @@ class CSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double carouselwidth = MediaQuery.of(context).size.width;
-    double carouselheight = carouselwidth * 145 / 327;
 
     return Padding(
       padding: const EdgeInsets.all(10),
@@ -71,7 +69,7 @@ class CSlider extends StatelessWidget {
         color: Colors.grey[200],
         child: Image(
           image: NetworkImage(imagePath),
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
       ),
     );

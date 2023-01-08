@@ -167,7 +167,7 @@ class SearchResult extends StatelessWidget {
                                         Provider.of<DealProvider>(context,
                                             listen: false)
                                             .calculateDiscount(
-                                            data.discountOnPrice!
+                                            data.discount!
                                                 .toString(),
                                             data.price!.toString()),
                                         style: const TextStyle(
@@ -176,18 +176,18 @@ class SearchResult extends StatelessWidget {
                                             fontWeight: FontWeight.w400,
                                             color: Color(0xFFFFFFFF)),
                                       ),
+                                      Insets.gapW5,
                                       Container(
-                                        width: 28,
-                                        height: 11,
+                                        padding: const EdgeInsets.all(5),
                                         decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(3))),
                                         child: Center(
                                           child: Text(
-                                            '${data.discountOnPrice} % OFF',
+                                              '${data.discount}% OFF',
                                             style: const TextStyle(
-                                                fontSize: 5,
+                                                fontSize: 8,
                                                 fontFamily: 'Mulish',
                                                 fontWeight: FontWeight.w900,
                                                 color: AppColors.APP_PRIMARY_COLOR),

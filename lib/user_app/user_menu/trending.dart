@@ -153,26 +153,26 @@ class _trending_userState extends State<trending_user> {
                     fontWeight: FontWeight.w400,
                     color: AppColors.APP_PRIMARY_COLOR),
               ),
-              // SizedBox(
-              //   width: 5,
-              // ),
-              // Container(
-              //   width: 28,
-              //   height: 11,
-              //   decoration: const BoxDecoration(
-              //       color: Colors.blue,
-              //       borderRadius: BorderRadius.all(Radius.circular(3))),
-              //   child: Center(
-              //     child: Text(
-              //       '${widget.data.discount ?? 0}% OFF',
-              //       style: const TextStyle(
-              //           fontSize: 5,
-              //           fontFamily: 'Mulish',
-              //           fontWeight: FontWeight.w900,
-              //           color: Color(0xFFFFFFFF)),
-              //     ),
-              //   ),
-              // ),
+              SizedBox(
+                width: 5,
+              ),
+              Container(
+                width: 28,
+                height: 11,
+                decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.all(Radius.circular(3))),
+                child: Center(
+                  child: Text(
+                    '${widget.data.discount ?? 0}% OFF',
+                    style: const TextStyle(
+                        fontSize: 5,
+                        fontFamily: 'Mulish',
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFFFFFFFF)),
+                  ),
+                ),
+              ),
             ],
           ),
           Text(

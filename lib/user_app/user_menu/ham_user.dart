@@ -89,6 +89,12 @@ class _ham_userState extends State<ham_user> {
                                   'phone_no': data.phone,
                                   'dob': data.dateOfBirth ?? '',
                                   'gender': data.gender,
+                                  // 'language': data.language,
+                                  'language': data.language,
+                                  'countryId': data.userLocations![0].countryId,
+                                  'country': data.userLocations![0].countryName,
+                                  'cityId': data.userLocations![0].cityId,
+                                  'city': data.userLocations![0].cityName,
                                 },
                               ))).then((value) {
                         setState(() {});
@@ -123,7 +129,7 @@ class _ham_userState extends State<ham_user> {
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                       color: Color(0xffFFFFFF))),
-                              Text('${data.email}',
+                              Text('${data.email??''}',
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                       fontFamily: 'DMSans',

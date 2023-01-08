@@ -1,3 +1,4 @@
+import 'package:SiBuy/constant/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:SiBuy/user_app/user_menu/user_menu.dart';
 import 'package:SiBuy/user_app/verify%20_code/user_verification.dart';
@@ -119,6 +120,7 @@ class _Email_verState extends State<Email_ver> {
   Future<void> loginUsers() async {
     try {
       if (_formKey.currentState!.validate()) {
+        UiUtils.disableKeyboard(context);
         //show snackbar to indicate loading
         setState(() {
           isLoading = true;

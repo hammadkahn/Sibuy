@@ -24,13 +24,13 @@ class _MyProfileState extends State<MyProfile> {
 
   TextEditingController? nameCtr;
   TextEditingController? phoneNumberCtr;
-  final countryCtr = TextEditingController();
-  final cityCtr = TextEditingController();
-  final dobCtr = TextEditingController();
+  TextEditingController countryCtr = TextEditingController();
+  TextEditingController cityCtr = TextEditingController();
+  TextEditingController dobCtr = TextEditingController();
 
   ValueNotifier<bool> isLoaded = ValueNotifier(false);
 
-  String dropdownvalue = 'Male';
+  String genderDropdownValue = 'Male';
   String languageDropdownValue = 'English';
   String? languageId;
   String? countryCode;
@@ -54,6 +54,15 @@ class _MyProfileState extends State<MyProfile> {
     });
     nameCtr = TextEditingController(text: widget.userData['name']);
     phoneNumberCtr = TextEditingController(text: widget.userData['phone_no']);
+    cityCtr = TextEditingController(text: widget.userData['city']);
+    cityCode = widget.userData['cityId'];
+    countryCtr = TextEditingController(text: widget.userData['country']);
+    countryCode = widget.userData['countryId'];
+    dobCtr = TextEditingController(text: widget.userData['dob']);
+    genderDropdownValue = (widget.userData['gender']).toString().toCapitalized();
+    // countryCtr = TextEditingController(text: widget.userData['language']);
+    print('language');
+    print(widget.userData['language']);
     super.initState();
   }
 
@@ -66,7 +75,7 @@ class _MyProfileState extends State<MyProfile> {
         title: const Text('My Profile'),
       ),
       body: ListView(
-        padding: EdgeInsets.all(25),
+        padding: const EdgeInsets.all(25),
         children: [
           //forms for user to edit
           const Text("Full Name",
@@ -139,11 +148,9 @@ class _MyProfileState extends State<MyProfile> {
               underline: Container(),
               isExpanded: true,
               // Initial Value
-              value: dropdownvalue,
-
+              value: genderDropdownValue,
               // Down Arrow Icon
               icon: const Icon(Icons.keyboard_arrow_down),
-
               // Array list of items
               items: items.map((String items) {
                 return DropdownMenuItem(
@@ -155,7 +162,7 @@ class _MyProfileState extends State<MyProfile> {
               // change button value to selected value
               onChanged: (String? newValue) {
                 setState(() {
-                  dropdownvalue = newValue!;
+                  genderDropdownValue = newValue!;
                 });
               },
             ),
@@ -224,11 +231,10 @@ class _MyProfileState extends State<MyProfile> {
                 controller: countryCtr,
                 readOnly: true,
                 decoration: InputDecoration(
-                  labelText: 'Country',
+                  hintText: 'Country',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
-                  hintText: countryCtr.text,
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -253,7 +259,6 @@ class _MyProfileState extends State<MyProfile> {
           const SizedBox(
             height: 5,
           ),
-
           //city dropdown
           TextFormField(
             onTap: () => countryCode == null || countryCode!.isEmpty
@@ -294,11 +299,10 @@ class _MyProfileState extends State<MyProfile> {
             readOnly: true,
             controller: cityCtr,
             decoration: InputDecoration(
-              labelText: 'City',
+              hintText: 'City',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              hintText: cityCtr.text,
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -328,8 +332,7 @@ class _MyProfileState extends State<MyProfile> {
               return isLoaded.value == false
                   ? Loader()
                   : Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 2),
+                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(20),
@@ -348,15 +351,9 @@ class _MyProfileState extends State<MyProfile> {
                             value: items,
                             child: Text(items),
                             onTap: () {
-                              for (int i = 0;
-                                  i < _provider!.languageData['data'].length;
-                                  i++) {
-                                if (items ==
-                                    _provider!.languageData['data'][i]
-                                        ['name']) {
-                                  languageId = _provider!.languageData['data']
-                                          [i]['id']
-                                      .toString();
+                              for (int i = 0; i < _provider!.languageData['data'].length; i++) {
+                                if (items == _provider!.languageData['data'][i]['name']) {
+                                  languageId = _provider!.languageData['data'][i]['id'].toString();
                                   break;
                                 }
                               }
@@ -444,13 +441,11 @@ class _MyProfileState extends State<MyProfile> {
       'name': nameCtr!.text,
       'phone_no': phoneNumberCtr!.text,
       'date_of_birth': dobCtr.text,
-      'gender': dropdownvalue.toLowerCase(),
-      'languages': '[{"language_id":"$languageId","is_default":"0"}]',
-      'locations':
-          '[{"address":"${cityCtr.text}, ${countryCtr.text}","country":"$countryCode","city":"$cityCode"}]',
+      'gender': genderDropdownValue.toLowerCase(),
+      'languages': '[{"language_id":"${languageId??0}","is_default":"0"}]',
+      'locations': '[{"address":"${cityCtr.text}, ${countryCtr.text}","country":"$countryCode","city":"$cityCode"}]',
     };
-    final result =
-        await UserInformation().updateUserProfile(widget.token, data);
+    final result = await UserInformation().updateUserProfile(widget.token, data);
 
     if (result['status'] == true) {
       ScaffoldMessenger.of(context)
@@ -461,4 +456,9 @@ class _MyProfileState extends State<MyProfile> {
           .showSnackBar(SnackBar(content: Text(result['message'])));
     }
   }
+}
+
+extension StringCasingExtension on String {
+  String toCapitalized() => length > 0 ?'${this[0].toUpperCase()}${substring(1).toLowerCase()}':'';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalized()).join(' ');
 }

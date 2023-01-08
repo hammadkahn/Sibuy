@@ -192,7 +192,8 @@ class DealProvider with ChangeNotifier {
   UserSingleDealModel get dealModel => _dealModel!;
 
   Future<UserSingleDealModel> singleDealDetails(String token, String id) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(id);
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       final url = Uri.parse('${ApiUrls.baseUrl}user/getDeal?deal_id=$id}');
       final response = await http.get(
@@ -350,16 +351,20 @@ class DealProvider with ChangeNotifier {
     String discountOnPrice,
     dynamic price,
   ) {
+    return (double.parse(price) - double.parse(discountOnPrice)).toStringAsFixed(2);
+  }
+
+  String calculateDiscountPercent(
+      String discount,
+      dynamic price,
+      ) {
     double? priceAfterDiscount = 0;
     double? getPrice;
     double? percentage;
 
-    // getPrice = percentage * double.parse(price);
-    priceAfterDiscount = (double.parse(price) - double.parse(discountOnPrice));
-    // percentage =
-    //     ((double.parse(price) - priceAfterDiscount) / double.parse(price)) *
-    //         100;
-    return priceAfterDiscount.toStringAsFixed(2);
+    priceAfterDiscount = (double.parse(price) - double.parse(discount));
+    percentage = ((double.parse(price) - priceAfterDiscount) / double.parse(price)) * 100;
+    return percentage.toStringAsFixed(0);
   }
 
 //rating stars

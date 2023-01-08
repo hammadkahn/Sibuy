@@ -21,6 +21,7 @@ class Categories_user extends StatefulWidget {
 class _Categories_userState extends State<Categories_user> {
 
   int parentId = -1;
+  String parentName = '';
 
   bool isInternetAvailable = true;
 
@@ -29,6 +30,8 @@ class _Categories_userState extends State<Categories_user> {
     // TODO: implement initState
     UiUtils.checkInternet().then((value){
       isInternetAvailable = value;
+      print('isInternetAvailable');
+      print(isInternetAvailable);
       setState(() { });
     });
     super.initState();
@@ -90,15 +93,9 @@ class _Categories_userState extends State<Categories_user> {
                               itemBuilder: ((context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    // Navigator.of(context).push(
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => SingleCategory(
-                                    //         categoryData: list[index],
-                                    //         token: token),
-                                    //   ),
-                                    // );
                                     setState((){
                                       parentId = list[index].id;
+                                      parentName = list[index].name;
                                     });
                                     print(parentId);
                                   },
@@ -151,13 +148,14 @@ class _Categories_userState extends State<Categories_user> {
             const SizedBox(
               height: 42,
             ),
-            const Text('All Categories',
-                style: TextStyle(
+            parentName.isNotEmpty ? Text('$parentName Categories',
+                style: const TextStyle(
                   fontFamily: 'Mulish',
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF505050),
-                )),
+                )
+            ) : Container(),
             const SizedBox(
               height: 24,
             ),

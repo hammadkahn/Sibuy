@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../constant/color_constant.dart';
+
 // class PaymentWebView extends StatefulWidget {
 //   const PaymentWebView({Key? key}) : super(key: key);
 
@@ -109,45 +111,41 @@ class _WebViewExampleState extends State<WebViewExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
       appBar: AppBar(
-        title: const Text('Flutter WebView example'),
-        // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
-        actions: <Widget>[
-          NavigationControls(_controller.future),
-          SampleMenu(_controller.future, widget.cookieManager),
-        ],
+        backgroundColor: AppColors.APP_PRIMARY_COLOR,
+        title: const Text('Checkout'),
       ),
-      body: WebView(
-        initialUrl: 'https://flutter.dev',
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller.complete(webViewController);
-        },
-        onProgress: (int progress) {
-          print('WebView is loading (progress : $progress%)');
-        },
-        javascriptChannels: <JavascriptChannel>{
-          _toasterJavascriptChannel(context),
-        },
-        navigationDelegate: (NavigationRequest request) {
-          if (request.url.startsWith('https://www.youtube.com/')) {
-            print('blocking navigation to $request}');
-            return NavigationDecision.prevent;
-          }
-          print('allowing navigation to $request');
-          return NavigationDecision.navigate;
-        },
-        onPageStarted: (String url) {
-          print('Page started loading: $url');
-        },
-        onPageFinished: (String url) {
-          print('Page finished loading: $url');
-        },
-        gestureNavigationEnabled: true,
-        backgroundColor: const Color(0x00000000),
-      ),
-      floatingActionButton: favoriteButton(),
+      //
+      // body: WebView(
+      //   initialUrl: 'https://flutter.dev',
+      //   javascriptMode: JavascriptMode.unrestricted,
+      //   onWebViewCreated: (WebViewController webViewController) {
+      //     _controller.complete(webViewController);
+      //   },
+      //   onProgress: (int progress) {
+      //     print('WebView is loading (progress : $progress%)');
+      //   },
+      //   javascriptChannels: <JavascriptChannel>{
+      //     _toasterJavascriptChannel(context),
+      //   },
+      //   navigationDelegate: (NavigationRequest request) {
+      //     if (request.url.startsWith('https://www.youtube.com/')) {
+      //       print('blocking navigation to $request}');
+      //       return NavigationDecision.prevent;
+      //     }
+      //     print('allowing navigation to $request');
+      //     return NavigationDecision.navigate;
+      //   },
+      //   onPageStarted: (String url) {
+      //     print('Page started loading: $url');
+      //   },
+      //   onPageFinished: (String url) {
+      //     print('Page finished loading: $url');
+      //   },
+      //   gestureNavigationEnabled: true,
+      //   backgroundColor: const Color(0x00000000),
+      // ),
+      // floatingActionButton: favoriteButton(),
     );
   }
 
