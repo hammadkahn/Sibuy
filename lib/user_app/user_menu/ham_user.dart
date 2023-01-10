@@ -83,20 +83,22 @@ class _ham_userState extends State<ham_user> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => MyProfile(
-                                token: widget.token,
-                                userData: {
-                                  'name': data.name,
-                                  'phone_no': data.phone,
-                                  'dob': data.dateOfBirth ?? '',
-                                  'gender': data.gender,
-                                  // 'language': data.language,
-                                  'language': data.language,
-                                  'countryId': data.userLocations![0].countryId,
-                                  'country': data.userLocations![0].countryName,
-                                  'cityId': data.userLocations![0].cityId,
-                                  'city': data.userLocations![0].cityName,
-                                },
-                              ))).then((value) {
+                                    token: widget.token,
+                                    userData: {
+                                      'name': data.name,
+                                      'phone_no': data.phone,
+                                      'dob': data.dateOfBirth ?? '',
+                                      'gender': data.gender,
+                                      // 'language': data.language,
+                                      'language': data.language,
+                                      'countryId':
+                                          data.userLocations![0].countryId,
+                                      'country':
+                                          data.userLocations![0].countryName,
+                                      'cityId': data.userLocations![0].cityId,
+                                      'city': data.userLocations![0].cityName,
+                                    },
+                                  ))).then((value) {
                         setState(() {});
                       });
                     },
@@ -129,7 +131,7 @@ class _ham_userState extends State<ham_user> {
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                       color: Color(0xffFFFFFF))),
-                              Text('${data.email??''}',
+                              Text('${data.email ?? ''}',
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                       fontFamily: 'DMSans',
@@ -138,17 +140,18 @@ class _ham_userState extends State<ham_user> {
                                       color: Color(0xffFFFFFF))),
                             ],
                           ),
-                          data.profilePicture == null || data.profilePicture!.isEmpty
+                          data.profilePicture == null ||
+                                  data.profilePicture!.isEmpty
                               ? Image.asset(
-                            'assets/images/slt.png',
-                            height: 50,
-                            width: 50,
-                          )
+                                  'assets/images/slt.png',
+                                  height: 50,
+                                  width: 50,
+                                )
                               : Image.network(
-                            '${ApiUrls.imgBaseUrl}${data.profilePicturePath}/${data.profilePicture}',
-                            height: 100,
-                            width: 100,
-                          ),
+                                  '${ApiUrls.imgBaseUrl}${data.profilePicturePath}/${data.profilePicture}',
+                                  height: 100,
+                                  width: 100,
+                                ),
                         ],
                       ),
                     ),
@@ -159,8 +162,7 @@ class _ham_userState extends State<ham_user> {
                       padding: const EdgeInsets.fromLTRB(30, 0, 30, 30),
                       children: [
                         const Padding(
-                            padding:
-                            EdgeInsets.only(top: 10, bottom: 10),
+                            padding: EdgeInsets.only(top: 10, bottom: 10),
                             child: Divider(
                               color: Color(0xFFE6E6E6),
                               thickness: 0.5,
@@ -184,8 +186,7 @@ class _ham_userState extends State<ham_user> {
                                 color: Color(0xff32324D),
                               ),
                               SizedBox(
-                                width:
-                                MediaQuery.of(context).size.width *
+                                width: MediaQuery.of(context).size.width *
                                     10 /
                                     375,
                               ),
@@ -210,18 +211,15 @@ class _ham_userState extends State<ham_user> {
                         ),
                         InkWell(
                           onTap: () {
-                            data.perference == null ||
-                                data.perference!.isEmpty
-                                ? ScaffoldMessenger.of(context)
-                                .showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'no preferences added yet',
-                                ),
-                              ),
-                            )
-                                : preferencesBox(
-                                data.perference!, context);
+                            data.perference == null || data.perference!.isEmpty
+                                ? ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        'no preferences added yet',
+                                      ),
+                                    ),
+                                  )
+                                : preferencesBox(data.perference!, context);
                           },
                           child: Row(
                             children: [
@@ -230,8 +228,7 @@ class _ham_userState extends State<ham_user> {
                                 color: Color(0xff32324D),
                               ),
                               SizedBox(
-                                width:
-                                MediaQuery.of(context).size.width *
+                                width: MediaQuery.of(context).size.width *
                                     10 /
                                     375,
                               ),
@@ -245,8 +242,7 @@ class _ham_userState extends State<ham_user> {
                           ),
                         ),
                         const Padding(
-                            padding:
-                            EdgeInsets.only(top: 18, bottom: 18),
+                            padding: EdgeInsets.only(top: 18, bottom: 18),
                             child: Divider(
                               color: Color(0xFFE6E6E6),
                               thickness: 0.5,
@@ -258,8 +254,7 @@ class _ham_userState extends State<ham_user> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                  const Payments()),
+                                  builder: (context) => const Payments()),
                             );
                           },
                           child: Row(
@@ -270,8 +265,7 @@ class _ham_userState extends State<ham_user> {
                                 color: Color(0xff32324D),
                               ),
                               SizedBox(
-                                width:
-                                MediaQuery.of(context).size.width *
+                                width: MediaQuery.of(context).size.width *
                                     10 /
                                     375,
                               ),
@@ -285,8 +279,7 @@ class _ham_userState extends State<ham_user> {
                           ),
                         ),
                         const Padding(
-                            padding:
-                            EdgeInsets.only(top: 18, bottom: 18),
+                            padding: EdgeInsets.only(top: 18, bottom: 18),
                             child: Divider(
                               color: Color(0xFFE6E6E6),
                               thickness: 0.5,
@@ -298,7 +291,8 @@ class _ham_userState extends State<ham_user> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => Referral(token: widget.token),
+                                builder: (context) =>
+                                    Referral(token: widget.token),
                               ),
                             );
                           },
@@ -309,8 +303,7 @@ class _ham_userState extends State<ham_user> {
                                 color: Color(0xff32324D),
                               ),
                               SizedBox(
-                                width:
-                                MediaQuery.of(context).size.width *
+                                width: MediaQuery.of(context).size.width *
                                     10 /
                                     375,
                               ),
@@ -324,8 +317,7 @@ class _ham_userState extends State<ham_user> {
                           ),
                         ),
                         const Padding(
-                            padding:
-                            EdgeInsets.only(top: 18, bottom: 18),
+                            padding: EdgeInsets.only(top: 18, bottom: 18),
                             child: Divider(
                               color: Color(0xFFE6E6E6),
                               thickness: 0.5,
@@ -337,8 +329,10 @@ class _ham_userState extends State<ham_user> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    Change_pass(token: widget.token, role: 'user',),
+                                builder: (context) => Change_pass(
+                                  token: widget.token,
+                                  role: 'user',
+                                ),
                               ),
                             );
                           },
@@ -349,8 +343,7 @@ class _ham_userState extends State<ham_user> {
                                 color: Color(0xff32324D),
                               ),
                               SizedBox(
-                                width:
-                                MediaQuery.of(context).size.width *
+                                width: MediaQuery.of(context).size.width *
                                     10 /
                                     375,
                               ),
@@ -364,8 +357,7 @@ class _ham_userState extends State<ham_user> {
                           ),
                         ),
                         const Padding(
-                            padding:
-                            EdgeInsets.only(top: 18, bottom: 18),
+                            padding: EdgeInsets.only(top: 18, bottom: 18),
                             child: Divider(
                               color: Color(0xFFE6E6E6),
                               thickness: 0.5,
@@ -377,7 +369,8 @@ class _ham_userState extends State<ham_user> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => Points(points: data!.points!),
+                                builder: (context) =>
+                                    Points(points: data!.points!),
                               ),
                             );
                           },
@@ -388,8 +381,7 @@ class _ham_userState extends State<ham_user> {
                                 color: Color(0xff32324D),
                               ),
                               SizedBox(
-                                width:
-                                MediaQuery.of(context).size.width *
+                                width: MediaQuery.of(context).size.width *
                                     10 /
                                     375,
                               ),
@@ -403,8 +395,7 @@ class _ham_userState extends State<ham_user> {
                           ),
                         ),
                         const Padding(
-                            padding:
-                            EdgeInsets.only(top: 18, bottom: 18),
+                            padding: EdgeInsets.only(top: 18, bottom: 18),
                             child: Divider(
                               color: Color(0xFFE6E6E6),
                               thickness: 0.5,
@@ -416,7 +407,8 @@ class _ham_userState extends State<ham_user> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => const Insights(),
+                                builder: (context) =>
+                                    Insights(token: widget.token),
                               ),
                             );
                           },
@@ -427,8 +419,7 @@ class _ham_userState extends State<ham_user> {
                                 color: Color(0xff32324D),
                               ),
                               SizedBox(
-                                width:
-                                MediaQuery.of(context).size.width *
+                                width: MediaQuery.of(context).size.width *
                                     10 /
                                     375,
                               ),
@@ -442,8 +433,7 @@ class _ham_userState extends State<ham_user> {
                           ),
                         ),
                         const Padding(
-                            padding:
-                            EdgeInsets.only(top: 18, bottom: 18),
+                            padding: EdgeInsets.only(top: 18, bottom: 18),
                             child: Divider(
                               color: Color(0xFFE6E6E6),
                               thickness: 0.5,
@@ -467,8 +457,7 @@ class _ham_userState extends State<ham_user> {
                                 color: Color(0xff32324D),
                               ),
                               SizedBox(
-                                width:
-                                MediaQuery.of(context).size.width *
+                                width: MediaQuery.of(context).size.width *
                                     10 /
                                     375,
                               ),
@@ -496,7 +485,7 @@ class _ham_userState extends State<ham_user> {
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
                                     builder: (context) => const user_auth()),
-                                    (route) => false);
+                                (route) => false);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(message!)));
@@ -510,8 +499,7 @@ class _ham_userState extends State<ham_user> {
                             color: Color(0xff32324D),
                           ),
                           SizedBox(
-                            width:
-                            MediaQuery.of(context).size.width * 10 / 375,
+                            width: MediaQuery.of(context).size.width * 10 / 375,
                           ),
                           const Text('Log out',
                               style: TextStyle(
@@ -557,9 +545,11 @@ class _ham_userState extends State<ham_user> {
   }
 
   Future<void> createConversation() async {
-    final result = await Provider.of<ChatProvider>(context, listen: false).createCoversation(widget.token, 'hello');
+    final result = await Provider.of<ChatProvider>(context, listen: false)
+        .createCoversation(widget.token, 'hello');
     print(result);
-    Navigator.push(context,
+    Navigator.push(
+      context,
       MaterialPageRoute(
         builder: (ctx) => ChatScreen(
           token: widget.token,

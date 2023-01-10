@@ -34,7 +34,7 @@ class SearchResult extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   itemCount: searchModel!.data!.length,
                   shrinkWrap: true,
-                  separatorBuilder: (context, index){
+                  separatorBuilder: (context, index) {
                     return Insets.gapH10;
                   },
                   itemBuilder: ((context, index) {
@@ -43,14 +43,14 @@ class SearchResult extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       width: SizeConfig.screenWidth * 0.85,
                       decoration: const BoxDecoration(
-                          color: const Color(0xFFE8E8E8),
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(16))),
+                          color: AppColors.APP_PRIMARY_COLOR,
+                          borderRadius: BorderRadius.all(Radius.circular(16))),
                       child: InkWell(
                         onTap: () {
                           showModalBottomSheet(
                             shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(top: Radius.circular(26))),
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(26))),
                             isScrollControlled: true,
                             context: context,
                             builder: (ct) => Wrap(
@@ -69,31 +69,19 @@ class SearchResult extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Offer of the Week',
-                                  style: TextStyle(
-                                      fontFamily: 'Mulish',
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xFFA5A5BA)),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width - 180,
+                                  child: Text(
+                                    data.name!,
+                                    softWrap: true,
+                                    style: const TextStyle(
+                                        fontFamily: 'Mulish',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFFFFFFFF)),
+                                  ),
                                 ),
-                                Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: SizedBox(
-                                      width: MediaQuery.of(context)
-                                          .size
-                                          .width -
-                                          180,
-                                      child: Text(
-                                        data.name!,
-                                        softWrap: true,
-                                        style: const TextStyle(
-                                            fontFamily: 'Mulish',
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: Color(0xFFFFFFFF)),
-                                      ),
-                                    )),
                                 // Padding(
                                 //     padding: const EdgeInsets.only(top: 4),
                                 //     child: Row(
@@ -118,18 +106,19 @@ class SearchResult extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         const Text(
-                                          'Expiry:',
+                                          'Expiry: ',
                                           style: TextStyle(
-                                              fontSize: 9,
+                                              fontSize: 10,
                                               color: Colors.white),
                                         ),
                                         Text(
                                           searchModel!.data![index].expiry!,
                                           style: const TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.APP_PRIMARY_COLOR),
+                                            fontFamily: 'Poppins',
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ],
                                     )),
@@ -143,18 +132,19 @@ class SearchResult extends StatelessWidget {
                                             fontFamily: 'Mulish',
                                             fontSize: 9,
                                             fontWeight: FontWeight.w700,
-                                            color: AppColors.APP_PRIMARY_COLOR),
+                                            color: Colors.white),
                                       ),
                                       Text(
                                         data.price!.toString(),
                                         style: const TextStyle(
                                             decoration:
-                                            TextDecoration.lineThrough,
+                                                TextDecoration.lineThrough,
                                             fontFamily: 'Mulish',
                                             fontSize: 16,
                                             fontWeight: FontWeight.w400,
-                                            color: AppColors.APP_PRIMARY_COLOR),
+                                            color: Colors.white),
                                       ),
+                                      Insets.gapW10,
                                       const Text(
                                         '\$',
                                         style: TextStyle(
@@ -165,11 +155,10 @@ class SearchResult extends StatelessWidget {
                                       ),
                                       Text(
                                         Provider.of<DealProvider>(context,
-                                            listen: false)
+                                                listen: false)
                                             .calculateDiscount(
-                                            data.discount!
-                                                .toString(),
-                                            data.price!.toString()),
+                                                data.discount!.toString(),
+                                                data.price!.toString()),
                                         style: const TextStyle(
                                             fontFamily: 'Mulish',
                                             fontSize: 16,
@@ -185,12 +174,13 @@ class SearchResult extends StatelessWidget {
                                                 Radius.circular(3))),
                                         child: Center(
                                           child: Text(
-                                              '${data.discount}% OFF',
+                                            '${data.discount}% OFF',
                                             style: const TextStyle(
                                                 fontSize: 8,
                                                 fontFamily: 'Mulish',
                                                 fontWeight: FontWeight.w900,
-                                                color: AppColors.APP_PRIMARY_COLOR),
+                                                color: AppColors
+                                                    .APP_PRIMARY_COLOR),
                                           ),
                                         ),
                                       ),
@@ -199,7 +189,7 @@ class SearchResult extends StatelessWidget {
                                 ),
                                 RichText(
                                   text: TextSpan(
-                                      text: 'Discount On:',
+                                      text: 'Discount On:  ',
                                       style: const TextStyle(
                                           fontFamily: 'Mulish',
                                           fontSize: 9,
@@ -207,12 +197,12 @@ class SearchResult extends StatelessWidget {
                                           color: Colors.white),
                                       children: [
                                         TextSpan(
-                                          text: data.type.toString(),
+                                          text: data.categoryName.toString(),
                                           style: const TextStyle(
                                               fontFamily: 'Mulish',
                                               fontSize: 11,
                                               fontWeight: FontWeight.w400,
-                                              color: AppColors.APP_PRIMARY_COLOR),
+                                              color: Colors.white),
                                         )
                                       ]),
                                 ),
@@ -227,14 +217,14 @@ class SearchResult extends StatelessWidget {
                               ),
                               child: data.image == null
                                   ? Image.asset(
-                                'assets/images/food.png',
-                                fit: BoxFit.cover,
-                              )
+                                      'assets/images/food.png',
+                                      fit: BoxFit.cover,
+                                    )
                                   : CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                  '${ApiUrls.imgBaseUrl}${data.image!.path}/${data.image!.image}',
-                                ),
-                              ),
+                                      backgroundImage: NetworkImage(
+                                        '${ApiUrls.imgBaseUrl}${data.image!.path}/${data.image!.image}',
+                                      ),
+                                    ),
                             ),
                           ],
                         ),

@@ -152,6 +152,9 @@ class _cart_dealsState extends State<cart_deals> {
                                 fontWeight: FontWeight.w400,
                                 color: Color(0xFFFF6767)),
                           ),
+                          SizedBox(
+                            width: 3,
+                          ),
                           const Text(
                             '\$',
                             style: TextStyle(
@@ -215,7 +218,8 @@ class _cart_dealsState extends State<cart_deals> {
                           )),
                       Container(
                         // margin: const EdgeInsets.symmetric(horizontal: 8),
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(3),
                         ),

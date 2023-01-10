@@ -75,10 +75,10 @@ class _OfferDetailsState extends State<OfferDetails> {
                             height: 8,
                           ),
                           const Text(
-                            'Cafe Bistrovia - Baku, Azerbaijan',
+                            'Phnom Penh, Cambodia',
                             style: TextStyle(
                                 fontFamily: 'Mulish',
-                                fontSize: 10,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xFF8E8EA9)),
                           ),
@@ -129,6 +129,7 @@ class _OfferDetailsState extends State<OfferDetails> {
                         fontWeight: FontWeight.w400,
                         color: Color(0xFFFF6767)),
                   ),
+                  const SizedBox(width: 10),
                   const Text(
                     '\$',
                     style: TextStyle(
@@ -139,8 +140,7 @@ class _OfferDetailsState extends State<OfferDetails> {
                   ),
                   Text(
                     Provider.of<DealProvider>(context, listen: false)
-                        .calculateDiscount(
-                            widget.data.discount!.toString(),
+                        .calculateDiscount(widget.data.discount!.toString(),
                             widget.data.price!.toStringAsFixed(0)),
                     style: const TextStyle(
                         fontFamily: 'Mulish',
@@ -182,7 +182,7 @@ class _OfferDetailsState extends State<OfferDetails> {
                 widget.data.description ?? 'no description provided',
                 style: const TextStyle(
                   fontFamily: 'Mulish',
-                  fontSize: 10,
+                  fontSize: 12,
                   fontWeight: FontWeight.w400,
                 ),
               ),
